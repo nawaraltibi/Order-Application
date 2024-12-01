@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:order_application/App/Routes/AppRoutes.dart';
 import 'package:order_application/App/Translations/AppTranslations.dart';
 import 'package:order_application/Presentation/Controllers/Splash/SplashBindings.dart';
+import 'package:order_application/Presentation/Pages/Onboarding/OnboardingScreen.dart';
 import 'package:order_application/Presentation/Pages/Splash/SplashScreen.dart';
 
 void main() async {
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
           initialBinding: SplashBindings(),
           getPages: AppRoutes.routes,
           initialRoute: '/',
-          home: SplashScreen(),
+          home: OnboardingScreen(),
         );
       },
     );
