@@ -10,13 +10,13 @@ class SplashController extends GetxController {
 
     // Get the value that indicates whether the user has used the app before
     isFirstTime = prefs.getBool('isFirstTime') ?? true;
-    bool? requireStudentData = prefs.getBool('requireStudentData');
+    bool? requireData = prefs.getBool('requireData');
     var token = prefs.getString('token');
 
     // If it's the first use, update the value to false for the next time
-    if (isFirstTime) {
+    if (!isFirstTime) {
       await prefs.setBool('isFirstTime', false);
-      //TODO Here, you can add navigation to a welcome or intro screen for new users
+      Get.offAllNamed('/Onboarding');
       return;
     }
 
@@ -28,7 +28,7 @@ class SplashController extends GetxController {
     }
 
     // If the token exists but the user needs to complete their data, navigate to the profile setup screen
-    if (requireStudentData == true) {
+    if (requireData == true) {
       //TODO Here, you can add Binding the AuthBinding for navigation
       //TODO Here, you can add navigation to the profile creation screen
     } else {

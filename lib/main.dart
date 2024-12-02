@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:order_application/App/Routes/AppRoutes.dart';
+import 'package:order_application/App/Theme/Theme.dart';
 import 'package:order_application/App/Translations/AppTranslations.dart';
 import 'package:order_application/Presentation/Controllers/Splash/SplashBindings.dart';
 import 'package:order_application/Presentation/Pages/Onboarding/OnboardingScreen.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, child) {
         return GetMaterialApp(
+          theme: AppTheme.lightTheme,
           translations: AppTranslations(),
           locale: Locale('en', 'US'),
           fallbackLocale: Locale('en', 'US'),
@@ -28,7 +30,7 @@ class MyApp extends StatelessWidget {
           initialBinding: SplashBindings(),
           getPages: AppRoutes.routes,
           initialRoute: '/',
-          home: OnboardingScreen(),
+          home: SplashScreen(),
         );
       },
     );

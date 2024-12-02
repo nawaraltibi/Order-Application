@@ -6,6 +6,6 @@ class AppTextStyles {
 
   static TextStyle language = Get.locale?.languageCode == 'ar'
       ? GoogleFonts.almarai()
-      : GoogleFonts.brawler();
+      : GoogleFonts.mulish();
 
 }
