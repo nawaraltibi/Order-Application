@@ -76,7 +76,7 @@ class _OrangeButtonWidgetState extends State<OrangeButtonWidget> {
               )
             // Show the arrow icon if not loading
             : SvgPicture.asset(
-                'assets/images/arrow-right.svg', // Icon asset
+                'assets/images/icons/arrow-right.svg', // Icon asset
                 width: 24.89.w, // Dynamic width
                 height: 24.89.h, // Dynamic height
               ),
