@@ -19,7 +19,7 @@ class AppTranslations extends Translations {
           'fill information:': 'Fill your information:',
           'first name': 'First Name',
           'last name': 'Last Name',
-          'Location': 'Location (optional):',
+          'location': 'Current location (optional):',
           'welcome back': 'Welcome Back!',
           'enter password': 'Enter your password to access your account',
           'allow maps': 'Allow Maps to access this device’s precise location?',
@@ -68,7 +68,7 @@ class AppTranslations extends Translations {
           'fill information:': ':املأ معلوماتك',
           'first name': 'الاسم الاول',
           'last name': 'الاسم الاخير',
-          'Location': ':الموقع (اختياري)',
+          'location': ':الموقع الحالي (اختياري)',
           'welcome back': '!مرحباً بك مرة أخرى',
           'enter password': 'أدخل كلمة المرور الخاصة بك للوصول إلى حسابك',
           'allow maps':

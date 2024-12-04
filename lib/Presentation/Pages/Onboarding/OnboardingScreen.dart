@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:order_application/App/Color/Color.dart';
 import 'package:order_application/App/Styles/AppTextStyles.dart';
 import 'package:order_application/Presentation/Widgets/OrangeButtonWidget.dart';
@@ -47,6 +46,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   ];
   int _currentPage = 0;
 
+  void _skip() {
+    Get.toNamed("/EnterNumber");
+  }
+
   void _nextPage() {
     if (_currentPage < pages.length - 1) {
       _pageController.nextPage(
@@ -54,8 +57,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         curve: Curves.easeInOut,
       );
     }else{
-      print(1);
-      Get.toNamed("/EnterNumber");
+      _skip();
     }
   }
 
@@ -140,7 +142,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             left: 40.w,
             top: 675.h,
             child: TextButton(
-                onPressed: () {},
+                onPressed: _skip,
                 child: Text(
                   "skip".tr,
                   style: AppTextStyles.language.copyWith(

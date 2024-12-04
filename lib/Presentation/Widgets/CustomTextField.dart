@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:order_application/App/Styles/AppTextStyles.dart';
+import 'package:get/get.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -13,18 +14,20 @@ class CustomTextField extends StatelessWidget {
   const CustomTextField({
     super.key,
     required this.controller,
-    this.validator, // Optional validator for form validation
-    this.hintText = '', // Default hint text
-    this.suffixIcon, // Optional suffix icon
-    this.keyboardType = TextInputType.text, // Default to text input type
+    this.validator,
+    this.hintText = '',
+    this.suffixIcon,
+    this.keyboardType = TextInputType.text,
   });
 
   @override
   Widget build(BuildContext context) {
+    // Determine text alignment based on the current language direction
+    TextAlign textAlign = Get.locale?.languageCode == 'ar' ? TextAlign.right : TextAlign.left;
+
     return TextFormField(
       controller: controller, // Set the controller to manage the input
-      keyboardType:
-          keyboardType, // Use the keyboard type passed in the constructor
+      keyboardType: keyboardType, // Use the keyboard type passed in the constructor
       validator: validator, // Use validator if provided
       decoration: InputDecoration(
         hintText: hintText, // Optional hint text
@@ -58,15 +61,14 @@ class CustomTextField extends StatelessWidget {
         ),
         floatingLabelBehavior: FloatingLabelBehavior.never,
         alignLabelWithHint: true,
-        suffixIcon:
-            suffixIcon, // Optional suffix icon (can be an image or icon)
+        suffixIcon: suffixIcon, // Optional suffix icon (can be an image or icon)
       ),
       style: AppTextStyles.language.copyWith(
         fontSize: 16.sp,
         color: Colors.black,
         fontWeight: FontWeight.w300,
       ),
-      textAlign: TextAlign.left,
+      textAlign: textAlign, // Change text alignment based on the language
     );
   }
 }
