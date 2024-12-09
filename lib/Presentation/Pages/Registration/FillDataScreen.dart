@@ -62,7 +62,9 @@ class FillDataScreen extends StatelessWidget {
             bottom: 40.h,
             right: 24.w,
             child: OrangeButtonWidget(
-              function: () {},
+              function: () {
+                Get.toNamed('/DashboardPage');
+              },
             ),
           ),
         ],

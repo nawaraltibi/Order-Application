@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:order_application/Presentation/Controllers/Dashboard/DashboardBinding.dart';
+import 'package:order_application/Presentation/Pages/Dashboard/DashboardPage.dart';
 import 'package:order_application/Presentation/Pages/Onboarding/OnboardingScreen.dart';
 import 'package:order_application/Presentation/Pages/Registration/EnterPhoneNumberScreen.dart';
 import 'package:order_application/Presentation/Pages/Registration/FillDataScreen.dart';
@@ -12,5 +14,6 @@ class AppRoutes {
     GetPage(name: '/EnterNumber', page: () => EnterNumberScreen()),
     GetPage(name: '/Verification', page: () => VerificationScreen()),
     GetPage(name: '/FillData', page: () => FillDataScreen()),
+    GetPage(name: '/DashboardPage', page: () => DashboardPage(), binding: DashboardBinding(),),
   ];
 }

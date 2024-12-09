@@ -16,6 +16,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isRTL = Get.locale?.languageCode == 'ar';
+
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 14.h),
@@ -32,13 +34,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
-
               ),
               child: Center(
-                child: SvgPicture.asset(
-                  'assets/icons/arrow-left.svg',
-                  width: 14.h,
-                  height: 14.h,
+                child: Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.rotationY(isRTL ? 3.1416 : 0), // عكس الأيقونة
+                  child: SvgPicture.asset(
+                    'assets/icons/arrow-left.svg',
+                    width: 14.h,
+                    height: 14.h,
+                  ),
                 ),
               ),
             ),
