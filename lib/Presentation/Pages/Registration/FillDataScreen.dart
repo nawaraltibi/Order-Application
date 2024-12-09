@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:order_application/Presentation/Widgets/CustomAppBar.dart';
 import 'package:order_application/Presentation/Widgets/CustomTextField.dart';
+import 'package:order_application/Presentation/Widgets/GetLocationButton.dart';
 import 'package:order_application/Presentation/Widgets/OrangeButtonWidget.dart';
 import 'package:order_application/Presentation/Widgets/ProfileImagePicker.dart';
 import 'package:order_application/Presentation/Widgets/SectionTitle.dart';
@@ -48,10 +49,11 @@ class FillDataScreen extends StatelessWidget {
                 SizedBox(height: 20.h),
                 CustomTextField(
                   controller: TextEditingController(),
-                  hintText: "".tr,
+                  hintText: "location name".tr,
                   keyboardType: TextInputType.name,
-                  suffixIcon: Icon(Icons.location_on_rounded),
                 ),
+                SizedBox(height: 30.h),
+                GetLocationButton(),
               ],
             ),
           ),

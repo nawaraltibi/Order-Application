@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:order_application/Presentation/Widgets/CustomAppBar.dart';
-import 'package:order_application/Presentation/Widgets/CustomTextField.dart';
+import 'package:order_application/Presentation/Widgets/CustomOTPField.dart';
 import 'package:order_application/Presentation/Widgets/DescriptionText.dart';
 import 'package:order_application/Presentation/Widgets/OrangeButtonWidget.dart';
-import 'package:order_application/Presentation/Widgets/ToggleRoleButton.dart';
 import 'package:order_application/Presentation/Widgets/WelcomeText.dart';
 
-// Main widget for entering number
-class EnterNumberScreen extends StatelessWidget {
+// Main widget for entering OTP
+class VerificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: '',trailingWidget: ToggleRoleButton(onChanged: (bool ) {  },),),
+      appBar: CustomAppBar(title: ''),
       body: Stack(
         children: [
           // Content of the screen
@@ -26,13 +25,12 @@ class EnterNumberScreen extends StatelessWidget {
                 WelcomeText(),
                 SizedBox(height: 10.h),
                 DescriptionText(
-                  text: 'enter the number'.tr,
+                  text: 'verification code'.tr,
                 ),
                 SizedBox(height: 50.h),
-                CustomTextField(
-                    controller: TextEditingController(),
-                    hintText: "phone number".tr,
-                    keyboardType: TextInputType.phone
+                CustomOTPField(
+                  controller: TextEditingController(),
+                  keyboard: TextInputType.number,
                 ),
               ],
             ),
@@ -43,7 +41,7 @@ class EnterNumberScreen extends StatelessWidget {
             right: 24.w,
             child: OrangeButtonWidget(
               function: () {
-                Get.toNamed("/Verification");
+                Get.toNamed("/FillData");
               },
             ),
           ),
