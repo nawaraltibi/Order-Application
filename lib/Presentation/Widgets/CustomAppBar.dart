@@ -4,14 +4,17 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:order_application/App/Color/Color.dart';
 import 'package:order_application/App/Styles/AppTextStyles.dart';
+import 'package:order_application/Presentation/Controllers/Dashboard/DashboardController.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final Widget? trailingWidget;
+  final DashboardController? controller;
 
   CustomAppBar({
     required this.title,
     this.trailingWidget,
+    this.controller,
   });
 
   @override
@@ -26,7 +29,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           elevation: 0,
           leading: GestureDetector(
             onTap: () {
-              Get.back();
+              if (controller != null) {
+                controller!.goToHome();
+              } else {
+                Get.back();
+              }
             },
             child: Container(
               width: 44.h,
@@ -38,7 +45,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               child: Center(
                 child: Transform(
                   alignment: Alignment.center,
-                  transform: Matrix4.rotationY(isRTL ? 3.1416 : 0), // عكس الأيقونة
+                  transform: Matrix4.rotationY(isRTL ? 3.1416 : 0),
                   child: SvgPicture.asset(
                     'assets/icons/arrow-left.svg',
                     width: 14.h,
@@ -53,7 +60,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             style: AppTextStyles.language.copyWith(
               fontSize: 20.sp,
               color: Color(0xff32324D),
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w400,
             ),
             textAlign: TextAlign.left,
           ),

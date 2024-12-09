@@ -6,6 +6,10 @@ import 'package:get/get.dart';
 import 'package:order_application/App/Color/Color.dart';
 import 'package:order_application/App/Styles/AppTextStyles.dart';
 import 'package:order_application/Presentation/Controllers/Dashboard/DashboardController.dart';
+import 'package:order_application/Presentation/Pages/Home/HomeScreen.dart';
+import 'package:order_application/Presentation/Pages/Orders/OrdersScreen.dart';
+import 'package:order_application/Presentation/Pages/Profile/ProfileScreen.dart';
+import 'package:order_application/Presentation/Pages/Search/SearchScreen.dart';
 
 class DashboardPage extends StatelessWidget {
   @override
@@ -17,10 +21,10 @@ class DashboardPage extends StatelessWidget {
             child: IndexedStack(
               index: controller.tabIndex,
               children: [
-                // HomePage(),
-                // NewsPage(),
-                // AlertsPage(),
-                // AccountPage(),
+                HomeScreen(),
+                SearchScreen(),
+                OrdersScreen(),
+                ProfileScreen(),
               ],
             ),
           ),
