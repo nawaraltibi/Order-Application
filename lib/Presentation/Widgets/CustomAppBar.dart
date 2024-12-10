@@ -23,7 +23,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 14.h),
+        padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 20.h),
         child: AppBar(
           backgroundColor: AppColors.background,
           elevation: 0,
@@ -78,5 +78,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(80.h);
+  Size get preferredSize => Size.fromHeight(100.h);
 }

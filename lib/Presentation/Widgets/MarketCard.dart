@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../App/Color/Color.dart';
 import '../../App/Styles/AppTextStyles.dart';
 
 class MarketCard extends StatelessWidget {
-  bool imageType; // false for Svg and true others
-  String marketImage;
-  String marketName;
-  double rating;
-  int reviews;
+  final bool imageType; // false for Svg and true for others
+  final String marketImage;
+  final String marketName;
+  final double rating;
+  final int reviews;
 
   MarketCard({
     required this.imageType,
@@ -24,18 +25,21 @@ class MarketCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isRTL = Get.locale?.languageCode == 'ar';
+
     return Container(
       padding: EdgeInsets.all(10),
-      margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(
-            Radius.circular(16),
-          ),
-          boxShadow: [
-            BoxShadow(color: Colors.black12.withOpacity(0.1), blurRadius: 5)
-          ]),
+        color: Colors.white,
+        borderRadius: BorderRadius.all(
+          Radius.circular(16),
+        ),
+        boxShadow: [
+          BoxShadow(color: Colors.black12.withOpacity(0.1), blurRadius: 5),
+        ],
+      ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
             width: 73.w,
@@ -50,75 +54,77 @@ class MarketCard extends StatelessWidget {
                     fit: BoxFit.contain,
                   ),
           ),
-          SizedBox(
-            width: 12.w,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "$marketName".tr,
-                style: AppTextStyles.language
-                    .copyWith(fontWeight: FontWeight.w500, fontSize: 14.sp),
-              ),
-              SizedBox(
-                height: 4.h,
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.star_half,
-                    color: Color(0xFFFFB01D),
-                    size: 19.sp,
-                  ),
-                  SizedBox(
-                    width: 2.w,
-                  ),
-                  Text(
-                    "$rating",
+          SizedBox(width: 12.w),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    marketName,
                     style: AppTextStyles.language.copyWith(
-                      color: Color(0xFF8E8EA9),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14.sp,
                     ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  SizedBox(
-                    width: 4.w,
-                  ),
-                  Text(
-                    "($reviews review)".tr,
-                    style: AppTextStyles.language.copyWith(
-                      color: Color(0xFFC0C0CF),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12.sp,
+                ),
+                SizedBox(height: 4.h),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.star_half,
+                      color: AppColors.primary,
+                      size: 19.sp,
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    SizedBox(width: 2.w),
+                    Text(
+                      "$rating",
+                      style: AppTextStyles.language.copyWith(
+                        color: const Color(0xFF8E8EA9),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12.sp,
+                      ),
+                    ),
+                    SizedBox(width: 4.w),
+                    Text(
+                      "review".trParams({'num': reviews.toString()}),
+                      style: AppTextStyles.language.copyWith(
+                        color: const Color(0xFFC0C0CF),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12.sp,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-          SizedBox(
-            width: 78.w,
-          ),
+          SizedBox(width: 12.w),
           Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               InkWell(
                 onTap: () {},
                 child: Container(
-                  width: 26.w,
-                  height: 26.h,
-                  child: FittedBox(
-                    fit: BoxFit.none,
+                  width: 22.w,
+                  height: 22.h,
+                  child: Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.rotationY(isRTL ? 3.1416 : 0),
                     child: SvgPicture.asset(
-                      "assets/images/icons/arrow-right-card.svg",
-                      width: 22.w,
-                      height: 22.h,
+                      'assets/icons/arrow-right-card.svg',
+                      width: 12.h,
+                      height: 12.h,
                     ),
                   ),
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
     );

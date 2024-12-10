@@ -49,6 +49,7 @@ class AppTranslations extends Translations {
           'all': 'All',
           'markets': 'Markets',
           'products': 'Products',
+          'review': '(@num review)',
         },
         'ar_SA': {
           'discover local stores and products':
@@ -92,6 +93,7 @@ class AppTranslations extends Translations {
           'all': 'الكل ',
           'markets': 'المتاجر',
           'products': 'البضاعة',
+          'review': '(@num تقيم)',
         },
       };
 }
