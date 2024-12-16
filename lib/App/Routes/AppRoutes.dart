@@ -7,6 +7,8 @@ import 'package:order_application/Presentation/Pages/Registration/FillDataScreen
 import 'package:order_application/Presentation/Pages/Registration/VerificationScreen.dart';
 import 'package:order_application/Presentation/Pages/Splash/SplashScreen.dart';
 
+import '../../Presentation/Pages/Profile/EditInformationScreen.dart';
+
 class AppRoutes {
   static final routes = [
     GetPage(name: '/', page: () => SplashScreen()),
@@ -15,5 +17,6 @@ class AppRoutes {
     GetPage(name: '/Verification', page: () => VerificationScreen()),
     GetPage(name: '/FillData', page: () => FillDataScreen()),
     GetPage(name: '/DashboardPage', page: () => DashboardPage(), binding: DashboardBinding(),),
+    GetPage(name: '/EditInformation', page: () => EditInformationScreen()),
   ];
 }

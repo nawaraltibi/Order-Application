@@ -7,6 +7,8 @@ import 'package:order_application/App/Translations/AppTranslations.dart';
 import 'package:order_application/Presentation/Controllers/Splash/SplashBindings.dart';
 import 'package:order_application/Presentation/Pages/Splash/SplashScreen.dart';
 
+import 'Presentation/Pages/Onboarding/OnboardingScreen.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
@@ -29,7 +31,7 @@ class MyApp extends StatelessWidget {
           initialBinding: SplashBindings(),
           getPages: AppRoutes.routes,
           initialRoute: '/',
-          home: SplashScreen(),
+          home:OnboardingScreen(),
         );
       },
     );
