@@ -50,6 +50,7 @@ class AppTranslations extends Translations {
           'markets': 'Markets',
           'products': 'Products',
           'review': '(@num review)',
+          'need': 'Get your needs seamlessly',
         },
         'ar_SA': {
           'discover local stores and products':
@@ -94,6 +95,7 @@ class AppTranslations extends Translations {
           'markets': 'المتاجر',
           'products': 'البضاعة',
           'review': '(@num تقيم)',
+          'need': 'احصل على احتياجاتك بسهولة',
         },
       };
 }
