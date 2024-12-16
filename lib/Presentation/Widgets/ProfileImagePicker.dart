@@ -43,7 +43,7 @@ class _ProfileImagePickerState extends State<ProfileImagePicker> {
           backgroundColor: Colors.grey[300],
           backgroundImage: _image != null
               ? FileImage(_image!)
-              : AssetImage('assets/images/User 05c.png') as ImageProvider,
+              : AssetImage('assets/images/User.png') as ImageProvider,
         ),
         Positioned(
           bottom: 0,

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:order_application/App/Styles/AppTextStyles.dart';
 import 'package:order_application/Presentation/Widgets/CustomAppBar.dart';
 import 'package:order_application/Presentation/Widgets/OrangeButtonWidget.dart';
+import 'package:order_application/Presentation/Widgets/ProfileImagePicker.dart';
 import '../../Widgets/CustomTextField.dart';
 
 class EditInformationScreen extends StatelessWidget {
@@ -19,42 +20,9 @@ class EditInformationScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: Column(
           children: [
-            Container(
-                alignment: Alignment.center,
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(60),
-                  onTap: () {},
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Container(
-                        width: 138.w,
-                        height: 138.h,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                                image: AssetImage('assets/images/User.png'),
-                                fit: BoxFit.cover)),
-                      ),
-                      Positioned(
-                        top: 112.h,
-                        left: 97.w,
-                        child: Container(
-                          alignment: Alignment.center,
-                          width: 28.w,
-                          height: 28.h,
-                          decoration: BoxDecoration(
-                              color: Colors.orange, shape: BoxShape.circle),
-                          child: Icon(
-                            Icons.add,
-                            color: Colors.white,
-                            size: 24.sp,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                )),
+            Center(
+              child: ProfileImagePicker(),
+            ),
             SizedBox(
               height: 33.h,
             ),
