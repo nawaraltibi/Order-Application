@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:order_application/App/Styles/AppTextStyles.dart';
 import 'package:order_application/Presentation/Widgets/CustomAppBar.dart';
-import 'package:order_application/Presentation/Widgets/OrangeButtonWidget.dart';
+import 'package:order_application/Presentation/Widgets/CircularOrangeButton.dart';
 import 'package:order_application/Presentation/Widgets/ProfileImagePicker.dart';
+import 'package:order_application/Presentation/Widgets/SectionTitle.dart';
 import '../../Widgets/CustomTextField.dart';
 
 class EditInformationScreen extends StatelessWidget {
@@ -17,26 +17,16 @@ class EditInformationScreen extends StatelessWidget {
         title: "",
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        padding: EdgeInsets.symmetric(horizontal: 23.w),
         child: Column(
           children: [
-            Center(
-              child: ProfileImagePicker(),
-            ),
+            const ProfileImagePicker(),
             SizedBox(
               height: 33.h,
             ),
             Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Edit your information:".tr,
-                textAlign: TextAlign.start,
-                style: AppTextStyles.language.copyWith(
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
+                alignment: Alignment.centerLeft,
+                child: SectionTitle(text: "Edit your information:".tr)),
             SizedBox(
               height: 17.h,
             ),

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:order_application/Presentation/Widgets/CustomAppBar.dart';
 import 'package:order_application/Presentation/Widgets/CustomOTPField.dart';
 import 'package:order_application/Presentation/Widgets/DescriptionText.dart';
-import 'package:order_application/Presentation/Widgets/OrangeButtonWidget.dart';
+import 'package:order_application/Presentation/Widgets/CircularOrangeButton.dart';
 import 'package:order_application/Presentation/Widgets/WelcomeText.dart';
 
 // Main widget for entering OTP

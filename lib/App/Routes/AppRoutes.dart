@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:order_application/Presentation/Controllers/Dashboard/DashboardBinding.dart';
 import 'package:order_application/Presentation/Pages/Dashboard/DashboardPage.dart';
 import 'package:order_application/Presentation/Pages/Onboarding/OnboardingScreen.dart';
+import 'package:order_application/Presentation/Pages/Profile/AboutScreen.dart';
+import 'package:order_application/Presentation/Pages/Profile/LanguageScreen.dart';
 import 'package:order_application/Presentation/Pages/Registration/EnterPhoneNumberScreen.dart';
 import 'package:order_application/Presentation/Pages/Registration/FillDataScreen.dart';
 import 'package:order_application/Presentation/Pages/Registration/VerificationScreen.dart';
@@ -18,5 +20,7 @@ class AppRoutes {
     GetPage(name: '/FillData', page: () => FillDataScreen()),
     GetPage(name: '/DashboardPage', page: () => DashboardPage(), binding: DashboardBinding(),),
     GetPage(name: '/EditInformation', page: () => EditInformationScreen()),
+    GetPage(name: '/Language', page: () => Languagescreen()),
+    GetPage(name: '/About', page: () => AboutScreen()),
   ];
 }

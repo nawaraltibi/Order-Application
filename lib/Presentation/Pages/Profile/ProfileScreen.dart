@@ -6,6 +6,7 @@ import 'package:order_application/App/Color/Color.dart';
 import 'package:order_application/App/Styles/AppTextStyles.dart';
 import 'package:order_application/Presentation/Controllers/Dashboard/DashboardController.dart';
 import 'package:order_application/Presentation/Controllers/Profile/ProfileController.dart';
+import 'package:order_application/Presentation/Widgets/CustomAlertDialog.dart';
 import 'package:order_application/Presentation/Widgets/CustomAppBar.dart';
 
 class ProfileScreen extends GetView<ProfileController> {
@@ -29,7 +30,7 @@ class ProfileScreen extends GetView<ProfileController> {
           controller: Get.find<DashboardController>(),
         ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: 23.w),
           child: ListView(
             children: [
               InkWell(
@@ -42,7 +43,7 @@ class ProfileScreen extends GetView<ProfileController> {
                     Container(
                       width: 80.w,
                       height: 80.h,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
                               image: AssetImage('assets/images/User.png'),
@@ -106,22 +107,38 @@ class ProfileScreen extends GetView<ProfileController> {
                     style: AppTextStyles.language.copyWith(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
-                        color: Color(0XFF666687))),
+                        color: const Color(0XFF666687))),
               ),
               SizedBox(
                 height: 12.h,
               ),
               ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: list.length,
                 itemBuilder: (context, index) {
                   return InkWell(
                     borderRadius: BorderRadius.circular(20),
-                    onTap: () {},
+                    onTap: () {
+                      if (list[index]['text'] != 'Logout') {
+                        Get.toNamed("/${list[index]['text']}");
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return CustomAlertDialog(
+                                title: '',
+                                message:
+                                    'Are you sure you want to log out? You can come back later.',
+                                onConfirm: () {},
+                                onCancel: () {});
+                          },
+                        );
+                      }
+                    },
                     child: Expanded(
                       child: Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                             left: 10, right: 10, top: 11, bottom: 10),
                         child: Row(
                           children: [
@@ -138,7 +155,7 @@ class ProfileScreen extends GetView<ProfileController> {
                               style: AppTextStyles.language.copyWith(
                                   fontSize: 15.sp, fontWeight: FontWeight.w500),
                             ),
-                            Spacer(),
+                            const Spacer(),
                             SvgPicture.asset(
                               'assets/icons/arrow-right-card.svg',
                               width: 22.w,

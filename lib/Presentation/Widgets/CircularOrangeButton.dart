@@ -59,9 +59,9 @@ class _OrangeButtonWidgetState extends State<OrangeButtonWidget> {
         onPressed: _isLoading ? null : _handleButtonPress,
 
         style: ElevatedButton.styleFrom(
-          backgroundColor: Color(0xFFF19434), // Button's background color
+          backgroundColor: const Color(0xFFF19434), // Button's background color
           elevation: 2, // Button elevation for shadow effect
-          padding: EdgeInsets.all(0), // Remove padding inside the button
+          padding: const EdgeInsets.all(0), // Remove padding inside the button
         ),
 
         child: _isLoading
@@ -69,7 +69,7 @@ class _OrangeButtonWidgetState extends State<OrangeButtonWidget> {
             ? SizedBox(
                 width: 24.w, // Size of the loading spinner
                 height: 24.h,
-                child: CircularProgressIndicator(
+                child: const CircularProgressIndicator(
                   color: Colors.white, // Color of the spinner
                   strokeWidth: 2.0, // Width of the spinner's stroke
                 ),

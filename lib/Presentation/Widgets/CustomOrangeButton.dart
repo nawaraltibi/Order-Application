@@ -4,12 +4,12 @@ import 'package:get/get.dart';
 import 'package:order_application/App/Color/Color.dart';
 import 'package:order_application/App/Styles/AppTextStyles.dart';
 
-class CustomBlackButton extends StatelessWidget {
+class CustomOrangebButton extends StatelessWidget {
   final String buttonText;
   final VoidCallback? onPressed;
   final bool isLoading;
 
-  const CustomBlackButton({
+  const CustomOrangebButton({
     Key? key,
     required this.buttonText,
     required this.onPressed,
@@ -20,7 +20,7 @@ class CustomBlackButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.dark,
+        backgroundColor: AppColors.primary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.r),
         ),
@@ -29,7 +29,7 @@ class CustomBlackButton extends StatelessWidget {
       ),
       onPressed: isLoading ? null : onPressed,
       child: isLoading
-          ? const CircularProgressIndicator(color: Colors.white)
+          ? CircularProgressIndicator(color: Colors.white)
           : Text(
               buttonText.tr,
               style: AppTextStyles.language.copyWith(

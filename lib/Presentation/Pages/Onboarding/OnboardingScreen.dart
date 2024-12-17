@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:order_application/App/Color/Color.dart';
 import 'package:order_application/App/Styles/AppTextStyles.dart';
-import 'package:order_application/Presentation/Widgets/OrangeButtonWidget.dart';
+import 'package:order_application/Presentation/Widgets/CircularOrangeButton.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreen extends StatefulWidget {
