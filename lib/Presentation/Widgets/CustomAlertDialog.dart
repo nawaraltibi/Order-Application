@@ -7,6 +7,8 @@ import 'package:order_application/Presentation/Widgets/CustomOrangeButton.dart';
 class CustomAlertDialog extends StatelessWidget {
   final String title;
   final String message;
+  final String confirmText;
+  final String cancelText;
   final VoidCallback onConfirm;
   final VoidCallback onCancel;
 
@@ -14,6 +16,8 @@ class CustomAlertDialog extends StatelessWidget {
     Key? key,
     required this.title,
     required this.message,
+    required this.confirmText,
+    required this.cancelText,
     required this.onConfirm,
     required this.onCancel,
   }) : super(key: key);
@@ -23,24 +27,24 @@ class CustomAlertDialog extends StatelessWidget {
     return AlertDialog(
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24.w), // Rounded corners
+        borderRadius: BorderRadius.circular(24.w),
       ),
       content: Text(
-        textAlign: TextAlign.center,
         message,
+        textAlign: TextAlign.center,
         style: AppTextStyles.language
             .copyWith(fontSize: 17.sp, fontWeight: FontWeight.w500),
       ),
       actions: [
-        CustomOrangebButton(buttonText: 'Logout', onPressed: () {}),
-        SizedBox(
-          height: 16.h,
+        CustomOrangebButton(
+          buttonText: confirmText,
+          onPressed: onConfirm,
         ),
+        SizedBox(height: 16.h),
         CustomBlackButton(
-            buttonText: 'Cancel',
-            onPressed: () {
-              Navigator.pop(context);
-            })
+          buttonText: cancelText,
+          onPressed: onCancel,
+        ),
       ],
     );
   }

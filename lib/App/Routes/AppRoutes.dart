@@ -20,7 +20,7 @@ class AppRoutes {
     GetPage(name: '/FillData', page: () => FillDataScreen()),
     GetPage(name: '/DashboardPage', page: () => DashboardPage(), binding: DashboardBinding(),),
     GetPage(name: '/EditInformation', page: () => EditInformationScreen()),
-    GetPage(name: '/Language', page: () => Languagescreen()),
+    GetPage(name: '/Language', page: () => LanguageScreen()),
     GetPage(name: '/About', page: () => AboutScreen()),
   ];
 }

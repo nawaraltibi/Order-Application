@@ -19,8 +19,7 @@ class FillDataScreen extends StatelessWidget {
           // Content of the screen
           Padding(
             padding: EdgeInsets.fromLTRB(18.0.w, 0, 18.0.w, 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: ListView(
               children: [
                 Center(
                   child: ProfileImagePicker(),

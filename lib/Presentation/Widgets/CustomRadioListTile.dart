@@ -5,12 +5,12 @@ import 'package:order_application/App/Color/Color.dart';
 import 'package:order_application/App/Styles/AppTextStyles.dart';
 
 class CustomRadioListTile extends StatefulWidget {
-  final List<dynamic> titles; // List of titles
-  final Function(dynamic) onSelected; // Callback function
+  final List<Map<String, String>> list;
+  final Function(Map<String, String>) onSelected;
 
   const CustomRadioListTile({
     super.key,
-    required this.titles,
+    required this.list,
     required this.onSelected,
   });
 
@@ -19,16 +19,21 @@ class CustomRadioListTile extends StatefulWidget {
 }
 
 class _CustomRadioListTileState extends State<CustomRadioListTile> {
-  dynamic selectedTitle; // Tracks the selected title
+  Map<String, String>? selectedTitle;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: widget.titles.length,
+      itemCount: widget.list.length,
       itemBuilder: (context, index) {
-        dynamic title = widget.titles[index];
+        Map<String, String> title = widget.list[index];
         bool isSelected = selectedTitle == title;
 
         return Container(
@@ -43,11 +48,12 @@ class _CustomRadioListTileState extends State<CustomRadioListTile> {
               color: Colors.white,
               child: ListTile(
                 title: Text(
-                  '$title'.tr,
+                  title['title']!.tr,
                   style: AppTextStyles.language.copyWith(
-                      fontSize: 18.sp,
-                      color: const Color(0xFF8E8EA9),
-                      fontWeight: FontWeight.w600),
+                    fontSize: 18.sp,
+                    color: const Color(0xFF8E8EA9),
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 leading: Container(
                   width: 22.w,
@@ -63,9 +69,9 @@ class _CustomRadioListTileState extends State<CustomRadioListTile> {
                 ),
                 onTap: () {
                   setState(() {
-                    selectedTitle = title; // Update selected value
+                    selectedTitle = title;
                   });
-                  widget.onSelected(title); // Call the callback function
+                  widget.onSelected(title);
                 },
               ),
             ),

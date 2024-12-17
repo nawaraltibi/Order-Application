@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:order_application/Presentation/Widgets/CustomAppBar.dart';
 import 'package:order_application/Presentation/Widgets/CustomBlackButton.dart';
 import 'package:order_application/Presentation/Widgets/SectionTitle.dart';
@@ -10,12 +11,12 @@ class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'About'),
+      appBar: CustomAppBar(title: 'about'.tr),
       body: Padding(
         padding: EdgeInsets.only(right: 23.w,left: 23.w,bottom: 35.h),
         child: Column(
           children: [
-            const Align(alignment: AlignmentDirectional.centerStart,child: SectionTitle(text: 'About us:'),),
+            Align(alignment: AlignmentDirectional.centerStart,child: SectionTitle(text: 'about'.tr),),
             Expanded(
               child: ListView(
                 children: const [
@@ -23,7 +24,7 @@ class AboutScreen extends StatelessWidget {
                 ],
               ),
             ),
-            CustomBlackButton(buttonText: 'Ok', onPressed: (){Navigator.pop(context);})
+            CustomBlackButton(buttonText: 'oK'.tr, onPressed: (){Navigator.pop(context);})
           ],
         ),
       ),

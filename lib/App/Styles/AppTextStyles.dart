@@ -3,9 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 
 class AppTextStyles {
-
-  static TextStyle language = Get.locale?.languageCode == 'ar'
-      ? GoogleFonts.almarai()
-      : GoogleFonts.mulish();
-
+  static TextStyle get language {
+    return Get.locale?.languageCode == 'ar'
+        ? GoogleFonts.almarai()
+        : GoogleFonts.mulish();
+  }
 }

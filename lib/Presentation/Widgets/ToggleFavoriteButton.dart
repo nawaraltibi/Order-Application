@@ -4,11 +4,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class ToggleFavoriteButton extends StatefulWidget {
   final Function(bool) onChanged;
+  final double height;
+  final double width;
   final bool isFavorite;
 
   const ToggleFavoriteButton({
     Key? key,
     required this.onChanged,
+    required this.height,
+    required this.width,
     this.isFavorite = false,
   }) : super(key: key);
 
@@ -35,8 +39,8 @@ class _ToggleFavoriteButtonState extends State<ToggleFavoriteButton> {
         widget.onChanged(isFavorite);
       },
       child: Container(
-        width: 25.w,
-        height: 25.h,
+        width: widget.width,
+        height: widget.height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
@@ -52,8 +56,8 @@ class _ToggleFavoriteButtonState extends State<ToggleFavoriteButton> {
           isFavorite
               ? "assets/icons/Like.svg"
               : "assets/icons/Dislike.svg",
-          width: 20.w,
-          height: 20.h,
+          width: widget.width - 5.w,
+          height: widget.height - 5.h,
         ),
       ),
     );

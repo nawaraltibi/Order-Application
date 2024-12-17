@@ -18,29 +18,25 @@ class EditInformationScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 23.w),
-        child: Column(
+        child: ListView(
           children: [
-            const ProfileImagePicker(),
+            Center(
+              child: ProfileImagePicker(),
+            ),
             SizedBox(
               height: 33.h,
             ),
-            Align(
-                alignment: Alignment.centerLeft,
-                child: SectionTitle(text: "Edit your information:".tr)),
-            SizedBox(
-              height: 17.h,
-            ),
+            SectionTitle(text: "edit information".tr),
+            SizedBox(height: 20.h),
             CustomTextField(
               controller: TextEditingController(),
-              hintText: "First name".tr,
+              hintText: "first name".tr,
               keyboardType: TextInputType.name,
             ),
-            SizedBox(
-              height: 23.h,
-            ),
+            SizedBox(height: 20.h),
             CustomTextField(
               controller: TextEditingController(),
-              hintText: "Last name".tr,
+              hintText: "last name".tr,
               keyboardType: TextInputType.name,
             ),
             Expanded(

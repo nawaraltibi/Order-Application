@@ -139,6 +139,8 @@ class ProductCard extends StatelessWidget {
             children: [
               ToggleFavoriteButton(
                 onChanged: (bool) {},
+                height: 22.h,
+                width: 22.w,
               ),
               SizedBox(height: 19.h),
               InkWell(

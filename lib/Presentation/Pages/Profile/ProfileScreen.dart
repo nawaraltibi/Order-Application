@@ -11,14 +11,24 @@ import 'package:order_application/Presentation/Widgets/CustomAppBar.dart';
 
 class ProfileScreen extends GetView<ProfileController> {
   final List<Map> list = [
-    {'icon': 'assets/icons/Notification.svg', 'text': 'Notification'},
-    {'icon': 'assets/icons/Address.svg', 'text': 'Addresses'},
-    {'icon': 'assets/icons/Payment.svg', 'text': 'Payment methods'},
-    {'icon': 'assets/icons/Favorite.svg', 'text': 'My favorites'},
-    {'icon': 'assets/icons/Language.svg', 'text': 'Language'},
-    {'icon': 'assets/icons/About.svg', 'text': 'About'},
-    {'icon': 'assets/icons/Logout.svg', 'text': 'Logout'},
+    {
+      'icon': 'assets/icons/Notification.svg',
+      'text': 'notification'.tr,
+      'root': ''
+    },
+    {'icon': 'assets/icons/Address.svg', 'text': 'addresses'.tr, 'root': ''},
+    {'icon': 'assets/icons/Payment.svg', 'text': 'payment'.tr, 'root': ''},
+    {'icon': 'assets/icons/Favorite.svg', 'text': 'favorites'.tr, 'root': ''},
+    {
+      'icon': 'assets/icons/Language.svg',
+      'text': 'language'.tr,
+      'root': 'Language'
+    },
+    {'icon': 'assets/icons/About.svg', 'text': 'about'.tr, 'root': 'About'},
+    {'icon': 'assets/icons/Logout.svg', 'text': 'logout'.tr, 'root': 'logout'},
   ];
+
+  bool isRTL = Get.locale?.languageCode == 'ar';
 
   ProfileScreen({super.key});
 
@@ -120,49 +130,53 @@ class ProfileScreen extends GetView<ProfileController> {
                   return InkWell(
                     borderRadius: BorderRadius.circular(20),
                     onTap: () {
-                      if (list[index]['text'] != 'Logout') {
-                        Get.toNamed("/${list[index]['text']}");
+                      if (list[index]['root'] != 'logout') {
+                        Get.toNamed("/${list[index]['root']}");
                       } else {
                         showDialog(
                           context: context,
                           builder: (context) {
                             return CustomAlertDialog(
-                                title: '',
-                                message:
-                                    'Are you sure you want to log out? You can come back later.',
-                                onConfirm: () {},
-                                onCancel: () {});
+                              title: '',
+                              message: 'are you sure you want to log out?'.tr,
+                              onConfirm: () {},
+                              onCancel: () {},
+                              confirmText: 'logout'.tr,
+                              cancelText: 'cancel'.tr,
+                            );
                           },
                         );
                       }
                     },
-                    child: Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 10, right: 10, top: 11, bottom: 10),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(
-                              list[index]['icon'],
-                              width: 26.w,
-                              height: 26.h,
-                            ),
-                            SizedBox(
-                              width: 12.w,
-                            ),
-                            Text(
-                              '${list[index]['text']}'.tr,
-                              style: AppTextStyles.language.copyWith(
-                                  fontSize: 15.sp, fontWeight: FontWeight.w500),
-                            ),
-                            const Spacer(),
-                            SvgPicture.asset(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 10, right: 10, top: 11, bottom: 10),
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(
+                            list[index]['icon'],
+                            width: 26.w,
+                            height: 26.h,
+                          ),
+                          SizedBox(
+                            width: 12.w,
+                          ),
+                          Text(
+                            '${list[index]['text']}'.tr,
+                            style: AppTextStyles.language.copyWith(
+                                fontSize: 15.sp, fontWeight: FontWeight.w500),
+                          ),
+                          const Spacer(),
+                          Transform(
+                            alignment: Alignment.center,
+                            transform: Matrix4.rotationY(isRTL ? 3.1416 : 0),
+                            child: SvgPicture.asset(
                               'assets/icons/arrow-right-card.svg',
                               width: 22.w,
                               height: 22.h,
-                            )
-                          ],
-                        ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   );
