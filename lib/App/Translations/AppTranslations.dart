@@ -96,6 +96,11 @@ class AppTranslations extends Translations {
           'products': 'البضاعة',
           'review': '(@num تقيم)',
           'need': 'احصل على احتياجاتك بسهولة',
+          'Available at:':'متوفر على:',
+          'About this item:':'تفاصيل عن المنتج:',
+          'Shopping:':'تسوق:',
+          'Price:':'السعر:',
+          'Add to cart':'إضافة إلى السلة',
         },
       };
 }

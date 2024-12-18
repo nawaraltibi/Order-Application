@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:order_application/Presentation/Controllers/Dashboard/DashboardBinding.dart';
 import 'package:order_application/Presentation/Pages/Dashboard/DashboardPage.dart';
+import 'package:order_application/Presentation/Pages/Details/ProductDetailsScreen.dart';
 import 'package:order_application/Presentation/Pages/Onboarding/OnboardingScreen.dart';
 import 'package:order_application/Presentation/Pages/Profile/AboutScreen.dart';
 import 'package:order_application/Presentation/Pages/Profile/LanguageScreen.dart';
@@ -22,5 +23,6 @@ class AppRoutes {
     GetPage(name: '/EditInformation', page: () => EditInformationScreen()),
     GetPage(name: '/Language', page: () => LanguageScreen()),
     GetPage(name: '/About', page: () => AboutScreen()),
+    GetPage(name: '/Details', page: () => ProductDetailsScreen()),
   ];
 }
