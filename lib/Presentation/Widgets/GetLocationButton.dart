@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:order_application/Presentation/Controllers/Auth/AuthController.dart';
 import 'package:order_application/Presentation/Widgets/CustomBlackButton.dart';
 
 class GetLocationButton extends StatefulWidget {
@@ -22,15 +23,9 @@ class _GetLocationButtonState extends State<GetLocationButton> {
   bool isLocationFetched = false;
   bool isLoading = false;
 
-  double? latitude;
-  double? longitude;
-
   @override
   void initState() {
     super.initState();
-
-    latitude = widget.initialLatitude;
-    longitude = widget.initialLongitude;
   }
 
   Future<void> _fetchLocation(BuildContext context) async {
@@ -42,8 +37,8 @@ class _GetLocationButtonState extends State<GetLocationButton> {
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
         setState(() {
-          latitude = null;
-          longitude = null;
+          isLocationFetched = false;
+          isLoading = false;
         });
         return;
       }
@@ -62,16 +57,16 @@ class _GetLocationButtonState extends State<GetLocationButton> {
       Position position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
 
+      // Update the latitude and longitude in the controller
+      Get.find<AuthController>().updateLocation(position.latitude, position.longitude);
+
       setState(() {
-        latitude = position.latitude;
-        longitude = position.longitude;
         isLocationFetched = true;
         isLoading = false;
       });
     } catch (e) {
       setState(() {
-        latitude = null;
-        longitude = null;
+        isLocationFetched = false;
         isLoading = false;
       });
     }

@@ -13,46 +13,47 @@ class EditInformationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: "",
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 23.w),
-        child: ListView(
-          children: [
-            Center(
-              child: ProfileImagePicker(),
+      appBar: CustomAppBar(title: '',),
+      body: Stack(
+        children: [
+          // Content of the screen
+          Padding(
+            padding: EdgeInsets.fromLTRB(18.0.w, 0, 18.0.w, 0),
+            child: ListView(
+              children: [
+                Center(
+                  child: ProfileImagePicker(),
+                ),
+                SizedBox(height: 20.h),
+                SectionTitle(
+                  text: "edit information".tr,
+                ),
+                SizedBox(height: 20.h),
+                CustomTextField(
+                  controller: TextEditingController(),
+                  hintText: "first name".tr,
+                  keyboardType: TextInputType.name,
+                ),
+                SizedBox(height: 20.h),
+                CustomTextField(
+                  controller: TextEditingController(),
+                  hintText: "last name".tr,
+                  keyboardType: TextInputType.name,
+                ),
+              ],
             ),
-            SizedBox(
-              height: 33.h,
+          ),
+          // Positioned Orange Button at the bottom
+          Positioned(
+            bottom: 40.h,
+            right: 24.w,
+            child: OrangeButtonWidget(
+              function: () {
+                Get.toNamed('/DashboardPage');
+              },
             ),
-            SectionTitle(text: "edit information".tr),
-            SizedBox(height: 20.h),
-            CustomTextField(
-              controller: TextEditingController(),
-              hintText: "first name".tr,
-              keyboardType: TextInputType.name,
-            ),
-            SizedBox(height: 20.h),
-            CustomTextField(
-              controller: TextEditingController(),
-              hintText: "last name".tr,
-              keyboardType: TextInputType.name,
-            ),
-            Expanded(
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Positioned(
-                    top: 220.h,
-                    left: 260.w,
-                    child: OrangeButtonWidget(function: () {}),
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

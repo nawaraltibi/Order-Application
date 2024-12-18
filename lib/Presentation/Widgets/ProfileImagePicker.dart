@@ -2,7 +2,9 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:order_application/App/Color/Color.dart';
+import 'package:order_application/Presentation/Controllers/Auth/AuthController.dart';
 
 class ProfileImagePicker extends StatefulWidget {
   const ProfileImagePicker({Key? key}) : super(key: key);
@@ -27,6 +29,9 @@ class _ProfileImagePickerState extends State<ProfileImagePicker> {
         setState(() {
           _image = File(_selectedFile.path!);
         });
+
+        // Update the profile image in the AuthController
+        Get.find<AuthController>().updateProfileImage(_image!);
       }
     } else {
       print('Permission denied');
@@ -69,3 +74,4 @@ class _ProfileImagePickerState extends State<ProfileImagePicker> {
     );
   }
 }
+

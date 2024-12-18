@@ -1,0 +1,37 @@
+import 'package:order_application/Data/Models/User.dart';
+import 'package:order_application/Data/providers/network/api_provider.dart';
+import 'package:order_application/Data/providers/network/apis/auth_api.dart';
+
+class AuthRepository {
+  final APIProvider _apiProvider = APIProvider.instance;
+
+  Future<Map<String, dynamic>> registerUser(User user) async {
+    final request = AuthAPI.register(user);
+    final response = await _apiProvider.request(request);
+    return response;
+  }
+
+  Future<Map<String, dynamic>> resendVerificationCode(User user) async {
+    final request = AuthAPI.resendVerificationCode(user);
+    final response = await _apiProvider.request(request);
+    return response;
+  }
+
+  Future<Map<String, dynamic>> verifyUser(User user) async {
+    final request = AuthAPI.verify(user);
+    final response = await _apiProvider.request(request);
+    return response;
+  }
+
+  Future<Map<String, dynamic>> fillUserData(User user) async {
+    final request = AuthAPI.fillStudentData(user: user);
+    final response = await _apiProvider.request(request);
+    return response;
+  }
+
+  Future<Map<String, dynamic>> logout() async {
+    final request = AuthAPI.logout();
+    final response = await _apiProvider.request(request);
+    return response;
+  }
+}
