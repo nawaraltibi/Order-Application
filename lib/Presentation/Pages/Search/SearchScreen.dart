@@ -8,6 +8,7 @@ import 'package:order_application/Presentation/Widgets/FilterWidget.dart';
 import 'package:order_application/Presentation/Widgets/MarketCard.dart';
 import 'package:order_application/Presentation/Widgets/ProductCard.dart';
 import 'package:order_application/Presentation/Widgets/SearchField.dart';
+import 'package:order_application/Presentation/Widgets/SwipeToDeleteWidget.dart';
 
 class SearchScreen extends GetView<SearchController> {
   @override
@@ -27,7 +28,11 @@ class SearchScreen extends GetView<SearchController> {
               SizedBox(height: 25.h,),
               ProductCard(imageType: true, productImage: 'assets/images/mobile.jpg', productName: 'Samsung Galaxy A35', rating: 4.9, reviews: 120, price: 1700,),
               SizedBox(height: 25.h,),
-              MarketCard(imageType: true, marketImage: 'assets/images/market.jpg', marketName: 'xiaomi', rating: 2.3, reviews: 234,),
+              SwipeToDeleteWidget(
+                onSwipe: () {  },
+                child:               MarketCard(imageType: true, marketImage: 'assets/images/market.jpg', marketName: 'xiaomi', rating: 2.3, reviews: 234,),
+
+              ),
             ],
           )
       ),
