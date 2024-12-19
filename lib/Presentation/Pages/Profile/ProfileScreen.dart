@@ -103,17 +103,48 @@ class ProfileScreen extends GetView<ProfileController> {
               SizedBox(
                 height: 20.h,
               ),
-              SvgPicture.asset(
-                'assets/images/Profile Experience.svg',
-                height: 100.h,
+              Container(
                 width: 323.w,
+                height: 80.h,
+                decoration: BoxDecoration(
+                  color: AppColors.dark,
+                  borderRadius: BorderRadius.circular(16.w),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding:  EdgeInsets.only(bottom: 25.h),
+                      child: Text(
+                        "experience".tr,
+                        style: AppTextStyles.language.copyWith(
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white
+                        )
+                      ),
+                    ),
+                    SizedBox(width: 30.w,),
+                    Transform(
+                      alignment: Alignment.center,
+                      transform: Matrix4.rotationY(isRTL ? 3.1416 : 0),
+                      child: ClipRRect(
+                        child: SvgPicture.asset(
+                          'assets/images/Profile Experience.svg',
+                        ),
+                        borderRadius: BorderRadius.only(bottomRight: Radius.circular(16.w)),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(
                 height: 18.h,
               ),
               Padding(
                 padding: EdgeInsets.only(left: 8.w),
-                child: Text("General".tr,
+                child: Text("general".tr,
                     style: AppTextStyles.language.copyWith(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w600,

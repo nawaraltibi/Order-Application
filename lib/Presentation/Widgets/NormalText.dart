@@ -21,7 +21,8 @@ class NormalText extends StatelessWidget {
       style: AppTextStyles.language.copyWith(
           fontWeight: FontWeight.w500,
           fontSize: size.sp,
-          color: AppColors.dark),
+          color: AppColors.dark,
+      ),
     );
   }
 }

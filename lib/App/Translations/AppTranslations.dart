@@ -53,6 +53,7 @@ class AppTranslations extends Translations {
           'need': 'Get your needs seamlessly',
         },
         'ar_SA': {
+          'general': 'عام',
           'discover local stores and products':
               'اكتشف المتاجر والمنتجات المحلية في متناول يدك!',
           'fast and reliable delivery': 'توصيل سريع وموثوق إلى عتبة داركم',
@@ -72,7 +73,7 @@ class AppTranslations extends Translations {
           'Search': 'بحث',
           'Orders': 'الطلبات',
           'Profile': 'الحساب',
-          'experience': 'تخصيص تجربتك',
+          'experience': 'قم بتخصيص تجربتك بسهولة',
           'notification': 'إشعار',
           'addresses': 'العناوين',
           'payment': 'طرق الدفع',
