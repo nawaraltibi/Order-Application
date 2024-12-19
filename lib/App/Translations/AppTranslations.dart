@@ -51,6 +51,7 @@ class AppTranslations extends Translations {
           'products': 'Products',
           'review': '(@num review)',
           'need': 'Get your needs seamlessly',
+          'payment_cards':'Your payment cards:'
         },
         'ar_SA': {
           'general': 'عام',
@@ -102,6 +103,7 @@ class AppTranslations extends Translations {
           'Shopping:':'تسوق:',
           'Price:':'السعر:',
           'Add to cart':'إضافة إلى السلة',
+          'payment_cards':'بطاقاتك:',
         },
       };
 }
