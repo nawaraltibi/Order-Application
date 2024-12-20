@@ -104,6 +104,10 @@ class AppTranslations extends Translations {
           'Price:':'السعر:',
           'Add to cart':'إضافة إلى السلة',
           'payment_cards':'بطاقاتك:',
+          'Card number':'رقم البطاقة',
+          'Name on card':'الاسم على البطاقة',
+          'Expiry date':'تاريخ الصلاحية',
+          'Register':'اضافة'
         },
       };
 }

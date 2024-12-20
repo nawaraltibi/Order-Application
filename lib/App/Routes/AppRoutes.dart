@@ -3,6 +3,7 @@ import 'package:order_application/Presentation/Controllers/Dashboard/DashboardBi
 import 'package:order_application/Presentation/Pages/Dashboard/DashboardPage.dart';
 import 'package:order_application/Presentation/Pages/Details/ProductDetailsScreen.dart';
 import 'package:order_application/Presentation/Pages/Onboarding/OnboardingScreen.dart';
+import 'package:order_application/Presentation/Pages/Payment/NewCardScreen.dart';
 import 'package:order_application/Presentation/Pages/Payment/PaymentMethodsScreen.dart';
 import 'package:order_application/Presentation/Pages/Profile/AboutScreen.dart';
 import 'package:order_application/Presentation/Pages/Profile/LanguageScreen.dart';
@@ -26,5 +27,6 @@ class AppRoutes {
     GetPage(name: '/About', page: () => AboutScreen()),
     GetPage(name: '/Details', page: () => ProductDetailsScreen()),
     GetPage(name: '/Payment', page: () => PaymentMethodsScreen()),
+    GetPage(name: '/NewCard', page: () => NewCardScreen()),
   ];
 }

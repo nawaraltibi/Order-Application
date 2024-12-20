@@ -29,7 +29,7 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
         child: ListView(
           children: [
             SectionTitle(
-              text: 'payment_cards',
+              text: 'payment_cards'.tr,
             ),
             SizedBox(height: 28.h,),
             ListView.builder(
@@ -42,7 +42,9 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
               ),
             ),
             SizedBox(height: 20.h,),
-            CustomBlackButton(buttonText: "add", onPressed: (){})
+            CustomBlackButton(buttonText: "add", onPressed: (){
+              Get.toNamed('NewCard');
+            })
           ],
         ),
       ),

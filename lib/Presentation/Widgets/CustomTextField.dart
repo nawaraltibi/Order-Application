@@ -7,7 +7,7 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final String? Function(String?)? validator; // Optional validator for validation
   final String? hintText; // Optional hint text
-  final Icon? suffixIcon; // Optional suffix icon (image or icon)
+  final Widget? suffixIcon; // Optional suffix icon (image or icon)
   final TextInputType keyboardType; // To accept different types of keyboard input
 
   // Constructor accepting the controller, optional validator, hintText, suffixIcon, and keyboardType
