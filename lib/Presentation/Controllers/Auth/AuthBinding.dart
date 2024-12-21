@@ -24,6 +24,6 @@ class AuthBinding extends Bindings {
       verifyUserUseCase: Get.find(),
       fillUserDataUseCase: Get.find(),
       logoutUseCase: Get.find(),
-    ),permanent: true);
+    ));
   }
 }

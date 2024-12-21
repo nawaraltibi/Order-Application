@@ -1,2 +1,1 @@
-const String host = "";
-//TODO
+const String host = "26.21.129.164:8000";

@@ -47,10 +47,10 @@ class EditInformationScreen extends StatelessWidget {
           Positioned(
             bottom: 40.h,
             right: 24.w,
-            child: OrangeButtonWidget(
-              function: () {
+            child: orangeButtonWidget(
+              function: () async {
                 Get.toNamed('/DashboardPage');
-              },
+              }, isLoading: false,
             ),
           ),
         ],

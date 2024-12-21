@@ -1,3 +1,4 @@
+import 'package:order_application/Data/Models/ResponseBody.dart';
 import 'package:order_application/Data/Models/User.dart';
 import 'package:order_application/Data/Repository/auth_repository.dart';
 
@@ -6,7 +7,7 @@ class FillUserDataUseCase {
 
   FillUserDataUseCase(this._repository);
 
-  Future<Map<String, dynamic>> call(User user) {
+  Future<ResponseBody> call(User user) {
     return _repository.fillUserData(user);
   }
 }

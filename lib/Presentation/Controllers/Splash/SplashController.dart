@@ -1,39 +1,28 @@
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:order_application/Presentation/Controllers/SharedPreferences/SharedPreferencesController.dart';
 
 class SplashController extends GetxController {
-  var isFirstTime = true;
+
+  // Getting instance of SharedPreferencesController
+  final SharedPreferencesController prefsController = Get.find<SharedPreferencesController>();
 
   // Function to check if the user is opening the app for the first time
-  Future<void> checkFirstTime() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+  Future<void> check() async {
 
-    // Get the value that indicates whether the user has used the app before
-    isFirstTime = prefs.getBool('isFirstTime') ?? true;
-    bool? requireData = prefs.getBool('requireData');
-    var token = prefs.getString('token');
-
-    // If it's the first use, update the value to false for the next time
-    if (!isFirstTime) {
-      await prefs.setBool('isFirstTime', false);
+    // If it's the first use, update the value to false for the next time and navigate to Onboarding
+    if (!prefsController.isFirstTime) {
+      await prefsController.saveBool('isFirstTime', false);
       Get.offAllNamed('/Onboarding');
       return;
     }
 
-    // If there is no token (user is not logged in), navigate to the login or start screen
-    if (token == null) {
-      //TODO Here, you can add Binding the AuthBinding for navigation
-      //TODO Here, you can add navigation to the login screen
+    // If the user is not logged in, navigate to the login screen
+    if (prefsController.token.isEmpty) {
+      Get.offAllNamed('/EnterNumber');
       return;
     }
 
-    // If the token exists but the user needs to complete their data, navigate to the profile setup screen
-    if (requireData == true) {
-      //TODO Here, you can add Binding the AuthBinding for navigation
-      //TODO Here, you can add navigation to the profile creation screen
-    } else {
-      //TODO Here, you can add Binding the HomeBinding for navigation
-      //TODO Here, you can add navigation to the home screen
-    }
+    // Otherwise, navigate to the home screen
+    Get.offAllNamed('/DashboardPage');
   }
 }

@@ -86,7 +86,6 @@ class _SwipeToDeleteWidgetState extends State<SwipeToDeleteWidget>
               }
               if (_dragPosition < -100 && details.velocity.pixelsPerSecond.dx.abs() < 50) {
                 widget.onSwipe();
-                print(1);
               }
               setState(() {
                 _dragPosition = 0;

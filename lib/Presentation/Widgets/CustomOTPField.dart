@@ -59,7 +59,6 @@ class CustomOTPFieldState extends State<CustomOTPField> {
       backgroundColor: Colors.transparent,
       enableActiveFill: true,
       onChanged: (value) {
-        print(value);
       },
       onCompleted: (value) {
         setState(() {

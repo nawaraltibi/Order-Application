@@ -6,7 +6,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SplashController splashController = Get.find();
-    splashController.checkFirstTime();
+    splashController.check();
 
     return Scaffold(
       body: Center(

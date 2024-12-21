@@ -5,12 +5,15 @@ import 'package:order_application/Presentation/Widgets/CustomAppBar.dart';
 import 'package:order_application/Presentation/Widgets/CustomOTPField.dart';
 import 'package:order_application/Presentation/Widgets/DescriptionText.dart';
 import 'package:order_application/Presentation/Widgets/CircularOrangeButton.dart';
+import 'package:order_application/Presentation/Widgets/ResendCodeWidget.dart';
+import 'package:order_application/Presentation/Controllers/Auth/AuthController.dart';
 import 'package:order_application/Presentation/Widgets/WelcomeText.dart';
 
 // Main widget for entering OTP
-class VerificationScreen extends StatelessWidget {
+class VerificationScreen extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
+    controller.otpController = TextEditingController();
     return Scaffold(
       appBar: CustomAppBar(title: ''),
       body: Stack(
@@ -29,8 +32,12 @@ class VerificationScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 50.h),
                 CustomOTPField(
-                  controller: TextEditingController(),
+                  controller: controller.otpController,
                   keyboard: TextInputType.number,
+                ),
+                SizedBox(height: 20.h),
+                ResendCodeWidget(
+                  authController: controller,
                 ),
               ],
             ),
@@ -39,12 +46,15 @@ class VerificationScreen extends StatelessWidget {
           Positioned(
             bottom: 40.h,
             right: 24.w,
-            child: OrangeButtonWidget(
-              function: () {
-                Get.toNamed("/FillData");
-              },
+            child: Obx(
+              () => orangeButtonWidget(
+                function: () async {
+                  controller.verify();
+                },
+                isLoading: controller.loadingMap['verify']!.value,
+              ),
             ),
-          ),
+          )
         ],
       ),
     );

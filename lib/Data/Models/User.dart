@@ -5,6 +5,7 @@ import 'package:order_application/Data/Models/Location.dart';
 class User {
   String? phone;
   String? otp;
+  String? name;
   String? firstName;
   String? lastName;
   File? image;
@@ -19,7 +20,13 @@ class User {
     required this.lastName,
     required this.image,
     this.locations = const [],
-  });
+  }){
+    name = setName();
+  }
+
+  String setName(){
+    return "$firstName $lastName";
+  }
 
   Map<String, dynamic> toJson() {
     return {

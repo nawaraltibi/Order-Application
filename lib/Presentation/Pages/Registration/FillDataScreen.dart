@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:order_application/Presentation/Controllers/Auth/AuthController.dart';
 import 'package:order_application/Presentation/Widgets/CustomAppBar.dart';
 import 'package:order_application/Presentation/Widgets/CustomTextField.dart';
 import 'package:order_application/Presentation/Widgets/GetLocationButton.dart';
@@ -9,11 +10,13 @@ import 'package:order_application/Presentation/Widgets/ProfileImagePicker.dart';
 import 'package:order_application/Presentation/Widgets/SectionTitle.dart';
 
 // Main widget for fill data
-class FillDataScreen extends StatelessWidget {
+class FillDataScreen extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: '',),
+      appBar: CustomAppBar(
+        title: '',
+      ),
       body: Stack(
         children: [
           // Content of the screen
@@ -30,13 +33,13 @@ class FillDataScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 20.h),
                 CustomTextField(
-                    controller: TextEditingController(),
-                    hintText: "first name".tr,
-                    keyboardType: TextInputType.name,
+                  controller: controller.firstNameController,
+                  hintText: "first name".tr,
+                  keyboardType: TextInputType.name,
                 ),
                 SizedBox(height: 20.h),
                 CustomTextField(
-                  controller: TextEditingController(),
+                  controller: controller.lastNameController,
                   hintText: "last name".tr,
                   keyboardType: TextInputType.name,
                 ),
@@ -46,7 +49,7 @@ class FillDataScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 20.h),
                 CustomTextField(
-                  controller: TextEditingController(),
+                  controller: controller.addressController,
                   hintText: "location name".tr,
                   keyboardType: TextInputType.name,
                 ),
@@ -59,11 +62,12 @@ class FillDataScreen extends StatelessWidget {
           Positioned(
             bottom: 40.h,
             right: 24.w,
-            child: OrangeButtonWidget(
-              function: () {
-                Get.toNamed('/DashboardPage');
-              },
-            ),
+            child: Obx(() => orangeButtonWidget(
+                  function: () async {
+                    controller.fillUserData();
+                  },
+                  isLoading: controller.loadingMap['fill_data']!.value,
+                )),
           ),
         ],
       ),

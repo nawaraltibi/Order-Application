@@ -51,7 +51,11 @@ class AppTranslations extends Translations {
           'products': 'Products',
           'review': '(@num review)',
           'need': 'Get your needs seamlessly',
-          'payment_cards':'Your payment cards:'
+          'payment_cards': 'Your payment cards:',
+          'didnt_receive_code': 'Didn’t receive code? ',
+          'resend_code_in': 'Resend code in: ',
+          'processing': 'Processing...',
+          'resend': 'Resend',
         },
         'ar_SA': {
           'general': 'عام',
@@ -98,16 +102,16 @@ class AppTranslations extends Translations {
           'products': 'البضاعة',
           'review': '(@num تقيم)',
           'need': 'احصل على احتياجاتك بسهولة',
-          'Available at:':'متوفر على:',
-          'About this item:':'تفاصيل عن المنتج:',
-          'Shopping:':'تسوق:',
-          'Price:':'السعر:',
-          'Add to cart':'إضافة إلى السلة',
-          'payment_cards':'بطاقاتك:',
-          'Card number':'رقم البطاقة',
-          'Name on card':'الاسم على البطاقة',
-          'Expiry date':'تاريخ الصلاحية',
-          'Register':'اضافة'
+          'Available at:': 'متوفر على:',
+          'About this item:': 'تفاصيل عن المنتج:',
+          'Shopping:': 'تسوق:',
+          'Price:': 'السعر:',
+          'Add to cart': 'إضافة إلى السلة',
+          'payment_cards': 'بطاقاتك:',
+          'Card number': 'رقم البطاقة',
+          'Name on card': 'الاسم على البطاقة',
+          'Expiry date': 'تاريخ الصلاحية',
+          'Register': 'اضافة'
         },
       };
 }

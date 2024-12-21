@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'dart:io';
 import 'package:order_application/Data/Models/User.dart';
 import 'package:order_application/Data/providers/network/api_endpoint.dart';
 import 'package:order_application/Data/providers/network/api_provider.dart';
@@ -51,33 +49,32 @@ class AuthAPI implements APIRequestRepresentable {
   String get path {
     switch (action) {
       case AuthAction.register:
-        return "/register";
       case AuthAction.resendVerificationCode:
-        return "/resendVerificationCode";
+        return "/otp-request";
       case AuthAction.verify:
-        return "/verify";
+        return "/otp-check";
       case AuthAction.fillStudentData:
-        return "/students/fillStudentData";
+        return "/register";
       case AuthAction.logout:
         return "/logout";
     }
   }
 
   @override
-  HTTPMethod get method {
-    return HTTPMethod.post;
-  }
+  HTTPMethod get method => HTTPMethod.post;
 
   @override
   Map<String, String> get headers {
     final headers = {
-      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Content-Type': action == AuthAction.fillStudentData
+          ? 'multipart/form-data'
+          : 'application/json',
     };
 
-    if (action == AuthAction.logout) {
-      headers['Accept'] = 'application/json';
+    if (action == AuthAction.logout && token != null) {
+      headers['Authorization'] = 'Bearer $token';
     }
-
     return headers;
   }
 
@@ -89,27 +86,19 @@ class AuthAPI implements APIRequestRepresentable {
     switch (action) {
       case AuthAction.register:
       case AuthAction.resendVerificationCode:
-        return {
-          'phone_number': user?.phone,
-        };
+        return {'phone': user?.phone};
       case AuthAction.verify:
-        return {
-          'phone_number': user?.phone,
-          'verification_code': user?.otp,
-        };
+        return {'phone': user?.phone, 'otp': user?.otp};
       case AuthAction.fillStudentData:
-        return {
-          'first_name': user?.firstName,
-          'last_name': user?.lastName,
-          'image': user != null ? base64Encode(user!.image!.readAsBytesSync()) : null,
-          'locations': user?.locations!.map((location) => location.toJson()).toList(),
-        };
       case AuthAction.logout:
-        return null; // No body needed for logout
+        return null;
     }
   }
 
-  Future request() {
+  Future<dynamic> request() async {
+    if (action == AuthAction.fillStudentData) {
+      return APIProvider.instance.handleMultipartRequest(this);
+    }
     return APIProvider.instance.request(this);
   }
 

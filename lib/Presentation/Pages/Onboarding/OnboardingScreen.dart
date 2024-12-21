@@ -50,7 +50,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     Get.toNamed("/EnterNumber");
   }
 
-  void _nextPage() {
+  Future<void> _nextPage() async {
     if (_currentPage < pages.length - 1) {
       _pageController.nextPage(
         duration: Duration(milliseconds: 500),
@@ -136,7 +136,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         Positioned(
           left: 270.w,
           top: 670.h,
-          child: OrangeButtonWidget(function: _nextPage),
+          child: orangeButtonWidget(function: _nextPage, isLoading: false),
         ),
         Positioned(
             left: 40.w,

@@ -5,6 +5,7 @@ import 'package:order_application/App/Routes/AppRoutes.dart';
 import 'package:order_application/App/Theme/Theme.dart';
 import 'package:order_application/App/Translations/AppTranslations.dart';
 import 'package:order_application/Presentation/Controllers/Language/LanguageController.dart';
+import 'package:order_application/Presentation/Controllers/SharedPreferences/SharedPreferencesController.dart';
 import 'package:order_application/Presentation/Controllers/Splash/SplashBindings.dart';
 import 'package:order_application/Presentation/Pages/Splash/SplashScreen.dart';
 
@@ -12,6 +13,7 @@ import 'Presentation/Pages/Onboarding/OnboardingScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Get.put(SharedPreferencesController());
   final LanguageController languageController = Get.put(LanguageController());
   await languageController.loadLanguage();
   runApp(MyApp());
