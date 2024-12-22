@@ -56,6 +56,8 @@ class AppTranslations extends Translations {
           'resend_code_in': 'Resend code in: ',
           'processing': 'Processing...',
           'resend': 'Resend',
+          'your_addresses':'Your addresses:',
+          'location_name':'Location Name'
         },
         'ar_SA': {
           'general': 'عام',
@@ -111,7 +113,9 @@ class AppTranslations extends Translations {
           'Card number': 'رقم البطاقة',
           'Name on card': 'الاسم على البطاقة',
           'Expiry date': 'تاريخ الصلاحية',
-          'Register': 'اضافة'
+          'Register': 'اضافة',
+          'your_addresses':'عناوينك:',
+          'location_name':'اسم الموقع'
         },
       };
 }

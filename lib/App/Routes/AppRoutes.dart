@@ -4,9 +4,9 @@ import 'package:order_application/Presentation/Controllers/Dashboard/DashboardBi
 import 'package:order_application/Presentation/Pages/Dashboard/DashboardPage.dart';
 import 'package:order_application/Presentation/Pages/Details/ProductDetailsScreen.dart';
 import 'package:order_application/Presentation/Pages/Onboarding/OnboardingScreen.dart';
-import 'package:order_application/Presentation/Pages/Payment/NewCardScreen.dart';
-import 'package:order_application/Presentation/Pages/Payment/PaymentMethodsScreen.dart';
 import 'package:order_application/Presentation/Pages/Profile/AboutScreen.dart';
+import 'package:order_application/Presentation/Pages/Profile/Addresses/AddAddressScreen.dart';
+import 'package:order_application/Presentation/Pages/Profile/Addresses/AddressesScreen.dart';
 import 'package:order_application/Presentation/Pages/Profile/LanguageScreen.dart';
 import 'package:order_application/Presentation/Pages/Registration/EnterPhoneNumberScreen.dart';
 import 'package:order_application/Presentation/Pages/Registration/FillDataScreen.dart';
@@ -14,6 +14,8 @@ import 'package:order_application/Presentation/Pages/Registration/VerificationSc
 import 'package:order_application/Presentation/Pages/Splash/SplashScreen.dart';
 
 import '../../Presentation/Pages/Profile/EditInformationScreen.dart';
+import '../../Presentation/Pages/Profile/Payment/NewCardScreen.dart';
+import '../../Presentation/Pages/Profile/Payment/PaymentMethodsScreen.dart';
 
 class AppRoutes {
   static final routes = [
@@ -29,5 +31,7 @@ class AppRoutes {
     GetPage(name: '/Details', page: () => ProductDetailsScreen()),
     GetPage(name: '/Payment', page: () => PaymentMethodsScreen()),
     GetPage(name: '/NewCard', page: () => NewCardScreen()),
+    GetPage(name: '/Addresses', page: () => AddressesScreen()),
+    GetPage(name: '/AddAddress', page: () => AddAddressScreen()),
   ];
 }

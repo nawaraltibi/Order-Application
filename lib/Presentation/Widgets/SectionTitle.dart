@@ -13,7 +13,7 @@ class SectionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      text.tr,
+      text,
       style: AppTextStyles.language.copyWith(
         fontSize: 20.sp,
         color: Color(0xff32324D),

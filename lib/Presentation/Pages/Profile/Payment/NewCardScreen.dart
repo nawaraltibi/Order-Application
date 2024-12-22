@@ -6,7 +6,7 @@ import 'package:order_application/App/Styles/AppTextStyles.dart';
 import 'package:order_application/Presentation/Widgets/CustomBlackButton.dart';
 import 'package:order_application/Presentation/Widgets/CustomTextField.dart';
 
-import '../../Widgets/CustomAppBar.dart';
+import '../../../Widgets/CustomAppBar.dart';
 
 class NewCardScreen extends StatefulWidget {
   const NewCardScreen({super.key});

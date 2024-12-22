@@ -16,7 +16,7 @@ class ProfileScreen extends GetView<ProfileController> {
       'text': 'notification'.tr,
       'root': ''
     },
-    {'icon': 'assets/icons/Address.svg', 'text': 'addresses'.tr, 'root': ''},
+    {'icon': 'assets/icons/Address.svg', 'text': 'addresses'.tr, 'root': 'Addresses'},
     {'icon': 'assets/icons/Payment.svg', 'text': 'payment'.tr, 'root': 'Payment'},
     {'icon': 'assets/icons/Favorite.svg', 'text': 'favorites'.tr, 'root': ''},
     {
