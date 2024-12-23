@@ -8,6 +8,7 @@ import 'package:order_application/Presentation/Pages/Profile/AboutScreen.dart';
 import 'package:order_application/Presentation/Pages/Profile/Addresses/AddAddressScreen.dart';
 import 'package:order_application/Presentation/Pages/Profile/Addresses/AddressesScreen.dart';
 import 'package:order_application/Presentation/Pages/Profile/LanguageScreen.dart';
+import 'package:order_application/Presentation/Pages/Profile/MyFavoritesScreen.dart';
 import 'package:order_application/Presentation/Pages/Registration/EnterPhoneNumberScreen.dart';
 import 'package:order_application/Presentation/Pages/Registration/FillDataScreen.dart';
 import 'package:order_application/Presentation/Pages/Registration/VerificationScreen.dart';
@@ -33,5 +34,6 @@ class AppRoutes {
     GetPage(name: '/NewCard', page: () => NewCardScreen()),
     GetPage(name: '/Addresses', page: () => AddressesScreen()),
     GetPage(name: '/AddAddress', page: () => AddAddressScreen()),
+    GetPage(name: '/Favorites', page: () => MyFavoritesScreen()),
   ];
 }

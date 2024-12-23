@@ -102,7 +102,7 @@ class AppTranslations extends Translations {
           'all': 'الكل ',
           'markets': 'المتاجر',
           'products': 'البضاعة',
-          'review': '(@num تقيم)',
+          'review': '(@num تقييم)',
           'need': 'احصل على احتياجاتك بسهولة',
           'Available at:': 'متوفر على:',
           'About this item:': 'تفاصيل عن المنتج:',
@@ -115,7 +115,9 @@ class AppTranslations extends Translations {
           'Expiry date': 'تاريخ الصلاحية',
           'Register': 'اضافة',
           'your_addresses':'عناوينك:',
-          'location_name':'اسم الموقع'
+          'location_name':'اسم الموقع',
+          'For your comfort':'من أجل راحتك',
+          'Get your special\nitems in one place.':'احصل على أغراضك\nالخاصة في مكان واحد.'
         },
       };
 }

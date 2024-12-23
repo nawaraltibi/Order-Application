@@ -30,13 +30,14 @@ class SearchField extends StatelessWidget {
       ),
       child: TextField(
         decoration: InputDecoration(
+          contentPadding: EdgeInsets.only(top: 14.h),
           hintText: 'Search'.tr,
           hintStyle: AppTextStyles.language.copyWith(
             fontWeight: FontWeight.w500,
             fontSize: 14.sp,
           ),
           prefixIcon: Padding(
-            padding: EdgeInsets.fromLTRB(15.w, 15.h,15.w,15.h),
+            padding: EdgeInsets.fromLTRB(15.w, 15.h,15.w,14.h),
             child: SvgPicture.asset(
               'assets/icons/Search icon filed.svg',
               width: 20.w,
@@ -44,7 +45,7 @@ class SearchField extends StatelessWidget {
             ),
           ),
           suffixIcon: Padding(
-            padding: EdgeInsets.fromLTRB(15.w, 15.h,15.w,15.h),
+            padding: EdgeInsets.fromLTRB(15.w, 15.h,15.w,12.h),
             child: GestureDetector(
               onTap: () {
                 showMenu(
