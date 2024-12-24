@@ -5,65 +5,10 @@ import 'package:get/get.dart';
 import 'package:order_application/App/Styles/AppTextStyles.dart';
 import 'package:order_application/Presentation/Widgets/CustomBlackButton.dart';
 import 'package:order_application/Presentation/Widgets/CustomTextField.dart';
-
+import 'package:order_application/Presentation/Controllers/Profile/ProfileController.dart';
 import '../../../Widgets/CustomAppBar.dart';
 
-class NewCardScreen extends StatefulWidget {
-  const NewCardScreen({super.key});
-
-  @override
-  State<NewCardScreen> createState() => _NewCardScreenState();
-}
-
-class _NewCardScreenState extends State<NewCardScreen> {
-  // Controllers for the text fields
-  final TextEditingController cardNumberController = TextEditingController();
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController expiryDateController = TextEditingController();
-
-  // Variables to hold the dynamic text
-  String cardNumber = "XXXX XXXX XXXX XXXX";
-  String cardName = "Name on card";
-  String expiryDate = "Expiry date";
-
-  @override
-  void initState() {
-    super.initState();
-
-    // Adding listeners to update the UI
-    cardNumberController.addListener(() {
-      setState(() {
-        cardNumber = cardNumberController.text.isEmpty
-            ? "XXXX XXXX XXXX XXXX"
-            : cardNumberController.text;
-      });
-    });
-
-    nameController.addListener(() {
-      setState(() {
-        cardName = nameController.text.isEmpty
-            ? "Name on card".tr
-            : nameController.text;
-      });
-    });
-
-    expiryDateController.addListener(() {
-      setState(() {
-        expiryDate = expiryDateController.text.isEmpty
-            ? "Expiry date".tr
-            : expiryDateController.text;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    // Dispose controllers when the widget is removed
-    cardNumberController.dispose();
-    nameController.dispose();
-    expiryDateController.dispose();
-    super.dispose();
-  }
+class NewCardScreen extends GetView<ProfileController> {
 
   @override
   Widget build(BuildContext context) {
@@ -78,16 +23,12 @@ class _NewCardScreenState extends State<NewCardScreen> {
             Stack(
               children: [
                 Container(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
+                  decoration: BoxDecoration(boxShadow: [
+                    BoxShadow(
                         color: Colors.black.withOpacity(0.05),
                         spreadRadius: 2,
-                        blurRadius: 5
-                      )
-                    ],
-                    borderRadius: BorderRadius.circular(10.r)
-                  ),
+                        blurRadius: 5)
+                  ], borderRadius: BorderRadius.circular(10.r)),
                   child: SvgPicture.asset(
                     'assets/icons/big-card.svg',
                     height: 210.h,
@@ -97,37 +38,39 @@ class _NewCardScreenState extends State<NewCardScreen> {
                 Align(
                   alignment: Alignment.center,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 90.h), // Add padding if needed
-                    child: FittedBox(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 10.w,
+                        vertical: 90.h), // Add padding if needed
+                    child: Obx(() => FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Text(
-                        cardNumber,
+                        controller.cardNumber.value,
                         style: AppTextStyles.language.copyWith(
                           fontWeight: FontWeight.w400,
                           fontSize: 20.sp,
                           color: Colors.white,
                         ),
-                        textAlign: TextAlign.center, // Ensure the text is centered
+                        textAlign: TextAlign.center,
                       ),
-                    ),
+                    )),
                   ),
                 ),
                 Positioned(
                   left: 39.w,
                   top: 150.h,
-                  child: buildText(cardName, 15),
+                  child: Obx(() => buildText(controller.cardName.value, 15)),
                 ),
                 Positioned(
                   left: 185.w,
                   top: 150.h,
-                  child: buildText(expiryDate, 15),
+                  child: Obx(() => buildText(controller.expiryDate.value, 15)),
                 ),
               ],
             ),
             SizedBox(height: 40.h),
             CustomTextField(
               hintText: 'Card number'.tr,
-              controller: cardNumberController,
+              controller: controller.cardNumberController,
               keyboardType: TextInputType.number,
               suffixIcon: Padding(
                 padding: EdgeInsets.symmetric(
@@ -139,12 +82,18 @@ class _NewCardScreenState extends State<NewCardScreen> {
                   height: 23.h,
                 ),
               ),
+              onChanged: (value) {
+                controller.cardNumber.value = value.isEmpty? 'XXXX XXXX XXXX XXXX': value;
+              },
             ),
             SizedBox(height: 25.h),
             CustomTextField(
               hintText: 'Name on card'.tr,
-              controller: nameController,
+              controller: controller.nameOnCardController,
               keyboardType: TextInputType.name,
+              onChanged: (value) {
+                controller.cardName.value = value.isEmpty? 'Name on card'.tr: value;
+              },
             ),
             SizedBox(height: 25.h),
             Row(
@@ -152,22 +101,31 @@ class _NewCardScreenState extends State<NewCardScreen> {
                 Expanded(
                   child: CustomTextField(
                     hintText: 'Expiry date'.tr,
-                    controller: expiryDateController,
+                    controller: controller.expiryDateController,
                     keyboardType: TextInputType.datetime,
+                    onChanged: (value) {
+                      controller.expiryDate.value = value.isEmpty? 'Expiry date'.tr: value;
+                    },
                   ),
                 ),
                 SizedBox(width: 30.w),
                 Expanded(
                   child: CustomTextField(
                     hintText: 'CVC',
-                    controller: TextEditingController(),
+                    controller: controller.cvcController,
                     keyboardType: TextInputType.number,
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 35.h,),
-            CustomBlackButton(buttonText: 'Register'.tr, onPressed: (){})
+            SizedBox(
+              height: 35.h,
+            ),
+            CustomBlackButton(
+                buttonText: 'Register'.tr,
+                onPressed: () {
+                  controller.createAnCards();
+                })
           ],
         ),
       ),

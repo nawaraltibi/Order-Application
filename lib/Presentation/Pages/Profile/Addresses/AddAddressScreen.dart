@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:order_application/Presentation/Controllers/Profile/ProfileController.dart';
 import 'package:order_application/Presentation/Widgets/CustomAppBar.dart';
 import 'package:order_application/Presentation/Widgets/CustomBlackButton.dart';
 import 'package:order_application/Presentation/Widgets/CustomTextField.dart';
 
-class AddAddressScreen extends StatelessWidget {
+class AddAddressScreen extends GetView<ProfileController> {
   const AddAddressScreen({super.key});
 
   @override

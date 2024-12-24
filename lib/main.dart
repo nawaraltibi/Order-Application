@@ -9,9 +9,8 @@ import 'package:order_application/Presentation/Controllers/Language/LanguageCont
 import 'package:order_application/Presentation/Controllers/SharedPreferences/SharedPreferencesController.dart';
 import 'package:order_application/Presentation/Controllers/Splash/SplashBindings.dart';
 import 'package:order_application/Presentation/Pages/Dashboard/DashboardPage.dart';
+import 'package:order_application/Presentation/Pages/Onboarding/OnboardingScreen.dart';
 import 'package:order_application/Presentation/Pages/Splash/SplashScreen.dart';
-
-import 'Presentation/Pages/Onboarding/OnboardingScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,10 +37,10 @@ class MyApp extends StatelessWidget {
             locale: languageController.currentLocale.value,
             fallbackLocale: const Locale('en', 'US'),
             debugShowCheckedModeBanner: false,
-            initialBinding: DashboardBinding(),
+            initialBinding: SplashBindings(),
             getPages: AppRoutes.routes,
             initialRoute: '/',
-            home: DashboardPage(),
+            home: SplashScreen(),
 
           );
         });

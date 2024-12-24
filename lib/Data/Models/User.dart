@@ -1,25 +1,32 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:order_application/Data/Models/Card.dart';
 import 'package:order_application/Data/Models/Location.dart';
 
 class User {
+  int? id;
   String? phone;
   String? otp;
   String? name;
   String? firstName;
   String? lastName;
   File? image;
+  String? imageName;
   List<Location>? locations;
+  List<Card>? cards;
 
   User.empty();
 
   User({
-    required this.phone,
-    required this.otp,
-    required this.firstName,
-    required this.lastName,
-    required this.image,
-    this.locations = const [],
+    this.id,
+    this.phone,
+    this.otp,
+    this.firstName,
+    this.lastName,
+    this.image,
+    this.imageName,
+    this.locations,
+    this.cards,
   }){
     name = setName();
   }
@@ -32,23 +39,32 @@ class User {
     return {
       'phone': phone,
       'otp': otp,
-      'firstName': firstName,
-      'lastName': lastName,
-      'image': base64Encode(image!.readAsBytesSync()),
-      'locations': locations!.map((location) => location.toJson()).toList(),
+      'first_name': firstName,
+      'last_name': lastName,
+      'profile_picture': base64Encode(image!.readAsBytesSync()),
+      'locations': locations?.map((location) => location.toJson()).toList(),
+      'cards': cards?.map((card) => card.toJson()).toList(),
     };
   }
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
+      id: (json['id']??json['user_id'])  as int,
       phone: json['phone'] as String,
-      otp: json['otp'] as String,
-      firstName: json['firstName'] as String,
-      lastName: json['lastName'] as String,
-      image: File.fromRawPath(base64Decode(json['image'] as String)),
-      locations: (json['locations'] as List<dynamic>)
+      otp: json['otp'] as String?,
+      firstName: json['first_name'] as String,
+      lastName: json['last_name'] as String,
+      imageName: json['profile_picture'] as String,
+      locations: json['locations'] != null
+          ? (json['locations'] as List<dynamic>)
           .map((locationJson) => Location.fromJson(locationJson))
-          .toList(),
+          .toList()
+          : null,
+      cards: json['cards'] != null
+          ? (json['cards'] as List<dynamic>)
+          .map((cardJson) => Card.fromJson(cardJson))
+          .toList()
+          : null,
     );
   }
 }

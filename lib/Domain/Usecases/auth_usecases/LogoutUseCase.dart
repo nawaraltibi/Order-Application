@@ -1,4 +1,3 @@
-import 'package:order_application/Data/Models/ResponseBody.dart';
 import 'package:order_application/Data/Repository/auth_repository.dart';
 
 class LogoutUseCase {
@@ -6,7 +5,7 @@ class LogoutUseCase {
 
   LogoutUseCase(this._repository);
 
-  Future<ResponseBody> call() {
+  Future<void> call() {
     return _repository.logout();
   }
 }

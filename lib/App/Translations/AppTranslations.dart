@@ -57,7 +57,12 @@ class AppTranslations extends Translations {
           'processing': 'Processing...',
           'resend': 'Resend',
           'your_addresses':'Your addresses:',
-          'location_name':'Location Name'
+          'location_name':'Location Name',
+          'please_enter_valid_phone': 'Please enter a valid phone number starting with +963',
+          'success': 'Success',
+          'failed': 'Failed',
+          'no_addresses': 'No Addresses',
+          'no_cards': 'No Cards',
         },
         'ar_SA': {
           'general': 'عام',
@@ -114,10 +119,19 @@ class AppTranslations extends Translations {
           'Name on card': 'الاسم على البطاقة',
           'Expiry date': 'تاريخ الصلاحية',
           'Register': 'اضافة',
+          'didnt_receive_code': 'ألم تستلم الرمز؟ ',
+          'resend_code_in': 'إعادة الارسال خلال ',
+          'processing': 'جاري المعالجة',
+          'resend': 'إعادة الارسال',
+          'please_enter_valid_phone': 'يرجى إدخال رقم هاتف صحيح يبدأ بـ +963',
+          'success': 'نجاح',
+          'failed': 'فشل',
           'your_addresses':'عناوينك:',
           'location_name':'اسم الموقع',
           'For your comfort':'من أجل راحتك',
-          'Get your special\nitems in one place.':'احصل على أغراضك\nالخاصة في مكان واحد.'
+          'Get your special\nitems in one place.':'احصل على أغراضك\nالخاصة في مكان واحد.',
+          'no_addresses': 'لا يوجد عناوين مسجلة',
+          'no_cards': 'لا يوجد بطاقات مسجلة',
         },
       };
 }

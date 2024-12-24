@@ -1,8 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:http_parser/http_parser.dart';
-import 'package:mime/mime.dart';
 import 'package:get/get_connect/connect.dart';
 import 'api_request_representable.dart';
 
@@ -24,56 +20,19 @@ class APIProvider {
     return _returnResponse(response);
   }
 
-  Future handleMultipartRequest(APIRequestRepresentable request) async {
-    final multipartRequest = http.MultipartRequest(
-      request.method.string,
-      Uri.parse(request.url),
-    )..headers.addAll(request.headers ?? {});
-
-    if (request.body != null && request.body is Map<String, dynamic>) {
-      final body = request.body as Map<String, dynamic>;
-      body.forEach((key, value) {
-        if (value is String) {
-          multipartRequest.fields[key] = value;
-        }
-      });
-    }
-
-    if (request.body?.files != null) {
-      for (var file in request.body!.files) {
-        final mimeType = lookupMimeType(file.path) ?? 'application/octet-stream';
-        final multipartFile = await http.MultipartFile.fromPath(
-          file.fieldName,
-          file.path,
-          contentType: MediaType.parse(mimeType),
-        );
-        multipartRequest.files.add(multipartFile);
-      }
-    }
-
-    final streamedResponse = await multipartRequest.send().timeout(requestTimeOut);
-    final response = await http.Response.fromStream(streamedResponse);
-
-    final responseBody = response.body.isNotEmpty
-        ? json.decode(response.body)
-        : {};
-    return _returnResponse(
-      Response<dynamic>(
-        statusCode: response.statusCode,
-        body: responseBody,
-        statusText: response.reasonPhrase,
-      ),
-    );
-  }
-
   dynamic _returnResponse(Response<dynamic> response) {
     if (response.statusCode == 200) {
       return response.body;
     }
-    print(response.body);
-    final errorCode = response.body['error'].toString();
+    if (response.statusCode == 201) {
+      return response.body;
+    }
+    if (response.statusCode == 204) {
+      return;
+    }
+    final errorDetails = response.body['error'].toString();
     final errorMessage = response.body['message'].toString();
-    final errorDetails = "HTTP ${response.statusCode}";
+    final errorCode = "HTTP ${response.statusCode}";
 
     switch (response.statusCode) {
       case 400:
@@ -161,7 +120,7 @@ class AppException implements Exception {
 
   @override
   String toString() {
-    return "$code: $message \n$details";
+    return "$message";
   }
 }
 

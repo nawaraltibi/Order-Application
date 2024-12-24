@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:order_application/Presentation/Controllers/Profile/ProfileController.dart';
+import 'package:order_application/Presentation/Controllers/User/UserController.dart';
 import 'package:order_application/Presentation/Widgets/CustomAppBar.dart';
 import 'package:order_application/Presentation/Widgets/CircularOrangeButton.dart';
 import 'package:order_application/Presentation/Widgets/ProfileImagePicker.dart';
 import 'package:order_application/Presentation/Widgets/SectionTitle.dart';
 import '../../Widgets/CustomTextField.dart';
 
-class EditInformationScreen extends StatelessWidget {
+class EditInformationScreen extends GetView<ProfileController> {
   const EditInformationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    controller.firstNameController =TextEditingController(text:Get.find<UserController>().user.value.firstName);
+    controller.lastNameController =TextEditingController(text:Get.find<UserController>().user.value.lastName);
+
     return Scaffold(
       appBar: CustomAppBar(title: '',),
       body: Stack(
@@ -22,7 +27,7 @@ class EditInformationScreen extends StatelessWidget {
             child: ListView(
               children: [
                 Center(
-                  child: ProfileImagePicker(),
+                  child: ProfileImagePicker(imagePath: Get.find<UserController>().user.value.imageName,),
                 ),
                 SizedBox(height: 20.h),
                 SectionTitle(
@@ -30,13 +35,13 @@ class EditInformationScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 20.h),
                 CustomTextField(
-                  controller: TextEditingController(),
+                  controller: controller.firstNameController,
                   hintText: "first name".tr,
                   keyboardType: TextInputType.name,
                 ),
                 SizedBox(height: 20.h),
                 CustomTextField(
-                  controller: TextEditingController(),
+                  controller: controller.lastNameController,
                   hintText: "last name".tr,
                   keyboardType: TextInputType.name,
                 ),
@@ -49,8 +54,8 @@ class EditInformationScreen extends StatelessWidget {
             right: 24.w,
             child: orangeButtonWidget(
               function: () async {
-                Get.toNamed('/DashboardPage');
-              }, isLoading: false,
+                controller.editUserData();
+              }, isLoading: controller.loadingMap['editUserData']!.value,
             ),
           ),
         ],

@@ -36,7 +36,7 @@ class VerificationScreen extends GetView<AuthController> {
                   keyboard: TextInputType.number,
                 ),
                 SizedBox(height: 20.h),
-                ResendCodeWidget(
+                buildResendCodeWidget(
                   authController: controller,
                 ),
               ],

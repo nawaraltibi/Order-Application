@@ -25,7 +25,7 @@ class FillDataScreen extends GetView<AuthController> {
             child: ListView(
               children: [
                 Center(
-                  child: ProfileImagePicker(),
+                  child: ProfileImagePicker(imagePath: '1734953968Screenshot 2023-12-04 210507.png',),
                 ),
                 SizedBox(height: 20.h),
                 SectionTitle(

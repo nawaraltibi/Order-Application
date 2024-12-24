@@ -3,9 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:order_application/App/Color/Color.dart';
+import 'package:order_application/App/Const/Host.dart';
 import 'package:order_application/App/Styles/AppTextStyles.dart';
 import 'package:order_application/Presentation/Controllers/Dashboard/DashboardController.dart';
 import 'package:order_application/Presentation/Controllers/Profile/ProfileController.dart';
+import 'package:order_application/Presentation/Controllers/User/UserController.dart';
 import 'package:order_application/Presentation/Widgets/CustomAlertDialog.dart';
 import 'package:order_application/Presentation/Widgets/CustomAppBar.dart';
 
@@ -16,9 +18,21 @@ class ProfileScreen extends GetView<ProfileController> {
       'text': 'notification'.tr,
       'root': ''
     },
-    {'icon': 'assets/icons/Address.svg', 'text': 'addresses'.tr, 'root': 'Addresses'},
-    {'icon': 'assets/icons/Payment.svg', 'text': 'payment'.tr, 'root': 'Payment'},
-    {'icon': 'assets/icons/Favorite.svg', 'text': 'favorites'.tr, 'root': 'Favorites'},
+    {
+      'icon': 'assets/icons/Address.svg',
+      'text': 'addresses'.tr,
+      'root': 'Addresses'
+    },
+    {
+      'icon': 'assets/icons/Payment.svg',
+      'text': 'payment'.tr,
+      'root': 'Payment'
+    },
+    {
+      'icon': 'assets/icons/Favorite.svg',
+      'text': 'favorites'.tr,
+      'root': 'Favorites'
+    },
     {
       'icon': 'assets/icons/Language.svg',
       'text': 'language'.tr,
@@ -53,36 +67,46 @@ class ProfileScreen extends GetView<ProfileController> {
                     Container(
                       width: 80.w,
                       height: 80.h,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                              image: AssetImage('assets/images/User.png'),
+                              image: NetworkImage(
+                                  'http://$host2/images/${Get.find<UserController>().user.value.imageName}'),
                               fit: BoxFit.cover)),
                     ),
                     SizedBox(
                       width: 19.w,
                     ),
-                    Column(
-                      children: [
-                        Text(
-                          "Nawar Altibi",
-                          style: AppTextStyles.language.copyWith(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16.sp,
+                    SizedBox(
+                      width: 150.w,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            Get.find<UserController>().user.value.name ??
+                                "Guest",
+                            style: AppTextStyles.language.copyWith(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16.sp,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
                           ),
-                        ),
-                        Text(
-                          "(228) 90 21 21 14",
-                          style: AppTextStyles.language.copyWith(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 11.sp,
-                            color: Colors.grey[500],
+                          Text(
+                            "(${Get.find<UserController>().user.value.phone ?? " "})",
+                            style: AppTextStyles.language.copyWith(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 11.sp,
+                              color: Colors.grey[500],
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
                           ),
-                        )
-                      ],
+                        ],
+                      ),
                     ),
                     SizedBox(
-                      width: 75.w,
+                      width: 20.w,
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -115,17 +139,16 @@ class ProfileScreen extends GetView<ProfileController> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Padding(
-                      padding:  EdgeInsets.only(bottom: 25.h),
-                      child: Text(
-                        "experience".tr,
-                        style: AppTextStyles.language.copyWith(
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white
-                        )
-                      ),
+                      padding: EdgeInsets.only(bottom: 25.h),
+                      child: Text("experience".tr,
+                          style: AppTextStyles.language.copyWith(
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white)),
                     ),
-                    SizedBox(width: 30.w,),
+                    SizedBox(
+                      width: 30.w,
+                    ),
                     Transform(
                       alignment: Alignment.center,
                       transform: Matrix4.rotationY(isRTL ? 3.1416 : 0),
@@ -133,7 +156,8 @@ class ProfileScreen extends GetView<ProfileController> {
                         child: SvgPicture.asset(
                           'assets/images/Profile Experience.svg',
                         ),
-                        borderRadius: BorderRadius.only(bottomRight: Radius.circular(16.w)),
+                        borderRadius: BorderRadius.only(
+                            bottomRight: Radius.circular(16.w)),
                       ),
                     ),
                   ],
@@ -170,8 +194,12 @@ class ProfileScreen extends GetView<ProfileController> {
                             return CustomAlertDialog(
                               title: '',
                               message: 'are you sure you want to log out?'.tr,
-                              onConfirm: () {},
-                              onCancel: () {},
+                              onConfirm: () {
+                                controller.logoutUser();
+                              },
+                              onCancel: () {
+                                Get.back();
+                              },
                               confirmText: 'logout'.tr,
                               cancelText: 'cancel'.tr,
                             );

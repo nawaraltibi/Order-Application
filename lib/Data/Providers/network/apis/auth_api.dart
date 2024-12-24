@@ -7,7 +7,6 @@ enum AuthAction {
   register,
   resendVerificationCode,
   verify,
-  fillStudentData,
   logout
 }
 
@@ -34,13 +33,8 @@ class AuthAPI implements APIRequestRepresentable {
   AuthAPI.verify(User user)
       : this._(action: AuthAction.verify, user: user);
 
-  // Constructor for the fill data action
-  AuthAPI.fillStudentData({
-    required User user,
-  }) : this._(action: AuthAction.fillStudentData, user: user);
-
   // Constructor for the logout action
-  AuthAPI.logout() : this._(action: AuthAction.logout);
+  AuthAPI.logout(String token) : this._(action: AuthAction.logout,token: token);
 
   @override
   String get endpoint => APIEndpoint.API;
@@ -53,10 +47,8 @@ class AuthAPI implements APIRequestRepresentable {
         return "/otp-request";
       case AuthAction.verify:
         return "/otp-check";
-      case AuthAction.fillStudentData:
-        return "/register";
       case AuthAction.logout:
-        return "/logout";
+        return "/user/logout";
     }
   }
 
@@ -67,9 +59,7 @@ class AuthAPI implements APIRequestRepresentable {
   Map<String, String> get headers {
     final headers = {
       'Accept': 'application/json',
-      'Content-Type': action == AuthAction.fillStudentData
-          ? 'multipart/form-data'
-          : 'application/json',
+      'Content-Type': 'application/json',
     };
 
     if (action == AuthAction.logout && token != null) {
@@ -89,16 +79,12 @@ class AuthAPI implements APIRequestRepresentable {
         return {'phone': user?.phone};
       case AuthAction.verify:
         return {'phone': user?.phone, 'otp': user?.otp};
-      case AuthAction.fillStudentData:
       case AuthAction.logout:
         return null;
     }
   }
 
   Future<dynamic> request() async {
-    if (action == AuthAction.fillStudentData) {
-      return APIProvider.instance.handleMultipartRequest(this);
-    }
     return APIProvider.instance.request(this);
   }
 

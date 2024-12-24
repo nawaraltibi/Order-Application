@@ -39,14 +39,50 @@ class AppRoutes {
       page: () => DashboardPage(),
       binding: DashboardBinding(),
     ),
+    GetPage(
+        name: '/EditInformation',
+        page: () => EditInformationScreen(),
+        binding: DashboardBinding()),
+    GetPage(
+        name: '/EnterNumber',
+        page: () => EnterNumberScreen(),
+        binding: AuthBinding()),
+    GetPage(
+      name: '/Verification',
+      page: () => VerificationScreen(),
+    ),
+    GetPage(
+      name: '/FillData',
+      page: () => FillDataScreen(),
+    ),
+    GetPage(
+      name: '/DashboardPage',
+      page: () => DashboardPage(),
+      binding: DashboardBinding(),
+    ),
     GetPage(name: '/EditInformation', page: () => EditInformationScreen()),
     GetPage(name: '/Language', page: () => LanguageScreen()),
     GetPage(name: '/About', page: () => AboutScreen()),
     GetPage(name: '/ProductDetails', page: () => ProductDetailsScreen()),
     GetPage(name: '/Payment', page: () => PaymentMethodsScreen()),
-    GetPage(name: '/NewCard', page: () => NewCardScreen()),
     GetPage(name: '/Addresses', page: () => AddressesScreen()),
     GetPage(name: '/AddAddress', page: () => AddAddressScreen()),
+    GetPage(name: '/Details', page: () => ProductDetailsScreen()),
+    GetPage(
+      name: '/Payment',
+      page: () => PaymentMethodsScreen(),
+      binding: DashboardBinding(),
+    ),
+    GetPage(
+      name: '/NewCard',
+      page: () => NewCardScreen(),
+      binding: DashboardBinding(),
+    ),
+    GetPage(
+      name: '/Addresses',
+      page: () => AddressesScreen(),
+      binding: DashboardBinding(),
+    ),
     GetPage(name: '/Favorites', page: () => MyFavoritesScreen()),
     GetPage(name: '/MarketDetails', page: () => MarketDetailsScreen()),
   ];

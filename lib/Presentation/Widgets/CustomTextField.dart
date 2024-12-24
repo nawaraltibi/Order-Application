@@ -9,8 +9,9 @@ class CustomTextField extends StatelessWidget {
   final String? hintText; // Optional hint text
   final Widget? suffixIcon; // Optional suffix icon (image or icon)
   final TextInputType keyboardType; // To accept different types of keyboard input
+  final Function(String)? onChanged; // Optional onChanged callback
 
-  // Constructor accepting the controller, optional validator, hintText, suffixIcon, and keyboardType
+  // Constructor accepting the controller, optional validator, hintText, suffixIcon, keyboardType, and onChanged
   const CustomTextField({
     super.key,
     required this.controller,
@@ -18,6 +19,7 @@ class CustomTextField extends StatelessWidget {
     this.hintText = '',
     this.suffixIcon,
     this.keyboardType = TextInputType.text,
+    this.onChanged,
   });
 
   @override
@@ -29,6 +31,7 @@ class CustomTextField extends StatelessWidget {
       controller: controller, // Set the controller to manage the input
       keyboardType: keyboardType, // Use the keyboard type passed in the constructor
       validator: validator, // Use validator if provided
+      onChanged: onChanged, // Call onChanged if provided
       decoration: InputDecoration(
         hintText: hintText, // Optional hint text
         hintStyle: AppTextStyles.language.copyWith(

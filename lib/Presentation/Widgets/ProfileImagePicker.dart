@@ -4,10 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:order_application/App/Color/Color.dart';
+import 'package:order_application/App/Const/Host.dart';
 import 'package:order_application/Presentation/Controllers/Auth/AuthController.dart';
+import 'package:order_application/Presentation/Controllers/Profile/ProfileController.dart';
 
 class ProfileImagePicker extends StatefulWidget {
-  const ProfileImagePicker({Key? key}) : super(key: key);
+  final String? imagePath;
+
+
+  const ProfileImagePicker({Key? key, this.imagePath}) : super(key: key);
 
   @override
   _ProfileImagePickerState createState() => _ProfileImagePickerState();
@@ -19,7 +24,7 @@ class _ProfileImagePickerState extends State<ProfileImagePicker> {
   Future<void> _pickImage() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: ['jpg'],
+      allowedExtensions: ['jpg', 'jpeg', 'png'],
     );
 
     if (result != null && result.files.isNotEmpty) {
@@ -30,8 +35,13 @@ class _ProfileImagePickerState extends State<ProfileImagePicker> {
           _image = File(_selectedFile.path!);
         });
 
-        // Update the profile image in the AuthController
-        Get.find<AuthController>().updateProfileImage(_image!);
+        try{
+          Get.find<AuthController>().updateProfileImage(_image!);
+        }catch(e){}
+        try{
+          Get.find<ProfileController>().updateProfileImage(_image!);
+        }catch(e){}
+
       }
     } else {
       print('Permission denied');
@@ -48,7 +58,10 @@ class _ProfileImagePickerState extends State<ProfileImagePicker> {
           backgroundColor: Colors.grey[300],
           backgroundImage: _image != null
               ? FileImage(_image!)
-              : AssetImage('assets/images/User.png') as ImageProvider,
+              : widget.imagePath != null && widget.imagePath!.isNotEmpty
+              ? NetworkImage('http://$host2/images/${widget.imagePath}')
+              : const AssetImage('assets/images/User.png')
+          as ImageProvider,
         ),
         Positioned(
           bottom: 0,
@@ -74,4 +87,3 @@ class _ProfileImagePickerState extends State<ProfileImagePicker> {
     );
   }
 }
-
