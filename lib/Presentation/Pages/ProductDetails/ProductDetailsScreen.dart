@@ -11,6 +11,7 @@ import 'package:order_application/Presentation/Widgets/SectionTitle.dart';
 import 'package:order_application/Presentation/Widgets/ToggleFavoriteButton.dart';
 
 import '../../Widgets/NormalText.dart';
+import '../../Widgets/ReviewsContainer.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({super.key});
@@ -70,32 +71,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 SizedBox(
                   width: 40.w,
                 ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 5.w),
-                  width: 75.w,
-                  height: 23.h,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20.w),
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.star,
-                        color: AppColors.primary,
-                        size: 15,
-                      ),
-                      SizedBox(
-                        width: 3.w,
-                      ),
-                      Text(
-                        '5.0(214)',
-                        style: AppTextStyles.language.copyWith(
-                            fontSize: 12.sp, fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
-                ),
+                ReviewsContainer(rating: 5.0,reviews: 214,),
               ],
             ),
           ),
@@ -228,3 +204,5 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 }
+
+

@@ -31,7 +31,7 @@ class ProductCard extends StatelessWidget {
 
     return InkWell(
       onTap: (){
-        Get.toNamed('/Details');
+        Get.toNamed('/ProductDetails');
       },
       child: Container(
         padding: EdgeInsets.all(10),

@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:order_application/Presentation/Widgets/CustomAppBar.dart';
-import 'package:order_application/Presentation/Widgets/ProductCard.dart';
+import 'package:order_application/Presentation/Widgets/RectangularProductCard.dart';
 import 'package:order_application/Presentation/Widgets/SearchField.dart';
 
 import '../../../App/Color/Color.dart';

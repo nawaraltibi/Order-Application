@@ -6,7 +6,7 @@ import 'package:order_application/Presentation/Widgets/CustomAppBar.dart';
 import 'package:order_application/Presentation/Widgets/FavoritesButton.dart';
 import 'package:order_application/Presentation/Widgets/FilterWidget.dart';
 import 'package:order_application/Presentation/Widgets/MarketCard.dart';
-import 'package:order_application/Presentation/Widgets/ProductCard.dart';
+import 'package:order_application/Presentation/Widgets/RectangularProductCard.dart';
 import 'package:order_application/Presentation/Widgets/SearchField.dart';
 import 'package:order_application/Presentation/Widgets/SwipeToDeleteWidget.dart';
 
@@ -30,7 +30,7 @@ class SearchScreen extends GetView<SearchController> {
               SizedBox(height: 25.h,),
               SwipeToDeleteWidget(
                 onSwipe: () {  },
-                child:               MarketCard(imageType: true, marketImage: 'assets/images/market.jpg', marketName: 'xiaomi', rating: 2.3, reviews: 234,),
+                child:               MarketCard(imageType: true, marketImage: 'assets/images/market.jpg', marketName: 'XIAOMI', rating: 2.3, reviews: 234,),
 
               ),
             ],
