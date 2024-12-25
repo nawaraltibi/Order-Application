@@ -78,8 +78,6 @@ class Location {
         // Extracting region and street from the response
         region = address['city'];
         street = address['road'];
-
-        print('Region: $region, Street: $street');
       } else {
         print('Failed to fetch location details. Status code: ${response.statusCode}');
       }

@@ -19,7 +19,7 @@ class HomeScreen extends GetView<HomeController> {
           children: [
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               SizedBox(
-                height: 50.h,
+                height: 60.h,
               ),
               Row(
                 children: [
@@ -59,7 +59,7 @@ class HomeScreen extends GetView<HomeController> {
                 ],
               ),
               SizedBox(
-                height: 20.h,
+                height: 30.h,
               ),
               ShoppingCartContainer(
                 isShow: true,

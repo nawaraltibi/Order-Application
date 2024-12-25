@@ -43,8 +43,8 @@ class ProfileController extends GetxController {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
 
-  double? latitude;
-  double? longitude;
+  RxDouble latitude = RxDouble(33.500694);
+  RxDouble longitude = RxDouble(36.301993);
   Rx<File?> profileImage = Rx<File?>(null);
 
   // Variables to hold the dynamic text
@@ -92,10 +92,15 @@ class ProfileController extends GetxController {
       () async {
         Location address = Location(
             name: addressNameController.text,
-            latitude: latitude!,
-            longitude: longitude!);
+            latitude: latitude.value,
+            longitude: longitude.value);
         final ResponseBody response =
             await createAnAddressUseCase.call(address);
+        final location = Location.fromJson(response.data);
+        await location.fetchLocationDetails();
+        Get.find<UserController>().user.value.locations!.add(location);
+        Get.back();
+        Get.snackbar('Success', response.message!);
       },
       loadingMap,
       'createAnAddress',
@@ -108,7 +113,11 @@ class ProfileController extends GetxController {
     await controllerHandling(
       () async {
         await deleteAnAddressUseCase.call(id);
-        Get.find<UserController>().user.value.locations?.removeWhere((location) => location.id == id);
+        Get.find<UserController>()
+            .user
+            .value
+            .locations
+            ?.removeWhere((location) => location.id == id);
       },
       loadingMap,
       'deleteAnAddress',
@@ -119,7 +128,7 @@ class ProfileController extends GetxController {
 
   Future<void> getAllAddress() async {
     await controllerHandling(
-          () async {
+      () async {
         final ResponseBody response = await getAllAddressUseCase.call();
         final locations = Location.fromJsonList(response.data);
         for (var location in locations) {
@@ -155,7 +164,11 @@ class ProfileController extends GetxController {
             expireDate: expiryDateController.text,
             cvc: int.parse(cvcController.text));
         final ResponseBody response = await createAnCardsUseCase.call(card);
-        Get.find<UserController>().user.value.cards!.add(Card.fromJson(response.data));
+        Get.find<UserController>()
+            .user
+            .value
+            .cards!
+            .add(Card.fromJson(response.data));
         Get.back();
         Get.snackbar('Success', response.message!);
       },
@@ -170,7 +183,11 @@ class ProfileController extends GetxController {
     await controllerHandling(
       () async {
         await deleteAnCardsUseCase.call(id);
-        Get.find<UserController>().user.value.cards?.removeWhere((card) => card.id == id);
+        Get.find<UserController>()
+            .user
+            .value
+            .cards
+            ?.removeWhere((card) => card.id == id);
       },
       loadingMap,
       'deleteAnCards',
@@ -183,7 +200,8 @@ class ProfileController extends GetxController {
     await controllerHandling(
       () async {
         final ResponseBody response = await getAllCardsUseCase.call();
-        Get.find<UserController>().user.value.cards = Card.fromJsonList(response.data);
+        Get.find<UserController>().user.value.cards =
+            Card.fromJsonList(response.data);
       },
       loadingMap,
       'getAllCards',
