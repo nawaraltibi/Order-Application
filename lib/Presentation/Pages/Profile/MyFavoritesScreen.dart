@@ -64,7 +64,7 @@ class _MyFavoritesScreenState extends State<MyFavoritesScreen> {
                     alignment: Alignment.center,
                     transform: Matrix4.rotationY(widget.isRTL ? 3.1416 : 0),
                     child: Image.asset(
-                      'assets/icons/badge.png',
+                      'assets/images/badge.png',
                       height: 184.h,
                       width: 138.w,
                     ),

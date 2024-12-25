@@ -49,7 +49,7 @@ class MarketDetailsScreen extends StatelessWidget {
                 height: 46.h,
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(20.r),
                 ),
                 child: Center(
                   child: Transform(
@@ -149,7 +149,8 @@ class MarketDetailsScreen extends StatelessWidget {
                         crossAxisCount: 2,
                         crossAxisSpacing: 15.w,
                         mainAxisSpacing: 15.h,
-                        childAspectRatio: 0.83),
+                        childAspectRatio: (ScreenUtil().screenWidth / 2) / (ScreenUtil().screenHeight * 0.3)
+                    ),
                     itemCount: 4,
                     itemBuilder: (context, index) {
                       return SquareProductCard(

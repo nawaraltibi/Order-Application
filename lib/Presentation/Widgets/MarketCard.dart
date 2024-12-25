@@ -49,7 +49,7 @@ class MarketCard extends StatelessWidget {
           children: [
             SizedBox(
               width: 73.w,
-              height: 90.h,
+              height: 92.h,
               child: imageType
                   ? Image.asset(
                       marketImage,

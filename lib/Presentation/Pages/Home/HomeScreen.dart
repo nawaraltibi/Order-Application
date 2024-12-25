@@ -5,6 +5,9 @@ import 'package:order_application/App/Const/Host.dart';
 import 'package:order_application/App/Styles/AppTextStyles.dart';
 import 'package:order_application/Presentation/Controllers/Home/HomeController.dart';
 import 'package:order_application/Presentation/Controllers/User/UserController.dart';
+import 'package:order_application/Presentation/Widgets/RectangularProductCard.dart';
+import 'package:order_application/Presentation/Widgets/SectionTitle.dart';
+import '../../Widgets/ShoppingCartContainer.dart';
 
 class HomeScreen extends GetView<HomeController> {
   @override
@@ -12,47 +15,84 @@ class HomeScreen extends GetView<HomeController> {
     return Scaffold(
       body: Container(
         padding: EdgeInsets.fromLTRB(18.0.w, 0, 18.0.w, 0),
-        child: Column(children: [
-          SizedBox(
-            height: 50.h,
-          ),
-          Row(
-            children: [
-              Container(
-                width: 50.w,
-                height: 50.h,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                        image: NetworkImage('http://$host2/images/${Get.find<UserController>().user.value.imageName}'),
-                        fit: BoxFit.cover)),
-              ),
+        child: ListView(
+          children: [
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               SizedBox(
-                width: 19.w,
+                height: 50.h,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
                 children: [
-                  Text(
-                    Get.find<UserController>().user.value.name?? "Guest",
-                    style: AppTextStyles.language.copyWith(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16.sp,
-                    ),
+                  Container(
+                    width: 50.w,
+                    height: 50.h,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: NetworkImage(
+                                'http://$host2/images/${Get.find<UserController>().user.value.imageName}'),
+                            fit: BoxFit.cover)),
                   ),
-                  Text(
-                    'need'.tr,
-                    style: AppTextStyles.language.copyWith(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12.sp,
-                      color: Colors.grey[500],
-                    ),
-                  )
+                  SizedBox(
+                    width: 19.w,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        Get.find<UserController>().user.value.name ?? "Guest",
+                        style: AppTextStyles.language.copyWith(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16.sp,
+                        ),
+                      ),
+                      Text(
+                        'need'.tr,
+                        style: AppTextStyles.language.copyWith(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12.sp,
+                          color: Colors.grey[500],
+                        ),
+                      )
+                    ],
+                  ),
                 ],
               ),
-            ],
-          ),
-        ]),
+              SizedBox(
+                height: 20.h,
+              ),
+              ShoppingCartContainer(
+                isShow: true,
+                price: 7500,
+              ),
+              SectionTitle(text: 'Most Requested:'.tr),
+              SizedBox(
+                height: 20.h,
+              ),
+              ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: 2,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: EdgeInsets.only(bottom: 17.h),
+                    child: ProductCard(
+                        imageType: true,
+                        productImage: 'assets/images/mobile.jpg',
+                        productName: 'Samsung Galaxy A35',
+                        rating: 4.9,
+                        reviews: 120,
+                        price: 270),
+                  );
+                },
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              SectionTitle(text: 'Most Requested:'.tr),
+            ]),
+          ],
+        ),
       ),
     );
   }

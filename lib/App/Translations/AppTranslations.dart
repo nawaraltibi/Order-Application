@@ -132,6 +132,9 @@ class AppTranslations extends Translations {
           'Get your special\nitems in one place.':'احصل على أغراضك\nالخاصة في مكان واحد.',
           'no_addresses': 'لا يوجد عناوين مسجلة',
           'no_cards': 'لا يوجد بطاقات مسجلة',
+          'Here it is':'إنها هنا',
+          'There is a shopping\ncart available for':'يوجد عربة تسوق\nمتاحة بقيمة',
+          'Most Requested:':'الأكثر طلباً:'
         },
       };
 }
