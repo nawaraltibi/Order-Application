@@ -1,42 +1,111 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:order_application/Data/Models/EmptyState.dart';
+import 'package:order_application/Data/Models/SearchType.dart';
 import 'package:order_application/Presentation/Controllers/Dashboard/DashboardController.dart';
 import 'package:order_application/Presentation/Widgets/CustomAppBar.dart';
+import 'package:order_application/Presentation/Widgets/EmptyStateWidget.dart';
 import 'package:order_application/Presentation/Widgets/FavoritesButton.dart';
 import 'package:order_application/Presentation/Widgets/FilterWidget.dart';
 import 'package:order_application/Presentation/Widgets/MarketCard.dart';
 import 'package:order_application/Presentation/Widgets/RectangularProductCard.dart';
 import 'package:order_application/Presentation/Widgets/SearchField.dart';
-import 'package:order_application/Presentation/Widgets/SwipeToDeleteWidget.dart';
+import 'package:order_application/Presentation/Controllers/Search/SearchController.dart';
 
-class SearchScreen extends GetView<SearchController> {
-  final GlobalKey _key = GlobalKey();
+class SearchScreen extends GetView<SearchFieldController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Search'.tr,controller:Get.find<DashboardController>(),trailingWidget: FavoritesButton(),),
+      appBar: CustomAppBar(
+        title: 'Search'.tr,
+        controller: Get.find<DashboardController>(),
+        trailingWidget: FavoritesButton(),
+      ),
       body: Container(
-          padding: EdgeInsets.fromLTRB(18.0.w, 0, 18.0.w, 0),
-          child: Column(
-            children: [
-              SearchField(
-                onSearchChanged: (String){},
-                onSortSelected: (String){},
-              ),
-              SizedBox(height: 25.h,),
-              FilterWidget(filters: ['all'.tr, 'markets'.tr, 'products'.tr]),
-              SizedBox(height: 25.h,),
-              RectangularProductCard(imageType: true, productImage: 'assets/images/mobile.jpg', productName: 'Samsung Galaxy A35', rating: 4.9, reviews: 120, price: 1700,),
-              SizedBox(height: 25.h,),
-              SwipeToDeleteWidget(
-                height: 108,
-                onSwipe: () {},
-                child:MarketCard(imageType: true, marketImage: 'assets/images/market.jpg', marketName: 'XIAOMI', rating: 2.3, reviews: 234,),
+        padding: EdgeInsets.fromLTRB(18.0.w, 0, 18.0.w, 0),
+        child: Column(
+          children: [
+            SearchField(
+              onSearchChanged: (searchQuery) {
+                controller.onSearchChanged(searchQuery);
+              },
+            ),
+            SizedBox(height: 25.h),
+            FilterWidget(
+              filters: const [SearchType.products, SearchType.markets],
+              onFilterChanged: (selectedFilter) {
+                controller.onFilterChanged(selectedFilter);
+              },
+            ),
+            SizedBox(height: 25.h),
+            Expanded(
+              child: Obx(() {
+                final selectedFilter = controller.selectedFilter.value;
+                final isProducts = selectedFilter == SearchType.products;
 
-              ),
-            ],
-          )
+                if (controller.searchQuery.isEmpty) {
+                  return Center(
+                      child: EmptyStateWidget(state: EmptyState.searchPrompt));
+                }
+
+                if ((isProducts && controller.products.isEmpty) ||
+                    (!isProducts && controller.markets.isEmpty)) {
+                  return Center(
+                      child: EmptyStateWidget(state: EmptyState.noResults));
+                }
+
+                final list =
+                    isProducts ? controller.products : controller.markets;
+
+                return NotificationListener<ScrollNotification>(
+                  onNotification: (scrollInfo) {
+                    if (scrollInfo.metrics.pixels ==
+                            scrollInfo.metrics.maxScrollExtent &&
+                        !(controller.loadingMap['searchProducts']?.value ??
+                            false)) {
+                      controller.getNextSearchPage();
+                    }
+                    return true;
+                  },
+                  child: ListView.separated(
+                    itemCount: list.length + 1,
+                    separatorBuilder: (_, __) => SizedBox(height: 20.h),
+                    itemBuilder: (context, index) {
+                      if (index == list.length) {
+                        return Obx(() {
+                          if (controller.meta.value?.currentPage ==
+                                  controller.meta.value?.lastPage ||
+                              !(controller
+                                      .loadingMap['searchProducts']?.value ??
+                                  false)) {
+                            return SizedBox.shrink();
+                          }
+                          return Padding(
+                            padding: EdgeInsets.symmetric(vertical: 20.h),
+                            child: Center(child: CircularProgressIndicator()),
+                          );
+                        });
+                      }
+
+                      if (isProducts) {
+                        final product = controller.products[index];
+                        return RectangularProductCard(
+                          product: product,
+                        );
+                      } else {
+                        final market = controller.markets[index];
+                        return MarketCard(
+                          market: market,
+                        );
+                      }
+                    },
+                  ),
+                );
+              }),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:order_application/App/Styles/AppTextStyles.dart';
 import 'package:order_application/Presentation/Controllers/Profile/ProfileController.dart';
 import 'package:order_application/Presentation/Controllers/User/UserController.dart';
 import 'package:order_application/Presentation/Widgets/AddressCardWidget.dart';
@@ -41,7 +42,9 @@ class AddressesScreen extends GetView<ProfileController> {
                   return Center(
                     child: Text(
                       "no_addresses".tr,
-                      style: TextStyle(fontSize: 16.sp, color: Colors.grey),
+                      style: AppTextStyles.language.copyWith(
+                          fontSize: 16.sp, color: Colors.grey
+                      ),
                     ),
                   );
                 }

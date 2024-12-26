@@ -139,7 +139,7 @@ class MarketDetailsScreen extends StatelessWidget {
                   height: 25.h,
                 ),
                 SearchField(
-                    onSearchChanged: (val) {}, onSortSelected: (val) {}),
+                    onSearchChanged: (val) {},),
                 SizedBox(
                   height: 10.h,
                 ),

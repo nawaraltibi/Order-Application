@@ -7,11 +7,9 @@ import 'package:order_application/App/Styles/AppTextStyles.dart';
 
 class SearchField extends StatelessWidget {
   final Function(String) onSearchChanged;
-  final Function(String) onSortSelected;
 
   SearchField({
     required this.onSearchChanged,
-    required this.onSortSelected,
   });
 
   @override
@@ -42,36 +40,6 @@ class SearchField extends StatelessWidget {
               'assets/icons/Search icon filed.svg',
               width: 20.w,
               height: 20.w,
-            ),
-          ),
-          suffixIcon: Padding(
-            padding: EdgeInsets.fromLTRB(15.w, 15.h,15.w,12.h),
-            child: GestureDetector(
-              onTap: () {
-                showMenu(
-                  context: context,
-                  position: RelativeRect.fromLTRB(50.w, 180.h,20.w,0.h),
-                  items: const [
-                    PopupMenuItem<String>(
-                      value: 'date',
-                      child: Text('Sort by Date'),
-                    ),
-                    PopupMenuItem<String>(
-                      value: 'patient',
-                      child: Text('Sort by Patient'),
-                    ),
-                  ],
-                ).then((value) {
-                  if (value != null) {
-                    onSortSelected(value);
-                  }
-                });
-              },
-              child: SvgPicture.asset(
-                'assets/icons/Sort.svg',
-                width: 20.w,
-                height: 20.w,
-              ),
             ),
           ),
           border: InputBorder.none,

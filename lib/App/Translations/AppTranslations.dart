@@ -64,6 +64,16 @@ class AppTranslations extends Translations {
           'no_addresses': 'No Addresses',
           'no_cards': 'No Cards',
           'attention':'Attention!',
+          'no_results': 'No results found.',
+          'search_prompt': 'Start searching for your needs.',
+          'no_location': 'No location available.',
+          'no_bank_card': 'No bank cards found.',
+          'no_favorites': 'No favorites found.',
+          'error': 'An error occurred.',
+          'no_network': 'No internet connection.',
+          'default_empty': 'No data available.',
+          'retry': 'Retry',
+
         },
         'ar_SA': {
           'general': 'عام',
@@ -150,7 +160,16 @@ class AppTranslations extends Translations {
           'Delivery':'التوصيل',
           'Total price':'السعر الكلّي',
           'Buy':'شراء',
-          'Cancel':'الغاء'
+          'Cancel':'الغاء',
+          'no_results': 'لا توجد نتائج.',
+          'search_prompt': 'ابدأ بالبحث عن احتياجاتك.',
+          'no_location': 'لا يوجد موقع.',
+          'no_bank_card': 'لا توجد بطاقات بنكية.',
+          'no_favorites': 'لا توجد مفضلات.',
+          'error': 'حدث خطأ ما.',
+          'no_network': 'لا يوجد اتصال بالإنترنت.',
+          'default_empty': 'لا توجد بيانات.',
+          'retry': 'إعادة المحاولة',
         },
       };
 }

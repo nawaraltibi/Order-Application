@@ -1,27 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:order_application/Presentation/Widgets/ToggleFavoriteButton.dart';
+import 'package:order_application/App/Const/Host.dart';
 import '../../App/Color/Color.dart';
 import '../../App/Styles/AppTextStyles.dart';
+import '../../Data/Models/Product.dart';
+import 'ToggleFavoriteButton.dart';
 
 class RectangularProductCard extends StatelessWidget {
-  final bool imageType; // false for Svg and true for others
-  final String productImage;
-  final String productName;
-  final double rating;
-  final int reviews;
-  final double price;
+  final Product product;
 
-  RectangularProductCard({
-    required this.imageType,
-    required this.productImage,
-    required this.productName,
-    required this.rating,
-    required this.reviews,
-    required this.price,
+  const RectangularProductCard({
+    required this.product,
     super.key,
   });
 
@@ -30,8 +20,8 @@ class RectangularProductCard extends StatelessWidget {
     bool isRTL = Get.locale?.languageCode == 'ar';
 
     return InkWell(
-      onTap: (){
-        Get.toNamed('/ProductDetails');
+      onTap: () {
+        Get.toNamed('/ProductDetails', arguments: product);
       },
       child: Container(
         padding: EdgeInsets.all(10),
@@ -45,39 +35,60 @@ class RectangularProductCard extends StatelessWidget {
           ],
         ),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            // Product Image with Loading Indicator
             SizedBox(
               width: 73.w,
               height: 90.h,
-              child: imageType
-                  ? Image.asset(
-                      productImage,
-                      fit: BoxFit.contain,
-                    )
-                  : SvgPicture.asset(
-                      productImage,
-                      fit: BoxFit.contain,
-                    ),
+              child: Image.network(
+                'http://$host2/images/${product.image}',
+                fit: BoxFit.contain,
+                loadingBuilder: (BuildContext context, Widget child,
+                    ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                                (loadingProgress.expectedTotalBytes ?? 1)
+                            : null,
+                        strokeWidth: 2,
+                        color: AppColors.primary,
+                      ),
+                    );
+                  }
+                },
+                errorBuilder: (context, error, stackTrace) => const Icon(
+                  Icons.broken_image,
+                  size: 50,
+                  color: Colors.grey,
+                ),
+              ),
             ),
             SizedBox(width: 12.w),
+            // Product Details
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Product Name
                   SizedBox(
-                    width: double.infinity,
+                    width: 170.w,
                     child: Text(
-                      productName,
+                      product.name,
                       style: AppTextStyles.language.copyWith(
                         fontWeight: FontWeight.w500,
-                        fontSize: 14.sp,
+                        fontSize: 16.sp,
                       ),
-                      maxLines: 2,
+                      maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  SizedBox(height: 4.h),
+                  SizedBox(height: 5.h),
+                  // Rating and Reviews
                   Row(
                     children: [
                       Icon(
@@ -87,16 +98,19 @@ class RectangularProductCard extends StatelessWidget {
                       ),
                       SizedBox(width: 2.w),
                       Text(
-                        "$rating",
+                        "${product.rate}",
                         style: AppTextStyles.language.copyWith(
                           color: const Color(0xFF8E8EA9),
                           fontWeight: FontWeight.w600,
                           fontSize: 12.sp,
                         ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                       ),
                       SizedBox(width: 4.w),
                       Text(
-                        "review".trParams({'num': reviews.toString()}),
+                        "review"
+                            .trParams({'num': product.totalSold.toString()}),
                         style: AppTextStyles.language.copyWith(
                           color: const Color(0xFFC0C0CF),
                           fontWeight: FontWeight.w600,
@@ -105,12 +119,13 @@ class RectangularProductCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20.h),
+                  SizedBox(height: 15.h),
+                  // Price
                   Text.rich(
                     TextSpan(
                       children: [
                         TextSpan(
-                          text: '$price',
+                          text: '${product.price}',
                           style: AppTextStyles.language.copyWith(
                             color: AppColors.primary,
                             fontSize: 16.sp,
@@ -142,23 +157,26 @@ class RectangularProductCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 ToggleFavoriteButton(
-                  onChanged: (bool) {},
+                  onChanged: (isFavorite) {
+                    // Handle favorite toggle
+                  },
                   height: 22.h,
                   width: 22.w,
                 ),
                 SizedBox(height: 19.h),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    // Handle action
+                  },
                   child: Container(
                     width: 22.w,
                     height: 22.h,
                     child: Transform(
                       alignment: Alignment.center,
                       transform: Matrix4.rotationY(isRTL ? 3.1416 : 0),
-                      child: SvgPicture.asset(
-                        'assets/icons/arrow-right-card.svg',
-                        width: 12.h,
-                        height: 12.h,
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 14.h,
                       ),
                     ),
                   ),

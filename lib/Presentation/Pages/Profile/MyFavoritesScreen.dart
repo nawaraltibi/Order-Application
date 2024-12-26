@@ -73,28 +73,28 @@ class _MyFavoritesScreenState extends State<MyFavoritesScreen> {
               ),
             ),
             SizedBox(height: 30.h,),
-            SearchField(onSearchChanged: (val){}, onSortSelected: (val) =>{} ,),
+            SearchField(onSearchChanged: (val){},),
             SizedBox(
               height: 30.h,
             ),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: 2,
-              itemBuilder: (context, index){
-                return Padding(
-                  padding:  EdgeInsets.only(bottom: 25.h),
-                  child: RectangularProductCard(
-                      imageType: true,
-                      productImage: 'assets/images/mobile.jpg',
-                      productName: 'Samsung Galaxy A35',
-                      rating: 4.9,
-                      reviews: 120,
-                      price: 270
-                  ),
-                );
-              },
-            )
+            // ListView.builder(
+            //   shrinkWrap: true,
+            //   physics: NeverScrollableScrollPhysics(),
+            //   itemCount: 2,
+            //   itemBuilder: (context, index){
+            //     return Padding(
+            //       padding:  EdgeInsets.only(bottom: 25.h),
+            //       child: RectangularProductCard(
+            //           imageType: true,
+            //           productImage: 'assets/images/mobile.jpg',
+            //           productName: 'Samsung Galaxy A35',
+            //           rating: 4.9,
+            //           reviews: 120,
+            //           price: 270
+            //       ),
+            //     );
+            //   },
+            // )
           ],
         ),
       ),

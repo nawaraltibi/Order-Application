@@ -91,12 +91,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           SizedBox(
             height: 13.h,
           ),
-          MarketCard(
-              imageType: true,
-              marketImage: 'assets/images/market.jpg',
-              marketName: 'XIAOMI',
-              rating: 4.9,
-              reviews: 120),
+          // MarketCard(
+          //     imageType: true,
+          //     marketImage: 'assets/images/market.jpg',
+          //     marketName: 'XIAOMI',
+          //     rating: 4.9,
+          //     reviews: 120),
           SizedBox(
             height: 23.h,
           ),

@@ -69,23 +69,23 @@ class HomeScreen extends GetView<HomeController> {
               SizedBox(
                 height: 20.h,
               ),
-              ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: 2,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: EdgeInsets.only(bottom: 17.h),
-                    child: RectangularProductCard(
-                        imageType: true,
-                        productImage: 'assets/images/mobile.jpg',
-                        productName: 'Samsung Galaxy A35',
-                        rating: 4.9,
-                        reviews: 120,
-                        price: 270),
-                  );
-                },
-              ),
+              // ListView.builder(
+              //   physics: NeverScrollableScrollPhysics(),
+              //   shrinkWrap: true,
+              //   itemCount: 2,
+              //   itemBuilder: (context, index) {
+              //     return Padding(
+              //       padding: EdgeInsets.only(bottom: 17.h),
+              //       child: RectangularProductCard(
+              //           imageType: true,
+              //           productImage: 'assets/images/mobile.jpg',
+              //           productName: 'Samsung Galaxy A35',
+              //           rating: 4.9,
+              //           reviews: 120,
+              //           price: 270),
+              //     );
+              //   },
+              // ),
               SizedBox(
                 height: 10.h,
               ),

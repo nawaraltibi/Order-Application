@@ -1,25 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:order_application/App/Const/Host.dart';
+import 'package:order_application/Data/Models/Market.dart';
 import '../../App/Color/Color.dart';
 import '../../App/Styles/AppTextStyles.dart';
 
 class MarketCard extends StatelessWidget {
-  final bool imageType; // false for Svg and true for others
-  final String marketImage;
-  final String marketName;
-  final double rating;
-  final int reviews;
+  final Market market;
 
-  MarketCard({
-    required this.imageType,
-    required this.marketImage,
-    required this.marketName,
-    required this.rating,
-    required this.reviews,
+  const MarketCard({
+    required this.market,
     super.key,
   });
 
@@ -29,10 +21,8 @@ class MarketCard extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        String lastRoute = Get.previousRoute;
-        if(lastRoute!='/MarketDetails')Get.toNamed('/MarketDetails');
+        Get.toNamed('/MarketDetails', arguments: market);
       },
-      borderRadius: BorderRadius.circular(16),
       child: Container(
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
@@ -47,37 +37,53 @@ class MarketCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            // Market Logo
             SizedBox(
               width: 73.w,
               height: 92.h,
-              child: imageType
-                  ? Image.asset(
-                      marketImage,
-                      fit: BoxFit.contain,
-                    )
-                  : SvgPicture.asset(
-                      marketImage,
-                      fit: BoxFit.contain,
-                    ),
+              child: Image.network(
+                'http://$host2/images/${market.logo}',
+                fit: BoxFit.contain,
+                loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                            : null,
+                        strokeWidth: 2,
+                        color: AppColors.primary,
+                      ),
+                    );
+                  }
+                },
+                errorBuilder: (context, error, stackTrace) => Icon(
+                  Icons.broken_image,
+                  size: 50,
+                  color: Colors.grey,
+                ),
+              ),
             ),
             SizedBox(width: 12.w),
+            // Market Details
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    width: double.infinity,
-                    child: Text(
-                      marketName,
-                      style: AppTextStyles.language.copyWith(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14.sp,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                  // Market Name
+                  Text(
+                    market.name,
+                    style: AppTextStyles.language.copyWith(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16.sp,
                     ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: 4.h),
+                  // Rating and Reviews
                   Row(
                     children: [
                       Icon(
@@ -87,7 +93,7 @@ class MarketCard extends StatelessWidget {
                       ),
                       SizedBox(width: 2.w),
                       Text(
-                        "$rating",
+                        "${market.rate}",
                         style: AppTextStyles.language.copyWith(
                           color: const Color(0xFF8E8EA9),
                           fontWeight: FontWeight.w600,
@@ -96,7 +102,7 @@ class MarketCard extends StatelessWidget {
                       ),
                       SizedBox(width: 4.w),
                       Text(
-                        "review".trParams({'num': reviews.toString()}),
+                        "review".trParams({'num': market.id.toString()}),
                         style: AppTextStyles.language.copyWith(
                           color: const Color(0xFFC0C0CF),
                           fontWeight: FontWeight.w600,
@@ -108,13 +114,14 @@ class MarketCard extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(width: 12.w),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed('/MarketDetails', arguments: market);
+                  },
                   child: Container(
                     width: 22.w,
                     height: 22.h,

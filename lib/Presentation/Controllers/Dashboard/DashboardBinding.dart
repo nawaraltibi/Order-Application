@@ -1,13 +1,15 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:order_application/Data/Repository/SearchRepository.dart';
 import 'package:order_application/Data/Repository/auth_repository.dart';
 import 'package:order_application/Data/Repository/card_repository.dart';
 import 'package:order_application/Data/Repository/address_repository.dart';
 import 'package:order_application/Domain/Usecases/auth_usecases/LogoutUseCase.dart';
+import 'package:order_application/Domain/Usecases/search_usecases/SearchUseCase.dart';
 import 'package:order_application/Presentation/Controllers/Dashboard/DashboardController.dart';
 import 'package:order_application/Presentation/Controllers/Home/HomeController.dart';
 import 'package:order_application/Presentation/Controllers/Orders/OrdersController.dart';
 import 'package:order_application/Presentation/Controllers/Profile/ProfileController.dart';
+import 'package:order_application/Presentation/Controllers/Search/SearchController.dart';
 import 'package:order_application/Domain/Usecases/address_usecases/CreateAnAddressUseCase.dart';
 import 'package:order_application/Domain/Usecases/address_usecases/DeleteAnAddressUseCase.dart';
 import 'package:order_application/Domain/Usecases/address_usecases/GetAllAddressUseCase.dart';
@@ -24,7 +26,9 @@ class DashboardBinding extends Bindings {
 
     Get.lazyPut<HomeController>(() => HomeController());
 
-    Get.lazyPut<SearchController>(() => SearchController());
+    Get.lazyPut<SearchFieldController>(() => SearchFieldController(
+        searchUseCase: SearchUseCase(SearchRepository()),
+    ));
 
     Get.lazyPut<OrdersController>(() => OrdersController());
 
