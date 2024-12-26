@@ -4,11 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class SwipeToDeleteWidget extends StatefulWidget {
   final Widget child;
   final VoidCallback onSwipe;
-
+  final int height;
   const SwipeToDeleteWidget({
     Key? key,
     required this.child,
     required this.onSwipe,
+    required this.height,
   }) : super(key: key);
 
   @override
@@ -20,6 +21,7 @@ class _SwipeToDeleteWidgetState extends State<SwipeToDeleteWidget>
   double _dragPosition = 0;
   late AnimationController _animationController;
   late Animation<double> _animation;
+  double _childWidth = 0;
 
   @override
   void initState() {
@@ -40,7 +42,7 @@ class _SwipeToDeleteWidgetState extends State<SwipeToDeleteWidget>
     });
 
     _animationController.forward(from: 0).then((_) {
-      if (targetPosition == -MediaQuery.of(context).size.width) {
+      if (targetPosition == -_childWidth) {
         widget.onSwipe();
       }
     });
@@ -54,48 +56,56 @@ class _SwipeToDeleteWidgetState extends State<SwipeToDeleteWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          height: 108.h,
-          decoration: BoxDecoration(
-            color: const Color(0xFF96293a),
-            borderRadius: BorderRadius.all(
-              Radius.circular(16.r),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        _childWidth = constraints.maxWidth;
+
+        return Stack(
+          clipBehavior: Clip.none,
+          children: [
+            // Background delete container
+            Container(
+              height: widget.height.h,
+              width: _childWidth,  // Match the child's width
+              decoration: BoxDecoration(
+                color: const Color(0xFF96293a),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(16.r),
+                ),
+
+              ),
+              alignment: Alignment.centerRight,
+              padding: const EdgeInsets.only(right: 20),
+              child: const Icon(
+                Icons.delete_outline,
+                color: Colors.white,
+                size: 30,
+              ),
             ),
-            boxShadow: [
-              BoxShadow(color: Colors.black12.withOpacity(0.1), blurRadius: 5),
-            ],
-          ),
-          alignment: Alignment.centerRight,
-          padding: const EdgeInsets.only(right: 20),
-          child: const Icon(
-            Icons.delete_outline,
-            color: Colors.white,
-            size: 30,
-          ),
-        ),
-        Positioned(
-          left: _dragPosition,
-          right: -_dragPosition,
-          child: GestureDetector(
-            onHorizontalDragUpdate: (details) {
-              setState(() {
-                _dragPosition = (_dragPosition + details.delta.dx)
-                    .clamp(-MediaQuery.of(context).size.width, 0);
-              });
-            },
-            onHorizontalDragEnd: (details) {
-              if (_dragPosition < -100) {
-                _animateTo(-MediaQuery.of(context).size.width);
-              } else {
-                _animateTo(0);
-              }
-            },
-            child: widget.child,
-          ),
-        ),
-      ],
+            // Foreground swipeable widget
+            Positioned(
+              left: _dragPosition,
+              right: -_dragPosition,
+              child: GestureDetector(
+                onHorizontalDragUpdate: (details) {
+                  setState(() {
+                    _dragPosition = (_dragPosition + details.delta.dx)
+                        .clamp(-_childWidth, 0);  // Limit drag to child width
+                  });
+                },
+                onHorizontalDragEnd: (details) {
+                  if (_dragPosition < -100) {
+                    _animateTo(-_childWidth);  // Animate to full width
+                  } else {
+                    _animateTo(0);
+                  }
+                },
+                child: widget.child,
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

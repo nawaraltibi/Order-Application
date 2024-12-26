@@ -24,9 +24,7 @@ class AddressCardWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.r),
       ),
       width: 330.w,
-      height: 108.h,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
+      child: IntrinsicHeight(
         child: Row(
           children: [
             Text(
@@ -37,7 +35,6 @@ class AddressCardWidget extends StatelessWidget {
                 color: AppColors.dark,
               ),
             ),
-            // SizedBox(width: 18.w,),
             VerticalDivider(
               color: Color(0xFFDCDCE4),
               thickness: 1.4,
@@ -45,33 +42,41 @@ class AddressCardWidget extends StatelessWidget {
               indent: 7.h,
               endIndent: 7.h,
             ),
-            Padding(
-              padding:  EdgeInsets.symmetric(vertical: 10.h),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    address,
-                    style: AppTextStyles.language.copyWith(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xFF8E8EA9)
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      address,
+                      style: AppTextStyles.language.copyWith(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xFF8E8EA9),
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                     ),
-                  ),
-                  Text(details,style: AppTextStyles.language.copyWith(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xFF8E8EA9),
-                  ),
-                    overflow: TextOverflow.clip,
-                  )
-                ],
+                    Text(
+                      details,
+                      style: AppTextStyles.language.copyWith(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xFF8E8EA9),
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                  ],
+                ),
               ),
-            )
+            ),
           ],
         ),
-      ),
+      )
+
+
     );
   }
 }

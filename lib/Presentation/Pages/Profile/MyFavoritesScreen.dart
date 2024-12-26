@@ -84,7 +84,7 @@ class _MyFavoritesScreenState extends State<MyFavoritesScreen> {
               itemBuilder: (context, index){
                 return Padding(
                   padding:  EdgeInsets.only(bottom: 25.h),
-                  child: ProductCard(
+                  child: RectangularProductCard(
                       imageType: true,
                       productImage: 'assets/images/mobile.jpg',
                       productName: 'Samsung Galaxy A35',

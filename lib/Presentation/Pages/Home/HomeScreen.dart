@@ -76,7 +76,7 @@ class HomeScreen extends GetView<HomeController> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: EdgeInsets.only(bottom: 17.h),
-                    child: ProductCard(
+                    child: RectangularProductCard(
                         imageType: true,
                         productImage: 'assets/images/mobile.jpg',
                         productName: 'Samsung Galaxy A35',

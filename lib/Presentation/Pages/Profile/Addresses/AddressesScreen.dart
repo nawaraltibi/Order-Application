@@ -53,6 +53,7 @@ class AddressesScreen extends GetView<ProfileController> {
                     return Padding(
                       padding: EdgeInsets.only(bottom: 25.h),
                       child: SwipeToDeleteWidget(
+                        height: 108,
                         child: AddressCardWidget(
                           type: location.name,
                           address: "${location.region ?? ''}",

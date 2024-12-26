@@ -6,12 +6,14 @@ import 'package:order_application/App/Styles/AppTextStyles.dart';
 import 'package:order_application/Presentation/Widgets/CustomAppBar.dart';
 import 'package:order_application/Presentation/Widgets/CustomBlackButton.dart';
 import 'package:order_application/Presentation/Widgets/MarketCard.dart';
-import 'package:order_application/Presentation/Widgets/PriceText.dart';
+import 'package:order_application/Presentation/Widgets/OrangePriceText.dart';
 import 'package:order_application/Presentation/Widgets/SectionTitle.dart';
 import 'package:order_application/Presentation/Widgets/ToggleFavoriteButton.dart';
 
 import '../../Widgets/NormalText.dart';
 import '../../Widgets/ReviewsContainer.dart';
+import '../../Widgets/MinusButton.dart';
+import '../../Widgets/PlusButton.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({super.key});
@@ -28,7 +30,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     return Scaffold(
       appBar: CustomAppBar(
         title: '',
-        trailingWidget: ToggleFavoriteButton(onChanged: (val) {}, height: 36.h, width: 36.w,),
+        trailingWidget: ToggleFavoriteButton(
+          onChanged: (val) {},
+          height: 36.h,
+          width: 36.w,
+        ),
       ),
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: 21.w),
@@ -71,7 +77,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 SizedBox(
                   width: 40.w,
                 ),
-                ReviewsContainer(rating: 5.0,reviews: 214,),
+                ReviewsContainer(
+                  rating: 5.0,
+                  reviews: 214,
+                ),
               ],
             ),
           ),
@@ -104,6 +113,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 \u2022 Featuring the toughest Gorilla Glass Victus, Glastic Rear & an AL7s10 Metal Frame for mobile phone protection & peace of mind
 \u2022 Smartphone preloaded with the Android mobile phone V10 operating system           """,
             size: 14,
+
           ),
           SizedBox(
             height: 15.h,
@@ -130,30 +140,19 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 SizedBox(
                   width: 10.w,
                 ),
-                const PriceText(price: 200, size: 15),
+                const OrangePriceText(price: 200, size: 15),
                 SizedBox(
                   width: 70.w,
                 ),
                 SizedBox(
                   width: 32.w,
                   height: 32.h,
-                  child: ElevatedButton(
-                    onPressed: () {
+                  child: MinusButton(
+                    onTap: () {
                       setState(() {
-                        if (numberOfProducts > 0) numberOfProducts--;
+                        if(numberOfProducts>0)numberOfProducts--;
                       });
                     },
-                    style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.grey,
-                        backgroundColor: const Color(0xFFEAEAEF),
-                        elevation: 0,
-                        padding: EdgeInsets.only(
-                            right: 0, left: 0, bottom: 15.h, top: 0)),
-                    child: Icon(
-                      Icons.minimize_rounded,
-                      color: const Color(0xFF292D32),
-                      size: 20.sp,
-                    ),
                   ),
                 ),
                 SizedBox(
@@ -172,23 +171,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 SizedBox(
                   width: 32.w,
                   height: 32.h,
-                  child: ElevatedButton(
-                    onPressed: () {
+                  child: PlusButton(
+                    onTap: () {
                       setState(() {
                         numberOfProducts++;
                       });
                     },
-                    style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.orangeAccent,
-                        backgroundColor: Colors.orange[100],
-                        elevation: 0,
-                        padding: EdgeInsets.only(
-                            right: 0, left: 0, bottom: 12.h, top: 5.h)),
-                    child: Icon(
-                      Icons.add,
-                      color: AppColors.primary,
-                      size: 20.sp,
-                    ),
                   ),
                 ),
               ],
@@ -197,8 +185,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           SizedBox(
             height: 30.h,
           ),
-          CustomBlackButton(buttonText: "Add to cart", onPressed: (){}),
-          SizedBox(height: 30.h,)
+          CustomBlackButton(buttonText: "Add to cart", onPressed: () {}),
+          SizedBox(
+            height: 30.h,
+          )
         ],
       ),
     );

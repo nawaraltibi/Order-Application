@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import '../../App/Color/Color.dart';
 import '../../App/Styles/AppTextStyles.dart';
-import 'PriceText.dart';
+import 'OrangePriceText.dart';
 
 class ShoppingCartContainer extends StatelessWidget {
   bool isShow;
@@ -68,7 +68,7 @@ class ShoppingCartContainer extends StatelessWidget {
                           ),
                           Padding(
                             padding: EdgeInsets.only(left: 5.w),
-                            child: PriceText(price: 7500, size: 16),
+                            child: OrangePriceText(price: 7500, size: 16),
                           )
                         ],
                       ),

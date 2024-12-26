@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../../App/Styles/AppTextStyles.dart';
-import 'PriceText.dart';
+import 'OrangePriceText.dart';
 import 'ToggleFavoriteButton.dart';
 
 class SquareProductCard extends StatelessWidget {
@@ -113,7 +113,7 @@ class SquareProductCard extends StatelessWidget {
             SizedBox(height: 7.h,),
             Row(
               children: [
-                PriceText(price: price, size: 15),
+                OrangePriceText(price: price, size: 15),
                 Spacer(),
                 ToggleFavoriteButton(onChanged: (val){}, height: 24, width: 24)
               ],

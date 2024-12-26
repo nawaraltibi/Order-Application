@@ -20,6 +20,9 @@ void main() async {
   Get.put(SharedPreferencesController());
   final LanguageController languageController = Get.put(LanguageController());
   await languageController.loadLanguage();
+  Get.lazyPut<UserController>(() => UserController(
+      getAuthenticatedUserUseCase: GetAuthenticatedUserUseCase(UserRepository())));
+
 
   runApp(MyApp());
 }
@@ -41,10 +44,11 @@ class MyApp extends StatelessWidget {
             locale: languageController.currentLocale.value,
             fallbackLocale: const Locale('en', 'US'),
             debugShowCheckedModeBanner: false,
-            initialBinding: SplashBindings(),
+            initialBinding: DashboardBinding(),
             getPages: AppRoutes.routes,
             initialRoute: '/',
-            home: SplashScreen(),
+            home: DashboardPage(),
+
           );
         });
       },

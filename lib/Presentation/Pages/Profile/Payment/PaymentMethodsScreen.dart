@@ -56,6 +56,7 @@ class PaymentMethodsScreen extends GetView<ProfileController> {
                       return Padding(
                         padding: EdgeInsets.only(bottom: 25.h),
                         child: SwipeToDeleteWidget(
+                          height: 108,
                           child: PaymentCardWidget(
                             name: card.name,
                           ),

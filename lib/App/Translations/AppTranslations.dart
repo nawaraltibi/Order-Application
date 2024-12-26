@@ -63,6 +63,7 @@ class AppTranslations extends Translations {
           'failed': 'Failed',
           'no_addresses': 'No Addresses',
           'no_cards': 'No Cards',
+          'attention':'Attention!',
         },
         'ar_SA': {
           'general': 'عام',
@@ -134,7 +135,22 @@ class AppTranslations extends Translations {
           'no_cards': 'لا يوجد بطاقات مسجلة',
           'Here it is':'إنها هنا',
           'There is a shopping\ncart available for':'يوجد عربة تسوق\nمتاحة بقيمة',
-          'Most Requested:':'الأكثر طلباً:'
+          'Most Requested:':'الأكثر طلباً:',
+          'attention':'انتبه!',
+          'Confirm or cancel your cart before\nexiting the application.':'قم بتأكيد أو إلغاء سلة التسوق\nالخاصة بك قبل الخروج من التطبيق',
+          'What has been determined:':'ما تم تحديده:',
+          'Delivery address':'عنوان التوصيل',
+          'Available locations:':'الأماكن المتاحة:',
+          'Available cards:':'البطاقات المتاحة:',
+          ' Add a place':' أضف عنوان',
+          ' Add a payment method':' أضف طريقة دفع',
+          ' Change the place':' تغيير الموقع',
+          ' Change payment method':' تغيير طريقة الدفع',
+          'Price of products':'سعر المنتجات',
+          'Delivery':'التوصيل',
+          'Total price':'السعر الكلّي',
+          'Buy':'شراء',
+          'Cancel':'الغاء'
         },
       };
 }

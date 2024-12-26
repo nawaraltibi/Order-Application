@@ -3,10 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../App/Color/Color.dart';
 import '../../App/Styles/AppTextStyles.dart';
 
-class PriceText extends StatelessWidget {
+class OrangePriceText extends StatelessWidget {
   final double price;
   final int size;
-  const PriceText({
+  const OrangePriceText({
     required this.price,
     required this.size,
     super.key,
@@ -22,7 +22,7 @@ class PriceText extends StatelessWidget {
             style: AppTextStyles.language.copyWith(
               color: AppColors.primary,
               fontSize: size.sp,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w800,
             ),
           ),
           WidgetSpan(
@@ -33,7 +33,7 @@ class PriceText extends StatelessWidget {
                 style: AppTextStyles.language.copyWith(
                   color: AppColors.primary,
                   fontSize: 10.sp,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w800,
                 ),
               ),
             ),

@@ -11,6 +11,7 @@ import 'package:order_application/Presentation/Widgets/SearchField.dart';
 import 'package:order_application/Presentation/Widgets/SwipeToDeleteWidget.dart';
 
 class SearchScreen extends GetView<SearchController> {
+  final GlobalKey _key = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,11 +27,12 @@ class SearchScreen extends GetView<SearchController> {
               SizedBox(height: 25.h,),
               FilterWidget(filters: ['all'.tr, 'markets'.tr, 'products'.tr]),
               SizedBox(height: 25.h,),
-              ProductCard(imageType: true, productImage: 'assets/images/mobile.jpg', productName: 'Samsung Galaxy A35', rating: 4.9, reviews: 120, price: 1700,),
+              RectangularProductCard(imageType: true, productImage: 'assets/images/mobile.jpg', productName: 'Samsung Galaxy A35', rating: 4.9, reviews: 120, price: 1700,),
               SizedBox(height: 25.h,),
               SwipeToDeleteWidget(
-                onSwipe: () {  },
-                child:               MarketCard(imageType: true, marketImage: 'assets/images/market.jpg', marketName: 'XIAOMI', rating: 2.3, reviews: 234,),
+                height: 108,
+                onSwipe: () {},
+                child:MarketCard(imageType: true, marketImage: 'assets/images/market.jpg', marketName: 'XIAOMI', rating: 2.3, reviews: 234,),
 
               ),
             ],

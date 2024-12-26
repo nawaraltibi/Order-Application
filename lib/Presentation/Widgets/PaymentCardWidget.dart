@@ -21,7 +21,6 @@ class PaymentCardWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.r),
       ),
       width: 330.w,
-      height: 108.h,
       child: Row(
         children: [
           Container(
@@ -41,13 +40,17 @@ class PaymentCardWidget extends StatelessWidget {
             ),
           ),
           SizedBox(width: 18.w,),
-          Text(
-            style: AppTextStyles.language.copyWith(
-                fontWeight: FontWeight.w600,
-                fontSize: 16.sp,
-                color: Color(0xFF8E8EA9)
+          Flexible(  // Wrap Text with Flexible
+            child: Text(
+              '$name'.tr,
+              style: AppTextStyles.language.copyWith(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16.sp,
+                  color: Color(0xFF8E8EA9)
+              ),
+              overflow: TextOverflow.ellipsis,  // Handle overflow
+              maxLines: 1,  // Limit to one line
             ),
-            '$name'.tr,
           )
         ],
       ),
