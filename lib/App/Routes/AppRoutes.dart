@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:order_application/Presentation/Controllers/Auth/AuthBinding.dart';
 import 'package:order_application/Presentation/Controllers/Dashboard/DashboardBinding.dart';
+import 'package:order_application/Presentation/Pages/Cart/CartScreen.dart';
 import 'package:order_application/Presentation/Pages/Dashboard/DashboardPage.dart';
 import 'package:order_application/Presentation/Pages/MarketDetails/MarketDetailsScreen.dart';
 import 'package:order_application/Presentation/Pages/Onboarding/OnboardingScreen.dart';
@@ -19,6 +20,7 @@ import '../../Presentation/Pages/Profile/Payment/NewCardScreen.dart';
 import '../../Presentation/Pages/Profile/Payment/PaymentMethodsScreen.dart';
 
 class AppRoutes {
+
   static final routes = [
     GetPage(name: '/', page: () => SplashScreen()),
     GetPage(name: '/Onboarding', page: () => OnboardingScreen()),
@@ -60,30 +62,84 @@ class AppRoutes {
       page: () => DashboardPage(),
       binding: DashboardBinding(),
     ),
-    GetPage(name: '/EditInformation', page: () => EditInformationScreen()),
-    GetPage(name: '/Language', page: () => LanguageScreen()),
-    GetPage(name: '/About', page: () => AboutScreen()),
-    GetPage(name: '/ProductDetails', page: () => ProductDetailsScreen()),
-    GetPage(name: '/Payment', page: () => PaymentMethodsScreen()),
-    GetPage(name: '/Addresses', page: () => AddressesScreen()),
-    GetPage(name: '/AddAddress', page: () => AddAddressScreen()),
-    GetPage(name: '/Details', page: () => ProductDetailsScreen()),
+    GetPage(
+      name: '/EditInformation',
+      page: () => EditInformationScreen(),
+    ),
+    GetPage(
+      name: '/Language',
+      page: () => LanguageScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 450),
+    ),
+    GetPage(
+      name: '/About',
+      page: () => AboutScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 450),
+    ),
+    GetPage(
+      name: '/ProductDetails',
+      page: () => ProductDetailsScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 450),
+    ),
+    GetPage(
+      name: '/Payment',
+      page: () => PaymentMethodsScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 450),
+    ),
+    GetPage(
+      name: '/Addresses',
+      page: () => AddressesScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 450),
+    ),
+    GetPage(
+      name: '/AddAddress',
+      page: () => AddAddressScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 500),
+    ),
     GetPage(
       name: '/Payment',
       page: () => PaymentMethodsScreen(),
       binding: DashboardBinding(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 450),
     ),
     GetPage(
       name: '/NewCard',
       page: () => NewCardScreen(),
       binding: DashboardBinding(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 500),
     ),
     GetPage(
       name: '/Addresses',
       page: () => AddressesScreen(),
       binding: DashboardBinding(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 450),
     ),
-    GetPage(name: '/Favorites', page: () => MyFavoritesScreen()),
-    GetPage(name: '/MarketDetails', page: () => MarketDetailsScreen()),
+    GetPage(
+      name: '/Favorites',
+      page: () => MyFavoritesScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 450),
+    ),
+    GetPage(
+      name: '/MarketDetails',
+      page: () => MarketDetailsScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: '/Cart',
+      page: () => CartScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 500),
+    ),
   ];
 }

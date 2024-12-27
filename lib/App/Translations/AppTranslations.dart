@@ -170,6 +170,7 @@ class AppTranslations extends Translations {
           'no_network': 'لا يوجد اتصال بالإنترنت.',
           'default_empty': 'لا توجد بيانات.',
           'retry': 'إعادة المحاولة',
+          'Cart': 'السلة',
         },
       };
 }
