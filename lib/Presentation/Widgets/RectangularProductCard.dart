@@ -78,7 +78,7 @@ class RectangularProductCard extends StatelessWidget {
                   SizedBox(
                     width: 170.w,
                     child: Text(
-                      product.name,
+                      product.name!,
                       style: AppTextStyles.language.copyWith(
                         fontWeight: FontWeight.w500,
                         fontSize: 16.sp,

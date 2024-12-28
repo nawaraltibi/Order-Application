@@ -73,7 +73,11 @@ class AppTranslations extends Translations {
           'no_network': 'No internet connection.',
           'default_empty': 'No data available.',
           'retry': 'Retry',
-
+          'Available at:': 'Available at:',
+          'About this item:': 'About this item:',
+          'Shopping:': 'Shopping:',
+          'Price:': 'Price:',
+          'Add to cart': 'Add to cart',
         },
         'ar_SA': {
           'general': 'عام',

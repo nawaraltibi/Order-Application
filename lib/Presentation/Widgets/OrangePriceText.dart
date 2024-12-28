@@ -4,7 +4,7 @@ import '../../App/Color/Color.dart';
 import '../../App/Styles/AppTextStyles.dart';
 
 class OrangePriceText extends StatelessWidget {
-  final double price;
+  final int price;
   final int size;
   const OrangePriceText({
     required this.price,

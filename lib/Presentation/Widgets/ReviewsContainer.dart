@@ -18,7 +18,6 @@ class ReviewsContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 5.w),
-      width: 75.w,
       height: 23.h,
       decoration: BoxDecoration(
         color: Colors.white,

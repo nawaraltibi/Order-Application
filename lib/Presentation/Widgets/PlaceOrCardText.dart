@@ -123,7 +123,7 @@ class _PlaceOrCardTextState extends State<PlaceOrCardText> {
                       ),
                     ),
                     SizedBox(
-                      height: 15.h,
+                      height: 25.h,
                     ),
                     CustomBlackButton(
                         buttonText: 'add'.tr,

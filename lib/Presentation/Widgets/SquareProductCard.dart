@@ -11,7 +11,7 @@ import 'ToggleFavoriteButton.dart';
 class SquareProductCard extends StatelessWidget {
   String productImage;
   String productName;
-  double price;
+  int price;
   double rating;
   SquareProductCard({
     required this.productImage,

@@ -22,8 +22,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     bool isRTL = Get.locale?.languageCode == 'ar';
 
     return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 20.h),
+      child: Container(
+        color: AppColors.background,
+        margin: EdgeInsets.symmetric(horizontal: 14.w, vertical: 20.h),
         child: AppBar(
           backgroundColor: AppColors.background,
           elevation: 0,
