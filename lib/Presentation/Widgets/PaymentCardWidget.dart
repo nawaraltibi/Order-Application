@@ -43,7 +43,7 @@ class PaymentCardWidget extends StatelessWidget {
           SizedBox(width: 18.w,),
           Flexible(  // Wrap Text with Flexible
             child: Text(
-              '$name'.tr,
+              '$name',
               style: AppTextStyles.language.copyWith(
                   fontWeight: FontWeight.w600,
                   fontSize: 16.sp,

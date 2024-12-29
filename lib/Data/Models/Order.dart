@@ -10,6 +10,7 @@ class Order {
   Card? card;
   OrderStatus status;
   double? totalCost;
+  double? deliveryFee;
   DateTime? deliveredAt;
   DateTime? createdAt;
 
@@ -20,9 +21,12 @@ class Order {
     this.card,
     this.status = OrderStatus.cart,
     this.totalCost,
+    this.deliveryFee = 10.0,
     this.deliveredAt,
     this.createdAt,
-  });
+  }) {
+    _updateTotalCost();
+  }
 
   Map<String, dynamic> toJson() {
     return {
@@ -43,6 +47,7 @@ class Order {
       status: OrderStatus.values
           .firstWhere((e) => e.toString() == 'OrderStatus.${json['status']}'),
       totalCost: json['totalCost'] != null ? (json['totalCost'] as num).toDouble() : null,
+      deliveryFee: json['deliveryFee'] != null ? (json['deliveryFee'] as num).toDouble() : 10.0,
       deliveredAt: json['deliveredAt'] != null
           ? DateTime.parse(json['deliveredAt'])
           : null,
@@ -81,6 +86,8 @@ class Order {
     if (!products!.contains(existingProduct)) {
       products!.add(existingProduct);
     }
+
+    _updateTotalCost();
   }
 
   void adjustProductQuantity(int productId, int delta) {
@@ -100,6 +107,8 @@ class Order {
     } else {
       product.quantity = newQuantity;
     }
+
+    _updateTotalCost();
   }
 
   void incrementProductQuantity(int productId) {
@@ -109,7 +118,6 @@ class Order {
   void decrementProductQuantity(int productId) {
     adjustProductQuantity(productId, -1);
   }
-
 
   void removeProduct(int productId, {bool requireConfirmation = false}) {
     if (!_canEditProduct(false)) {
@@ -127,6 +135,8 @@ class Order {
     }
 
     products?.removeWhere((p) => p.id == productId);
+
+    _updateTotalCost();
   }
 
   bool isOrderEmpty() {
@@ -137,25 +147,14 @@ class Order {
     return products != null && products!.length == 1;
   }
 
-  void rateProduct(int productId, void Function(Product product) action) {
-    if (!_isDelivered()) {
-      throw Exception("Order must be delivered to rate products.");
-    }
-
-    final product = products!.firstWhere(
-          (p) => p.id == productId,
-      orElse: () => throw Exception("Product not found."),
-    );
-
-    action(product);
-  }
-
   void updateLocation(Location newLocation) {
     if (!_isEditable()) {
       throw Exception("Cannot modify the order in its current state.");
     }
 
     location = newLocation;
+
+    _updateTotalCost();
   }
 
   void updateCard(Card newCard) {
@@ -164,6 +163,8 @@ class Order {
     }
 
     card = newCard;
+
+    _updateTotalCost();
   }
 
   void moveToNextStatus() {
@@ -180,6 +181,18 @@ class Order {
       case OrderStatus.delivered:
         throw Exception("The order has already been delivered.");
     }
+
+    _updateTotalCost();
+  }
+
+  void _updateTotalCost() {
+    if (products == null || products!.isEmpty) {
+      totalCost = 0.0;
+      return;
+    }
+
+    double productsTotal = products!.fold(0.0, (sum, product) => sum + (product.price! * (product.quantity ?? 1)));
+    totalCost = productsTotal + (deliveryFee ?? 10.0);
   }
 
   bool _isCart() {
