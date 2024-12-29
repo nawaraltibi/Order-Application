@@ -21,6 +21,7 @@ class PaymentCardWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.r),
       ),
       width: 330.w,
+      height: 108.h,
       child: Row(
         children: [
           Container(

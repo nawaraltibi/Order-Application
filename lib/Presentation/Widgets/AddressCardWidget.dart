@@ -18,12 +18,13 @@ class AddressCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical:18.sp,horizontal: 18.w),
+      padding: EdgeInsets.symmetric(vertical:18.h,horizontal: 18.w),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16.r),
       ),
       width: 330.w,
+      height: 108.h,
       child: IntrinsicHeight(
         child: Row(
           children: [

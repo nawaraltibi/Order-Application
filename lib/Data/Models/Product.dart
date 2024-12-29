@@ -14,7 +14,7 @@ class Product {
   final int? totalSold;
   final String? categoryEn;
   final String? categoryAr;
-  final bool? isFavorite;
+  bool? isFavorite;
   final Market? market;
 
   Product({

@@ -5,6 +5,7 @@ import 'package:order_application/App/Color/Color.dart';
 import 'package:order_application/App/Const/Host.dart';
 import 'package:order_application/App/Styles/AppTextStyles.dart';
 import 'package:order_application/Data/Models/Product.dart';
+import 'package:order_application/Presentation/Controllers/Cart/CartController.dart';
 import 'package:order_application/Presentation/Widgets/CustomAppBar.dart';
 import 'package:order_application/Presentation/Widgets/CustomBlackButton.dart';
 import 'package:order_application/Presentation/Widgets/OrangePriceText.dart';
@@ -204,7 +205,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           SizedBox(
             height: 30.h,
           ),
-          CustomBlackButton(buttonText: "Add to cart", onPressed: () {}),
+          CustomBlackButton(buttonText: "Add to cart", onPressed: () {
+            Get.find<CartController>().addProduct(product);
+            Get.back();
+          }),
           SizedBox(
             height: 30.h,
           )

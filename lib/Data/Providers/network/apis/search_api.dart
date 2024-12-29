@@ -4,12 +4,12 @@ import 'package:order_application/Data/Providers/network/api_request_representab
 
 import '../api_endpoint.dart';
 
-enum TagAction {
+enum SearchAction {
   search,
 }
 
 class SearchAPI implements APIRequestRepresentable {
-  final TagAction action;
+  final SearchAction action;
   final String token;
   final String searchType;
   final String word;
@@ -30,7 +30,7 @@ class SearchAPI implements APIRequestRepresentable {
     required String word,
     required int page,
   }) : this._(
-    action: TagAction.search,
+    action: SearchAction.search,
     token: token,
     searchType: searchType,
     word: word,
@@ -66,6 +66,7 @@ class SearchAPI implements APIRequestRepresentable {
     return null;
   }
 
+  @override
   Future request() {
     return APIProvider.instance.request(this);
   }

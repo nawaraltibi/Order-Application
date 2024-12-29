@@ -86,10 +86,10 @@ class HomeScreen extends GetView<HomeController> {
               //     );
               //   },
               // ),
-              SizedBox(
-                height: 10.h,
-              ),
-              SectionTitle(text: 'Most Requested:'.tr),
+              // SizedBox(
+              //   height: 10.h,
+              // ),
+              // SectionTitle(text: 'Most Requested:'.tr),
             ]),
           ],
         ),

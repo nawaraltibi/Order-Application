@@ -5,9 +5,9 @@ import 'package:order_application/Data/providers/network/api_request_representab
 
 enum CardsAction {
   getAllCards,
-  createAnCards,
-  getAnCards,
-  deleteAnCards,
+  createAnCard,
+  getAnCard,
+  deleteAnCard,
 }
 
 class CardAPI implements APIRequestRepresentable {
@@ -28,13 +28,13 @@ class CardAPI implements APIRequestRepresentable {
 
   // Constructor for create An Cards action
   CardAPI.createAnCards(String token, Card card)
-      : this._(action: CardsAction.createAnCards, token: token, card: card);
+      : this._(action: CardsAction.createAnCard, token: token, card: card);
 
   // Constructor for get An Cards action
-  CardAPI.getAnCards(String token, int id) : this._(action: CardsAction.getAnCards, token: token, id: id);
+  CardAPI.getAnCards(String token, int id) : this._(action: CardsAction.getAnCard, token: token, id: id);
 
   // Constructor for delete An Cards action
-  CardAPI.deleteAnCards(String token, int id) : this._(action: CardsAction.deleteAnCards, token: token, id: id);
+  CardAPI.deleteAnCards(String token, int id) : this._(action: CardsAction.deleteAnCard, token: token, id: id);
 
   @override
   String get endpoint => APIEndpoint.API;
@@ -43,11 +43,11 @@ class CardAPI implements APIRequestRepresentable {
   String get path {
     switch (action) {
       case CardsAction.getAllCards:
-      case CardsAction.createAnCards:
+      case CardsAction.createAnCard:
         return "/user/cards";
-      case CardsAction.getAnCards:
+      case CardsAction.getAnCard:
         return "/user/cards/$id";
-      case CardsAction.deleteAnCards:
+      case CardsAction.deleteAnCard:
         return "/user/cards/$id";
     }
   }
@@ -57,11 +57,11 @@ class CardAPI implements APIRequestRepresentable {
     switch (action) {
       case CardsAction.getAllCards:
         return HTTPMethod.get;
-      case CardsAction.createAnCards:
+      case CardsAction.createAnCard:
         return HTTPMethod.post;
-      case CardsAction.getAnCards:
+      case CardsAction.getAnCard:
         return HTTPMethod.get;
-      case CardsAction.deleteAnCards:
+      case CardsAction.deleteAnCard:
         return HTTPMethod.delete;
     }
   }
@@ -82,7 +82,7 @@ class CardAPI implements APIRequestRepresentable {
   @override
   dynamic get body {
     switch (action) {
-      case CardsAction.createAnCards:
+      case CardsAction.createAnCard:
         return {
           'name': card?.name,
           'card_number': card?.cardNumber,
@@ -90,8 +90,8 @@ class CardAPI implements APIRequestRepresentable {
           'cvc': card?.cvc,
         };
       case CardsAction.getAllCards:
-      case CardsAction.getAnCards:
-      case CardsAction.deleteAnCards:
+      case CardsAction.getAnCard:
+      case CardsAction.deleteAnCard:
         return null;
     }
   }

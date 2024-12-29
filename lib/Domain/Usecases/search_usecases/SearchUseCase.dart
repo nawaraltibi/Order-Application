@@ -1,6 +1,6 @@
 import 'package:order_application/Data/Models/ResponseBody.dart';
 import 'package:order_application/Data/Models/SearchType.dart';
-import 'package:order_application/Data/Repository/SearchRepository.dart';
+import 'package:order_application/Data/Repository/search_repository.dart';
 
 class SearchUseCase {
   final SearchRepository _repository;

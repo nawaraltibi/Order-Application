@@ -11,7 +11,7 @@ import 'package:order_application/Presentation/Widgets/FilterWidget.dart';
 import 'package:order_application/Presentation/Widgets/MarketCard.dart';
 import 'package:order_application/Presentation/Widgets/RectangularProductCard.dart';
 import 'package:order_application/Presentation/Widgets/SearchField.dart';
-import 'package:order_application/Presentation/Controllers/Search/SearchController.dart';
+import 'package:order_application/Presentation/Controllers/Search/SearchFieldController.dart';
 
 class SearchScreen extends GetView<SearchFieldController> {
   @override
@@ -45,13 +45,13 @@ class SearchScreen extends GetView<SearchFieldController> {
                 final isProducts = selectedFilter == SearchType.products;
 
                 if (controller.searchQuery.isEmpty) {
-                  return Center(
+                  return const Center(
                       child: EmptyStateWidget(state: EmptyState.searchPrompt));
                 }
 
                 if ((isProducts && controller.products.isEmpty) ||
                     (!isProducts && controller.markets.isEmpty)) {
-                  return Center(
+                  return const Center(
                       child: EmptyStateWidget(state: EmptyState.noResults));
                 }
 

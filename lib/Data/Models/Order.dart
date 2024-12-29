@@ -32,6 +32,31 @@ class Order {
     };
   }
 
+  factory Order.fromJson(Map<String, dynamic> json) {
+    return Order(
+      id: json['id'] as int?,
+      products: (json['products'] as List?)
+          ?.map((product) => Product.fromJson(product))
+          .toList(),
+      location: json['location'] != null ? Location.fromJson(json['location']) : null,
+      card: json['card'] != null ? Card.fromJson(json['card']) : null,
+      status: OrderStatus.values
+          .firstWhere((e) => e.toString() == 'OrderStatus.${json['status']}'),
+      totalCost: json['totalCost'] != null ? (json['totalCost'] as num).toDouble() : null,
+      deliveredAt: json['deliveredAt'] != null
+          ? DateTime.parse(json['deliveredAt'])
+          : null,
+      createdAt: json['createdAt'] != null
+          ? DateTime.parse(json['createdAt'])
+          : null,
+    );
+  }
+
+  static List<Order> fromListJson(List<dynamic>? jsonList) {
+    if (jsonList == null) return [];
+    return jsonList.map((json) => Order.fromJson(json)).toList();
+  }
+
   void addProductToCart(Product product) {
     if (!_isCart()) {
       throw Exception("Products can only be added to the cart.");

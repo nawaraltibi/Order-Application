@@ -11,7 +11,6 @@ class SearchFieldController extends GetxController {
   final SearchUseCase searchUseCase;
 
   Rx<Meta?> meta = Rx<Meta?>(null);
-  RxInt questionCount = 0.obs;
   RxList<Product> products = <Product>[].obs;
   RxList<Market> markets = <Market>[].obs;
   Rx<SearchType> selectedFilter = SearchType.products.obs;
