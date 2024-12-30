@@ -36,10 +36,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     return Scaffold(
       appBar: CustomAppBar(
         title: '',
-        trailingWidget: ToggleFavoriteButton(
-          onChanged: (val) {},
+        trailingWidget: buildToggleFavoriteButton(
           height: 36.h,
-          width: 36.w,
+          width: 36.w, product: product,
         ),
       ),
       body: ListView(
@@ -161,7 +160,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 SizedBox(
                   width: 10.w,
                 ),
-                OrangePriceText(price: product.price!, size: 15),
+                OrangePriceText(price: product.getTotalPrice(), size: 15),
                 Spacer(),
                 SizedBox(
                   width: 32.w,
@@ -198,6 +197,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       });
                     },
                   ),
+                ),
+                SizedBox(
+                  width: 10.w,
                 ),
               ],
             ),

@@ -21,7 +21,7 @@ class Order {
     this.card,
     this.status = OrderStatus.cart,
     this.totalCost,
-    this.deliveryFee = 10.0,
+    this.deliveryFee = 1000.0,
     this.deliveredAt,
     this.createdAt,
   }) {
@@ -70,24 +70,19 @@ class Order {
     if (product.quantity == null || product.quantity! <= 0) {
       throw Exception("Product quantity must be greater than zero.");
     }
-
     products ??= [];
     final existingProduct =
     products!.firstWhere((p) => p.id == product.id, orElse: () => product);
 
-    int availableToAdd = product.stockQuantity! - (existingProduct.quantity ?? 0);
-
-    if (availableToAdd <= 0) {
-      throw Exception("Product stock exceeded.");
-    }
-
-    int quantityToAdd =  (product.quantity! > availableToAdd) ? availableToAdd : product.quantity!;
-    existingProduct.quantity = (existingProduct.quantity ?? 0) + quantityToAdd;
+    existingProduct.addToCart();
     if (!products!.contains(existingProduct)) {
       products!.add(existingProduct);
     }
-
     _updateTotalCost();
+  }
+
+  Product productById(int id){
+    return products!.firstWhere((p) => p.id == id);
   }
 
   void adjustProductQuantity(int productId, int delta) {
@@ -96,20 +91,41 @@ class Order {
     }
 
     final product = products!.firstWhere(
-            (p) => p.id == productId,
-        orElse: () => throw Exception("Product not found."));
+          (p) => p.id == productId,
+      orElse: () => throw Exception("Product not found."),
+    );
 
-    int newQuantity = (product.quantity ?? 0) + delta;
+    int newQuantity = (product.existingQuantityInOrder ?? 0) + delta;
+
     if (newQuantity <= 0) {
-      products!.remove(product);
-    } else if (delta > 0 && newQuantity > product.stockQuantity!) {
-      throw Exception("Exceeds available stock.");
-    } else {
-      product.quantity = newQuantity;
+      throw Exception("Cannot adjust product quantity to zero or below.");
     }
 
+    if (delta > 0 && newQuantity >= product.stockQuantity!) {
+      throw Exception("Exceeds available stock.");
+    }
+
+    if (delta > 0) {
+      int availableToAdd = product.stockQuantity! - (product.existingQuantityInOrder ?? 0);
+      if (delta > availableToAdd) {
+        throw Exception("Product stock exceeded.");
+      }
+      product.existingQuantityInOrder = newQuantity;
+
+      product.availableToAdd = availableToAdd - delta;
+    }
+    else if (delta < 0) {
+      int updatedExistingQuantity = (product.existingQuantityInOrder ?? 0) + delta;
+      if (updatedExistingQuantity < 0) {
+        throw Exception("Cannot reduce product quantity below zero.");
+      }
+      product.existingQuantityInOrder = newQuantity;
+
+      product.availableToAdd = (product.availableToAdd ?? 0) - delta;
+    }
     _updateTotalCost();
   }
+
 
   void incrementProductQuantity(int productId) {
     adjustProductQuantity(productId, 1);
@@ -133,6 +149,12 @@ class Order {
       throw Exception(
           "You are about to remove the last product. Set `requireConfirmation` to true to confirm.");
     }
+
+    final productToRemove = products!.firstWhere((p) => p.id == productId);
+
+    productToRemove.existingQuantityInOrder = 0;
+    productToRemove.availableToAdd = productToRemove.stockQuantity;
+    productToRemove.quantity = 1;
 
     products?.removeWhere((p) => p.id == productId);
 
@@ -191,7 +213,7 @@ class Order {
       return;
     }
 
-    double productsTotal = products!.fold(0.0, (sum, product) => sum + (product.price! * (product.quantity ?? 1)));
+    double productsTotal = products!.fold(0.0, (sum, product) => sum + (product.price! * (product.existingQuantityInOrder ?? 1)));
     totalCost = productsTotal + (deliveryFee ?? 10.0);
   }
 

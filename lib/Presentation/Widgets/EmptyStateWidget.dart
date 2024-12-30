@@ -71,18 +71,22 @@ class EmptyStateWidget extends StatelessWidget {
           ),
         ),
         if (onRetry != null) ...[
-          SizedBox(height: 20.h),
+          SizedBox(height: 15.h),
           ElevatedButton(
             onPressed: onRetry,
             style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 12.h),
+              padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 5.h),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.r),
               ),
             ),
             child: Text(
               'retry'.tr,
-              style: TextStyle(fontSize: 16.sp),
+                style: AppTextStyles.language.copyWith(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14.sp,
+                  color: Colors.white,
+                ),
             ),
           ),
         ],

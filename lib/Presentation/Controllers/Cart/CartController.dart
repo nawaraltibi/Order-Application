@@ -3,30 +3,72 @@ import 'package:order_application/Data/Models/Location.dart';
 import 'package:order_application/Data/Models/Order.dart';
 import 'package:order_application/Data/Models/OrderStatus.dart';
 import 'package:order_application/Data/Models/Product.dart';
+import 'package:order_application/Presentation/Widgets/CustomAlertDialog.dart';
 
 class CartController extends GetxController {
   Rx<Order> currentCart = Order(status: OrderStatus.cart).obs;
   RxMap<String, RxBool> loadingMap = <String, RxBool>{}.obs;
   RxMap<String, String?> errorMap = <String, String?>{}.obs;
 
+  bool isCartEmpty() {
+    try {
+      return currentCart.value.isOrderEmpty();
+    } catch (e) {
+      errorMap['isCartEmpty'] = e.toString();
+      Get.snackbar('Error', e.toString());
+    }
+    return false;
+  }
+
+  Rx<int> getProductQuantity(int productId) {
+    return currentCart.value.productById(productId).existingQuantityInOrder!.obs;
+  }
+
   void addProduct(Product product) {
     try {
       currentCart.value.addProductToCart(product);
       currentCart.refresh();
     } catch (e) {
+      Get.snackbar('Error', '$e');
       errorMap['addProduct'] = e.toString();
-      Get.snackbar('Error', e.toString());
     }
   }
 
-  void removeProduct(int productId) {
+  Future<bool> removeProduct(int productId) async {
+    bool isSuccess = false;
     try {
-      currentCart.value.removeProduct(productId, requireConfirmation: true);
-      currentCart.refresh();
+      bool confirmation = false;
+
+      if (currentCart.value.hasSingleProduct()) {
+        await Get.dialog(
+          CustomAlertDialog(
+            message: 'are you sure you want to remove product?'.tr,
+            onConfirm: () {
+              isSuccess = true;
+              confirmation = true;
+              currentCart.value.removeProduct(productId, requireConfirmation: confirmation);
+              currentCart.refresh();
+              Get.back();
+              Get.back();
+            },
+            onCancel: () {
+              Get.back();
+            },
+            confirmText: 'Yes'.tr,
+            cancelText: 'No'.tr,
+          ),
+          barrierDismissible: false,
+        );
+      } else {
+        currentCart.value.removeProduct(productId, requireConfirmation: confirmation);
+        currentCart.refresh();
+        isSuccess = true;
+      }
     } catch (e) {
       errorMap['removeProduct'] = e.toString();
       Get.snackbar('Error', e.toString());
     }
+    return isSuccess;
   }
 
   void incrementProductQuantity(int productId) {
@@ -63,4 +105,9 @@ class CartController extends GetxController {
     currentCart.value.products?.clear();
     currentCart.refresh();
   }
+
+  var isExpanded = false.obs;
+
+  void toggleExpanded() => isExpanded.value = !isExpanded.value;
+
 }

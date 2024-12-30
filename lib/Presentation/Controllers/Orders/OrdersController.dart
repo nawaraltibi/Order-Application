@@ -169,21 +169,21 @@ class OrdersController extends GetxController {
           name: 'Samsung Galaxy A35',
           image: 'assets/images/mobile.jpg',
           price: 2700,
-          quantity: 2,
+          stockQuantity: 2,
         ),
         Product(
           id: 1,
           name: 'Samsung Galaxy A35',
           image: 'assets/images/mobile.jpg',
           price: 1700,
-          quantity: 1,
+          stockQuantity: 1,
         ),
         Product(
           id: 2,
           name: 'Samsung Galaxy A35',
           image: 'assets/images/mobile.jpg',
           price: 1200,
-          quantity: 2,
+          stockQuantity: 2,
         ),
       ]);
 

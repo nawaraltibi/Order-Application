@@ -1,46 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:order_application/Data/Models/Product.dart';
+import 'package:order_application/Presentation/Controllers/Favorites/FavoritesController.dart';
 
-class ToggleFavoriteButton extends StatefulWidget {
-  final Function(bool) onChanged;
-  final double height;
-  final double width;
-  final bool isFavorite;
+Widget buildToggleFavoriteButton({
+  required double height,
+  required double width,
+  required Product product,
+}) {
+  final RxBool isFavorite = product.isFavorite!.obs;
 
-  const ToggleFavoriteButton({
-    Key? key,
-    required this.onChanged,
-    required this.height,
-    required this.width,
-    this.isFavorite = false,
-  }) : super(key: key);
-
-  @override
-  _ToggleFavoriteButtonState createState() => _ToggleFavoriteButtonState();
-}
-
-class _ToggleFavoriteButtonState extends State<ToggleFavoriteButton> {
-  late bool isFavorite;
-
-  @override
-  void initState() {
-    super.initState();
-    isFavorite = widget.isFavorite;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          isFavorite = !isFavorite;
-        });
-        widget.onChanged(isFavorite);
+  return Obx(
+        () => GestureDetector(
+      onTap: () async {
+        await Get.find<FavoriteController>().addRemoveFavorite(id: product.id!, product: product);
+        isFavorite.value = product.isFavorite!;
       },
       child: Container(
-        width: widget.width,
-        height: widget.height,
+        width: width,
+        height: height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
@@ -53,13 +33,13 @@ class _ToggleFavoriteButtonState extends State<ToggleFavoriteButton> {
           ],
         ),
         child: SvgPicture.asset(
-          isFavorite
+          isFavorite.value
               ? "assets/icons/Like.svg"
               : "assets/icons/Dislike.svg",
-          width: widget.width - 5.w,
-          height: widget.height - 5.h,
+          width: width - 5.w,
+          height: height - 5.h,
         ),
       ),
-    );
-  }
+    ),
+  );
 }

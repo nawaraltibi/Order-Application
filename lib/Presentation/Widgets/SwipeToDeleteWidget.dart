@@ -3,8 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SwipeToDeleteWidget extends StatefulWidget {
   final Widget child;
-  final VoidCallback onSwipe;
+  final Future<bool> Function() onSwipe;  // Change to return Future<bool>
   final int height;
+
   const SwipeToDeleteWidget({
     Key? key,
     required this.child,
@@ -43,9 +44,17 @@ class _SwipeToDeleteWidgetState extends State<SwipeToDeleteWidget>
 
     _animationController.forward(from: 0).then((_) {
       if (targetPosition == -_childWidth) {
-        widget.onSwipe();
+        _deleteItem();
       }
     });
+  }
+
+  Future<void> _deleteItem() async {
+    bool success = await widget.onSwipe();  // Call the onSwipe function and check success
+    if (!success) {
+      // If delete fails, revert the swipe action
+      _animateTo(0);
+    }
   }
 
   @override
@@ -72,7 +81,6 @@ class _SwipeToDeleteWidgetState extends State<SwipeToDeleteWidget>
                 borderRadius: BorderRadius.all(
                   Radius.circular(16.r),
                 ),
-
               ),
               alignment: Alignment.centerRight,
               padding: const EdgeInsets.only(right: 20),
@@ -97,7 +105,7 @@ class _SwipeToDeleteWidgetState extends State<SwipeToDeleteWidget>
                   if (_dragPosition < -100) {
                     _animateTo(-_childWidth);  // Animate to full width
                   } else {
-                    _animateTo(0);
+                    _animateTo(0);  // Revert if swipe is not enough
                   }
                 },
                 child: widget.child,

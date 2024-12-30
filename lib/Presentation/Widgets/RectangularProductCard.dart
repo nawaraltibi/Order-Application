@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:order_application/App/Const/Host.dart';
 import '../../App/Color/Color.dart';
 import '../../App/Styles/AppTextStyles.dart';
-import '../../Data/Models/Product.dart';
+import 'package:order_application/Data/Models/Product.dart';
 import 'ToggleFavoriteButton.dart';
 
 class RectangularProductCard extends StatelessWidget {
@@ -156,10 +156,8 @@ class RectangularProductCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                ToggleFavoriteButton(
-                  onChanged: (isFavorite) {
-                    // Handle favorite toggle
-                  },
+                buildToggleFavoriteButton(
+                  product: product,
                   height: 22.h,
                   width: 22.w,
                 ),

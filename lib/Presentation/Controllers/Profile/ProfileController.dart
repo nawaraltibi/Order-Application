@@ -109,22 +109,27 @@ class ProfileController extends GetxController {
     );
   }
 
-  Future<void> deleteAnAddress(int id) async {
+  Future<bool> deleteAnAddress(int id) async {
+    bool isSuccess = false;
     await controllerHandling(
-      () async {
+          () async {
         await deleteAnAddressUseCase.call(id);
         Get.find<UserController>()
             .user
             .value
             .locations
             ?.removeWhere((location) => location.id == id);
+
+        isSuccess = true;
       },
       loadingMap,
       'deleteAnAddress',
       errorMap,
       'deleteAnAddress',
     );
+    return isSuccess;
   }
+
 
   Future<void> getAllAddress() async {
     await controllerHandling(
@@ -179,21 +184,25 @@ class ProfileController extends GetxController {
     );
   }
 
-  Future<void> deleteAnCards(int id) async {
+  Future<bool> deleteAnCards(int id) async {
+    bool isSuccess = false;
     await controllerHandling(
-      () async {
+          () async {
         await deleteAnCardsUseCase.call(id);
         Get.find<UserController>()
             .user
             .value
             .cards
             ?.removeWhere((card) => card.id == id);
+
+        isSuccess = true;
       },
       loadingMap,
       'deleteAnCards',
       errorMap,
       'deleteAnCards',
     );
+    return isSuccess;
   }
 
   Future<void> getAllCards() async {

@@ -21,7 +21,7 @@ class FavoritesRepository {
     return ResponseBody.fromJson(response);
   }
 
-  Future<ResponseBody> addRemove({
+  Future<void> addRemove({
     required int productId,
   }) async {
     final String token = Get.find<SharedPreferencesController>().token;
@@ -32,6 +32,6 @@ class FavoritesRepository {
     );
 
     final response = await _apiProvider.request(favoritesAPI);
-    return ResponseBody.fromJson(response);
+    return;
   }
 }

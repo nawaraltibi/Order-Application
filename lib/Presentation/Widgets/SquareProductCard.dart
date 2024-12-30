@@ -115,7 +115,7 @@ class SquareProductCard extends StatelessWidget {
               children: [
                 OrangePriceText(price: price, size: 15),
                 Spacer(),
-                ToggleFavoriteButton(onChanged: (val){}, height: 24, width: 24)
+                // ToggleFavoriteButton(height: 24, width: 24)
               ],
             )
           ],

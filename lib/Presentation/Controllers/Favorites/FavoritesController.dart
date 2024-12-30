@@ -11,7 +11,8 @@ class FavoriteController extends GetxController {
   final ShowFavoritesUseCase showFavoritesUseCase;
 
   Rx<Meta?> meta = Rx<Meta?>(null);
-  RxList<Product> products = <Product>[].obs;
+  RxList<Product> allProducts = <Product>[].obs;
+  RxList<Product> searchedProducts = <Product>[].obs;
   RxMap<String, RxBool> loadingMap = <String, RxBool>{}.obs;
   RxMap<String, String?> errorMap = <String, String?>{}.obs;
   Map<String, int> activeRequests = <String, int>{};
@@ -24,9 +25,15 @@ class FavoriteController extends GetxController {
   }) async {
     await controllerHandling(
           () async {
-        final ResponseBody response = await addRemoveFavoriteUseCase.call(id: id);
+        await addRemoveFavoriteUseCase.call(id: id);
         product.isFavorite = !product.isFavorite!;
-        meta.value = response.meta;
+
+        final index = allProducts.indexWhere((p) => p.id == product.id);
+        if (index != -1) {
+          allProducts[index] = product;
+          allProducts.refresh();
+        }
+        showFavorites();
       },
       loadingMap,
       'addRemoveFavorite',
@@ -40,16 +47,16 @@ class FavoriteController extends GetxController {
   }) async {
     await controllerHandling(
           () async {
-        final ResponseBody response = await showFavoritesUseCase.call(
-            page: page);
+        final ResponseBody response = await showFavoritesUseCase.call(page: page);
 
-        if(page == 1){
-          products.value = Product.fromListJson(response.data);
-        }else{
-          products.addAll(Product.fromListJson(response.data));
+        if (page == 1) {
+          allProducts.value = Product.fromListJson(response.data);
+        } else {
+          allProducts.addAll(Product.fromListJson(response.data));
         }
 
         meta.value = response.meta;
+        searchFavorites("");
       },
       loadingMap,
       'showFavorites',
@@ -62,9 +69,25 @@ class FavoriteController extends GetxController {
 
   bool getNextSearchPage() {
     if (meta.value != null && meta.value!.currentPage < meta.value!.lastPage) {
-      showFavorites(page: meta.value!.currentPage + 1);
+      showFavorites(page: meta.value!.currentPage + 1,);
       return true;
     }
     return false;
+  }
+
+  Future<void> searchFavorites(String query) async {
+    searchedProducts.clear();
+
+    if (query.isEmpty) {
+      searchedProducts.addAll(allProducts);
+      return;
+    }
+
+    final filteredProducts = allProducts.where((product) {
+      return product.name != null &&
+          product.name!.toLowerCase().contains(query.toLowerCase());
+    }).toList();
+
+    searchedProducts.addAll(filteredProducts);
   }
 }

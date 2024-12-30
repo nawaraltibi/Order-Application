@@ -9,7 +9,7 @@ import 'OrangePriceText.dart';
 
 class ShoppingCartContainer extends StatelessWidget {
   bool isShow;
-  double price;
+  int price;
 
   ShoppingCartContainer({
     required this.isShow,
@@ -72,7 +72,7 @@ class ShoppingCartContainer extends StatelessWidget {
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: 5.w),
-                        child: OrangePriceText(price: 7500, size: 16),
+                        child: OrangePriceText(price: price, size: 16),
                       )
                     ],
                   ),

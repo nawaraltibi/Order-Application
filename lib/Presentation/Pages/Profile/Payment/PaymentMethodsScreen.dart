@@ -63,7 +63,7 @@ class PaymentMethodsScreen extends GetView<ProfileController> {
                             name: card.name,
                           ),
                           onSwipe: () {
-                            controller.deleteAnCards(card.id!);
+                            return controller.deleteAnCards(card.id!);
                           },
                         ),
                       );

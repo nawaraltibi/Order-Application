@@ -63,7 +63,7 @@ class AddressesScreen extends GetView<ProfileController> {
                           details: "${location.street ?? ''}",
                         ),
                         onSwipe: () {
-                          controller.deleteAnAddress(location.id!);
+                          return controller.deleteAnAddress(location.id!);
                         },
                       ),
                     );

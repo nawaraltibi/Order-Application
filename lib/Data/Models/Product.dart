@@ -10,6 +10,8 @@ class Product {
   final String? image;
   final double? rate;
   final int? stockQuantity;
+  int? availableToAdd;
+  int? existingQuantityInOrder;
   int? quantity;
   final int? totalSold;
   final String? categoryEn;
@@ -26,13 +28,16 @@ class Product {
     this.image,
     this.rate,
     this.stockQuantity,
-    this.quantity = 0,
     this.totalSold,
     this.categoryEn,
     this.categoryAr,
     this.isFavorite,
     this.market,
-  });
+  }) {
+    availableToAdd = stockQuantity;
+    existingQuantityInOrder = 0;
+    quantity = 1;
+  }
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
@@ -60,7 +65,7 @@ class Product {
   Map<String, dynamic> toJson() {
     return {
       'product_id': id,
-      'quantity': quantity,
+      'quantity': existingQuantityInOrder,
     };
   }
 
@@ -87,5 +92,19 @@ class Product {
     if (quantity != null && quantity! > 0) {
       quantity = quantity! - 1;
     }
+  }
+
+  int getTotalPrice(){
+    return quantity!*price!;
+  }
+
+  void addToCart(){
+    int i = availableToAdd! - quantity! ;
+    if (i < 0) {
+      throw Exception("Product stock exceeded.");
+    }
+    availableToAdd = availableToAdd! - quantity!;
+    existingQuantityInOrder = existingQuantityInOrder! + quantity!;
+    quantity = 1;
   }
 }
