@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:order_application/Data/Models/Card.dart';
+import 'package:order_application/Data/Models/CreditCard.dart';
 import 'package:order_application/Data/Models/ResponseBody.dart';
 import 'package:order_application/Data/Providers/network/apis/cards_api.dart';
 import 'package:order_application/Data/providers/network/api_provider.dart';
@@ -14,7 +14,7 @@ class CardRepository {
     return ResponseBody.fromJson(response);
   }
 
-  Future<ResponseBody> createAnCards(Card card) async {
+  Future<ResponseBody> createAnCards(CreditCard card) async {
     final request = CardAPI.createAnCards(Get.find<SharedPreferencesController>().token, card);
     final response = await _apiProvider.request(request);
     return ResponseBody.fromJson(response);

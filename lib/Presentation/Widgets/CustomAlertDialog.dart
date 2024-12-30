@@ -5,7 +5,6 @@ import 'package:order_application/Presentation/Widgets/CustomBlackButton.dart';
 import 'package:order_application/Presentation/Widgets/CustomOrangeButton.dart';
 
 class CustomAlertDialog extends StatelessWidget {
-  final String title;
   final String message;
   final String confirmText;
   final String cancelText;
@@ -14,7 +13,6 @@ class CustomAlertDialog extends StatelessWidget {
 
   const CustomAlertDialog({
     Key? key,
-    required this.title,
     required this.message,
     required this.confirmText,
     required this.cancelText,

@@ -1,12 +1,12 @@
 
-class Card {
+class CreditCard {
   int? id;
   final String name;
   final String cardNumber;
   final String expireDate;
   final int cvc;
 
-  Card({
+  CreditCard({
     this.id,
     required this.name,
     required this.cardNumber,
@@ -23,8 +23,8 @@ class Card {
     };
   }
 
-  factory Card.fromJson(Map<String, dynamic> json) {
-    return Card(
+  factory CreditCard.fromJson(Map<String, dynamic> json) {
+    return CreditCard(
       id: json['id'] as int,
       name: json['name'] as String,
       cardNumber: json['card_number'] as String,
@@ -33,8 +33,8 @@ class Card {
     );
   }
 
-  static List<Card> fromJsonList(List<Map<String, dynamic>> jsonList) {
-    return jsonList.map((json) => Card.fromJson(json)).toList();
+  static List<CreditCard> fromJsonList(List<Map<String, dynamic>> jsonList) {
+    return jsonList.map((json) => CreditCard.fromJson(json)).toList();
   }
 
   @override

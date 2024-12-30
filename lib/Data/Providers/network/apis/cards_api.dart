@@ -1,4 +1,4 @@
-import 'package:order_application/Data/Models/Card.dart';
+import 'package:order_application/Data/Models/CreditCard.dart';
 import 'package:order_application/Data/providers/network/api_endpoint.dart';
 import 'package:order_application/Data/providers/network/api_provider.dart';
 import 'package:order_application/Data/providers/network/api_request_representable.dart';
@@ -13,7 +13,7 @@ enum CardsAction {
 class CardAPI implements APIRequestRepresentable {
   final CardsAction action;
   final String token;
-  final Card? card;
+  final CreditCard? card;
   final int? id;
 
   CardAPI._({
@@ -27,7 +27,7 @@ class CardAPI implements APIRequestRepresentable {
   CardAPI.getAllCards(String token) : this._(action: CardsAction.getAllCards, token: token);
 
   // Constructor for create An Cards action
-  CardAPI.createAnCards(String token, Card card)
+  CardAPI.createAnCards(String token, CreditCard card)
       : this._(action: CardsAction.createAnCard, token: token, card: card);
 
   // Constructor for get An Cards action

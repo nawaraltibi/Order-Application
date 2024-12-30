@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:order_application/App/Utils/ControllerHandling.dart';
-import 'package:order_application/Data/Models/Card.dart';
+import 'package:order_application/Data/Models/CreditCard.dart';
 import 'package:order_application/Data/Models/Location.dart';
 import 'package:order_application/Data/Models/ResponseBody.dart';
 import 'package:order_application/Data/Models/User.dart';
@@ -158,7 +158,7 @@ class ProfileController extends GetxController {
   Future<void> createAnCards() async {
     await controllerHandling(
       () async {
-        Card card = Card(
+        CreditCard card = CreditCard(
             name: nameOnCardController.text,
             cardNumber: cardNumberController.text,
             expireDate: expiryDateController.text,
@@ -168,7 +168,7 @@ class ProfileController extends GetxController {
             .user
             .value
             .cards!
-            .add(Card.fromJson(response.data));
+            .add(CreditCard.fromJson(response.data));
         Get.back();
         Get.snackbar('Success', response.message!);
       },
@@ -201,7 +201,7 @@ class ProfileController extends GetxController {
       () async {
         final ResponseBody response = await getAllCardsUseCase.call();
         Get.find<UserController>().user.value.cards =
-            Card.fromJsonList(response.data);
+            CreditCard.fromJsonList(response.data);
       },
       loadingMap,
       'getAllCards',

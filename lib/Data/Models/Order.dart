@@ -1,4 +1,4 @@
-import 'package:order_application/Data/Models/Card.dart';
+import 'package:order_application/Data/Models/CreditCard.dart';
 import 'package:order_application/Data/Models/Location.dart';
 import 'package:order_application/Data/Models/OrderStatus.dart';
 import 'package:order_application/Data/Models/Product.dart';
@@ -7,7 +7,7 @@ class Order {
   int? id;
   List<Product>? products;
   Location? location;
-  Card? card;
+  CreditCard? card;
   OrderStatus status;
   double? totalCost;
   double? deliveryFee;
@@ -43,7 +43,7 @@ class Order {
           ?.map((product) => Product.fromJson(product))
           .toList(),
       location: json['location'] != null ? Location.fromJson(json['location']) : null,
-      card: json['card'] != null ? Card.fromJson(json['card']) : null,
+      card: json['card'] != null ? CreditCard.fromJson(json['card']) : null,
       status: OrderStatus.values
           .firstWhere((e) => e.toString() == 'OrderStatus.${json['status']}'),
       totalCost: json['totalCost'] != null ? (json['totalCost'] as num).toDouble() : null,
@@ -91,7 +91,7 @@ class Order {
   }
 
   void adjustProductQuantity(int productId, int delta) {
-    if (!_canEditProduct(delta > 0)) {
+    if (!canEditProduct(delta > 0)) {
       throw Exception("Cannot adjust product quantity in the current order state.");
     }
 
@@ -120,7 +120,7 @@ class Order {
   }
 
   void removeProduct(int productId, {bool requireConfirmation = false}) {
-    if (!_canEditProduct(false)) {
+    if (!canEditProduct(false)) {
       throw Exception("Cannot remove product in the current order state.");
     }
 
@@ -147,8 +147,8 @@ class Order {
     return products != null && products!.length == 1;
   }
 
-  void updateLocation(Location newLocation) {
-    if (!_isEditable()) {
+  void updateLocation(Location newLocation){
+    if (!isEditable()) {
       throw Exception("Cannot modify the order in its current state.");
     }
 
@@ -157,7 +157,7 @@ class Order {
     _updateTotalCost();
   }
 
-  void updateCard(Card newCard) {
+  void updateCard(CreditCard newCard) {
     if (!_isCart()) {
       throw Exception("Cannot modify the order in its current state.");
     }
@@ -199,7 +199,7 @@ class Order {
     return status == OrderStatus.cart;
   }
 
-  bool _isEditable() {
+  bool isEditable() {
     return status == OrderStatus.pendingConfirmation ||
         status == OrderStatus.inDelivery;
   }
@@ -208,11 +208,11 @@ class Order {
     return status == OrderStatus.delivered;
   }
 
-  bool _canEditProduct(bool isAdding) {
+  bool canEditProduct(bool isAdding) {
     if (isAdding) {
       return _isCart();
     } else {
-      return _isEditable() || _isCart();
+      return isEditable() || _isCart();
     }
   }
 }

@@ -1,4 +1,4 @@
-import 'package:order_application/Data/Models/Card.dart';
+import 'package:order_application/Data/Models/CreditCard.dart';
 import 'package:order_application/Data/Models/ResponseBody.dart';
 import 'package:order_application/Data/Repository/card_repository.dart';
 
@@ -7,7 +7,7 @@ class CreateAnCardsUseCase {
 
   CreateAnCardsUseCase(this._repository);
 
-  Future<ResponseBody> call(Card card) {
+  Future<ResponseBody> call(CreditCard card) {
     return _repository.createAnCards(card);
   }
 }

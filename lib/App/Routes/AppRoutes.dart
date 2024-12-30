@@ -5,6 +5,7 @@ import 'package:order_application/Presentation/Pages/Cart/CartScreen.dart';
 import 'package:order_application/Presentation/Pages/Dashboard/DashboardPage.dart';
 import 'package:order_application/Presentation/Pages/MarketDetails/MarketDetailsScreen.dart';
 import 'package:order_application/Presentation/Pages/Onboarding/OnboardingScreen.dart';
+import 'package:order_application/Presentation/Pages/Orders/EditOrderScreen.dart';
 import 'package:order_application/Presentation/Pages/Profile/AboutScreen.dart';
 import 'package:order_application/Presentation/Pages/Profile/Addresses/AddAddressScreen.dart';
 import 'package:order_application/Presentation/Pages/Profile/Addresses/AddressesScreen.dart';
@@ -138,6 +139,11 @@ class AppRoutes {
     GetPage(
       name: '/Cart',
       page: () => CartScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 500),
+    ),GetPage(
+      name: '/EditOrder',
+      page: () => EditOrderScreen(),
       transition: Transition.rightToLeft,
       transitionDuration: Duration(milliseconds: 500),
     ),

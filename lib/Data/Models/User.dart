@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:order_application/Data/Models/Card.dart';
+import 'package:order_application/Data/Models/CreditCard.dart';
 import 'package:order_application/Data/Models/Location.dart';
 
 class User {
@@ -13,7 +13,7 @@ class User {
   File? image;
   String? imageName;
   List<Location>? locations;
-  List<Card>? cards;
+  List<CreditCard>? cards;
 
   User.empty();
 
@@ -62,7 +62,7 @@ class User {
           : null,
       cards: json['cards'] != null
           ? (json['cards'] as List<dynamic>)
-          .map((cardJson) => Card.fromJson(cardJson))
+          .map((cardJson) => CreditCard.fromJson(cardJson))
           .toList()
           : null,
     );

@@ -192,7 +192,6 @@ class ProfileScreen extends GetView<ProfileController> {
                           context: context,
                           builder: (context) {
                             return CustomAlertDialog(
-                              title: '',
                               message: 'are you sure you want to log out?'.tr,
                               onConfirm: () {
                                 controller.logoutUser();

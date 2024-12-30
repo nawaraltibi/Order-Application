@@ -78,6 +78,13 @@ class AppTranslations extends Translations {
           'Shopping:': 'Shopping:',
           'Price:': 'Price:',
           'Add to cart': 'Add to cart',
+          'submitted_requests':'Submitted requests:',
+          'wait_confirmation':'Waiting for confirmation',
+          'on_way':'On the way',
+          'request_on':'Request on @day/@month/@year',
+          ' edit_order':'Edit the order',
+          ' delete_request':'Delete request',
+          'delete_confirmation':'Are you sure you want to Delete request?',
         },
         'ar_SA': {
           'general': 'عام',
@@ -175,6 +182,15 @@ class AppTranslations extends Translations {
           'default_empty': 'لا توجد بيانات.',
           'retry': 'إعادة المحاولة',
           'Cart': 'السلة',
+          'submitted_requests':'الطلبات المرسلة:',
+          'wait_confirmation':'بانتظار الموافقة',
+          'on_way':'في الطريق',
+          'Delivered':'تم التوصيل',
+          'request_on':'تم الطلب في @day/@month/@year',
+          ' edit_order':'تعديل الطلب',
+          ' delete_request':'حذف الطلب',
+          'delete_confirmation':'هل أنت متأكد من رغبتك بحذف الطلب؟',
+          'Delete':'حذف'
         },
       };
 }
