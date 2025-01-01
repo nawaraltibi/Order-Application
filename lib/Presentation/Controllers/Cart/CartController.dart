@@ -34,7 +34,7 @@ class CartController extends GetxController {
     }
   }
 
-  Future<bool> removeProduct(int productId) async {
+  Future<bool> removeProduct(int? productId) async {
     bool isSuccess = false;
     try {
       bool confirmation = false;
@@ -46,7 +46,7 @@ class CartController extends GetxController {
             onConfirm: () {
               isSuccess = true;
               confirmation = true;
-              currentCart.value.removeProduct(productId, requireConfirmation: confirmation);
+              currentCart.value.removeProduct(productId!, requireConfirmation: confirmation);
               currentCart.refresh();
               Get.back();
               Get.back();
@@ -60,7 +60,7 @@ class CartController extends GetxController {
           barrierDismissible: false,
         );
       } else {
-        currentCart.value.removeProduct(productId, requireConfirmation: confirmation);
+        currentCart.value.removeProduct(productId!, requireConfirmation: confirmation);
         currentCart.refresh();
         isSuccess = true;
       }

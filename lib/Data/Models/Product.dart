@@ -33,10 +33,12 @@ class Product {
     this.categoryAr,
     this.isFavorite,
     this.market,
+    this.existingQuantityInOrder,
+    this.quantity,
   }) {
     availableToAdd = stockQuantity;
-    existingQuantityInOrder = 0;
-    quantity = 1;
+    // existingQuantityInOrder = 0;
+    // quantity = 1;
   }
 
   factory Product.fromJson(Map<String, dynamic> json) {

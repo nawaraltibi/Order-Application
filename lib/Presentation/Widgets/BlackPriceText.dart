@@ -6,9 +6,9 @@ import '../../App/Color/Color.dart';
 import '../../App/Styles/AppTextStyles.dart';
 
 class BlackPriceText extends StatelessWidget {
-  final int? price;
+   var price;
   final int size;
-  const BlackPriceText({
+   BlackPriceText({
     required this.price,
     required this.size,
     super.key,

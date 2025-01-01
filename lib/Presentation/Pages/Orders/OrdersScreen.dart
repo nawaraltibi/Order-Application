@@ -337,7 +337,9 @@ class OrdersScreen extends GetView<OrdersController> {
                                                                               InkWell(
                                                                             onTap:
                                                                                 () {
-                                                                              controller.goToEditOrderPage();
+                                                                              controller.goToEditOrderPage(
+                                                                                controller.testOrder,
+                                                                              );
                                                                             },
                                                                             borderRadius:
                                                                                 BorderRadius.circular(16.r),

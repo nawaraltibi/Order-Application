@@ -25,7 +25,7 @@ class Order {
     this.deliveredAt,
     this.createdAt,
   }) {
-    _updateTotalCost();
+    updateTotalCost();
   }
 
   Map<String, dynamic> toJson() {
@@ -78,7 +78,7 @@ class Order {
     if (!products!.contains(existingProduct)) {
       products!.add(existingProduct);
     }
-    _updateTotalCost();
+    updateTotalCost();
   }
 
   Product productById(int id){
@@ -123,7 +123,7 @@ class Order {
 
       product.availableToAdd = (product.availableToAdd ?? 0) - delta;
     }
-    _updateTotalCost();
+    updateTotalCost();
   }
 
 
@@ -158,7 +158,7 @@ class Order {
 
     products?.removeWhere((p) => p.id == productId);
 
-    _updateTotalCost();
+    updateTotalCost();
   }
 
   bool isOrderEmpty() {
@@ -176,7 +176,7 @@ class Order {
 
     location = newLocation;
 
-    _updateTotalCost();
+    updateTotalCost();
   }
 
   void updateCard(CreditCard newCard) {
@@ -186,7 +186,7 @@ class Order {
 
     card = newCard;
 
-    _updateTotalCost();
+    updateTotalCost();
   }
 
   void moveToNextStatus() {
@@ -204,10 +204,10 @@ class Order {
         throw Exception("The order has already been delivered.");
     }
 
-    _updateTotalCost();
+    updateTotalCost();
   }
 
-  void _updateTotalCost() {
+  void updateTotalCost() {
     if (products == null || products!.isEmpty) {
       totalCost = 0.0;
       return;

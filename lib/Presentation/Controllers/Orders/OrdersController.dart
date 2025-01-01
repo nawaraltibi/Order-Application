@@ -103,8 +103,8 @@ class OrdersController extends GetxController {
     );
   }
 
-  void goToEditOrderPage() {
-    Get.toNamed('/EditOrder');
+  void goToEditOrderPage(var data) {
+    Get.toNamed('/EditOrder',arguments: data);
   }
 
   var expandedOrders = <bool>[].obs;
@@ -169,21 +169,24 @@ class OrdersController extends GetxController {
           name: 'Samsung Galaxy A35',
           image: 'assets/images/mobile.jpg',
           price: 2700,
-          stockQuantity: 2,
+          quantity: 2,
+          existingQuantityInOrder: 2
         ),
         Product(
           id: 1,
           name: 'Samsung Galaxy A35',
           image: 'assets/images/mobile.jpg',
           price: 1700,
-          stockQuantity: 1,
+          quantity: 1,
+          existingQuantityInOrder: 1
         ),
         Product(
           id: 2,
           name: 'Samsung Galaxy A35',
           image: 'assets/images/mobile.jpg',
           price: 1200,
-          stockQuantity: 2,
+          quantity: 2,
+          existingQuantityInOrder: 2
         ),
       ]);
 
