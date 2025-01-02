@@ -190,7 +190,10 @@ class AppTranslations extends Translations {
           ' edit_order':'تعديل الطلب',
           ' delete_request':'حذف الطلب',
           'delete_confirmation':'هل أنت متأكد من رغبتك بحذف الطلب؟',
-          'Delete':'حذف'
+          'Delete':'حذف',
+          'Orders that need to be delivered:':'الطلبات التي تحتاج إلى توصيل:',
+          'Take it':'أخذ',
+          'Done':'تم التوصيل'
         },
       };
 }

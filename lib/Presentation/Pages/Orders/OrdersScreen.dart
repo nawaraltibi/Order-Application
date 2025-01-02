@@ -36,7 +36,7 @@ class OrdersScreen extends GetView<OrdersController> {
                         ListView.builder(
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
-                            itemCount: 1,
+                            itemCount: 2,
                             itemBuilder: (context, index) {
                               controller.initializeExpanded(2);
 
@@ -108,8 +108,7 @@ class OrdersScreen extends GetView<OrdersController> {
                                           Spacer(),
                                           IconButton(
                                             onPressed: () {
-                                              controller
-                                                  .updateExpanded(index);
+                                              controller.updateExpanded(index);
                                             },
                                             icon: Icon(
                                               controller.expandedOrders[index]
@@ -126,7 +125,7 @@ class OrdersScreen extends GetView<OrdersController> {
                                           duration: Duration(milliseconds: 300),
                                           curve: Curves.easeInOut,
                                           child:
-                                          controller.expandedOrders[index]
+                                              controller.expandedOrders[index]
                                                   ? Column(
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment

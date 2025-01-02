@@ -7,6 +7,7 @@ import 'package:order_application/App/Translations/AppTranslations.dart';
 import 'package:order_application/Presentation/Controllers/Language/LanguageController.dart';
 import 'package:order_application/Presentation/Controllers/SharedPreferences/SharedPreferencesController.dart';
 import 'package:order_application/Presentation/Controllers/Splash/SplashBindings.dart';
+import 'package:order_application/Presentation/Pages/Driver/DriverOrdersScreen.dart';
 import 'package:order_application/Presentation/Pages/Splash/SplashScreen.dart';
 
 import 'Data/Repository/user_repository.dart';
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
             initialBinding: DashboardBinding(),
             getPages: AppRoutes.routes,
             initialRoute: '/',
-            home: DashboardPage(),
+            home: DriverOrdersScreen(),
 
 
           );

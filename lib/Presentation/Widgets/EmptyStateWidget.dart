@@ -49,6 +49,9 @@ class EmptyStateWidget extends StatelessWidget {
         assetPath = 'assets/images/no_network.svg';
         message = 'no_network'.tr;
         break;
+      case EmptyState.noOrders:
+        assetPath = 'assets/images/no_orders.svg';
+        message = 'Nothing is available now. Click on the Get Current Location button to update and get the list of requests.';
       default:
         assetPath = 'assets/images/default_empty.svg';
         message = 'default_empty'.tr;

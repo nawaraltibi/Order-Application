@@ -3,6 +3,8 @@ import 'package:order_application/Presentation/Controllers/Auth/AuthBinding.dart
 import 'package:order_application/Presentation/Controllers/Dashboard/DashboardBinding.dart';
 import 'package:order_application/Presentation/Pages/Cart/CartScreen.dart';
 import 'package:order_application/Presentation/Pages/Dashboard/DashboardPage.dart';
+import 'package:order_application/Presentation/Pages/Driver/DriverOrderTakenScreen.dart';
+import 'package:order_application/Presentation/Pages/Driver/DriverOrdersScreen.dart';
 import 'package:order_application/Presentation/Pages/MarketDetails/MarketDetailsScreen.dart';
 import 'package:order_application/Presentation/Pages/Onboarding/OnboardingScreen.dart';
 import 'package:order_application/Presentation/Pages/Orders/EditOrderScreen.dart';
@@ -21,7 +23,6 @@ import '../../Presentation/Pages/Profile/Payment/NewCardScreen.dart';
 import '../../Presentation/Pages/Profile/Payment/PaymentMethodsScreen.dart';
 
 class AppRoutes {
-
   static final routes = [
     GetPage(name: '/', page: () => SplashScreen()),
     GetPage(name: '/Onboarding', page: () => OnboardingScreen()),
@@ -141,9 +142,22 @@ class AppRoutes {
       page: () => CartScreen(),
       transition: Transition.rightToLeft,
       transitionDuration: Duration(milliseconds: 500),
-    ),GetPage(
+    ),
+    GetPage(
       name: '/EditOrder',
       page: () => EditOrderScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: '/DriverOrders',
+      page: () => DriverOrdersScreen(),
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: '/DriverOrderTaken',
+      page: () => DriverOrderTakenScreen(),
       transition: Transition.rightToLeft,
       transitionDuration: Duration(milliseconds: 500),
     ),

@@ -4,7 +4,8 @@ enum EmptyState {
   noLocation,
   noBankCard,
   noFavorites,
+  noOrders,
   error,
   noNetwork,
-  defaultEmpty
+  defaultEmpty,
 }
