@@ -31,8 +31,7 @@ class AddressesScreen extends GetView<ProfileController> {
             Expanded(
               child: Obx(() {
                 final locations = Get.find<UserController>().user.value.locations ?? [];
-                final isLoading = controller.loadingMap['getAllAddress']?.value;
-                if (isLoading!) {
+                if (controller.loadingMap['getAllAddress']!.value) {
                   return Center(
                     child: CircularProgressIndicator(),
                   );

@@ -38,7 +38,22 @@ class DashboardBinding extends Bindings {
 
     Get.put<CartController>(CartController(), permanent: true);
 
-    Get.put<FavoriteController>(FavoriteController(addRemoveFavoriteUseCase: AddRemoveFavoriteUseCase(FavoritesRepository()), showFavoritesUseCase: ShowFavoritesUseCase(FavoritesRepository())), permanent: true);
+    Get.put<OrdersController>(
+        OrdersController(
+            getAllOrdersUseCase: GetAllOrdersUseCase(OrderRepository()),
+            createAnOrderUseCase: CreateAnOrderUseCase(OrderRepository()),
+            deleteAnOrderUseCase: DeleteAnOrderUseCase(OrderRepository()),
+            editAnOrderUseCase: EditAnOrderUseCase(OrderRepository()),
+            getAnOrderUseCase: GetAnOrderUseCase(OrderRepository())
+        ),
+        permanent: true);
+
+    Get.put<FavoriteController>(
+        FavoriteController(
+            addRemoveFavoriteUseCase: AddRemoveFavoriteUseCase(FavoritesRepository()),
+            showFavoritesUseCase: ShowFavoritesUseCase(FavoritesRepository())
+        ),
+        permanent: true);
 
     Get.put<HomeController>(HomeController(), permanent: true);
 

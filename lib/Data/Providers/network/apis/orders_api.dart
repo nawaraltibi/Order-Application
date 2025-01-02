@@ -53,9 +53,10 @@ class OrdersAPI implements APIRequestRepresentable {
       case OrdersAction.getAllOrders:
       case OrdersAction.createAnOrder:
       case OrdersAction.getAnOrder:
+      return "/user/orders";
       case OrdersAction.deleteAnOrder:
       case OrdersAction.editAnOrder:
-        return "/user/orders";
+        return "/user/orders/$id";
     }
   }
 
@@ -88,15 +89,15 @@ class OrdersAPI implements APIRequestRepresentable {
   @override
   Map<String, String> get query {
     final Map<String, String> queryParams = {};
-    switch (action) {
-      case OrdersAction.getAllOrders:
-      case OrdersAction.createAnOrder:
-        break;
-      case OrdersAction.getAnOrder:
-      case OrdersAction.deleteAnOrder:
-      case OrdersAction.editAnOrder:
-        queryParams['id'] = id.toString();
-    }
+    // switch (action) {
+    //   case OrdersAction.getAllOrders:
+    //   case OrdersAction.createAnOrder:
+    //     break;
+    //   case OrdersAction.getAnOrder:
+    //   case OrdersAction.deleteAnOrder:
+    //   case OrdersAction.editAnOrder:
+    //     queryParams['id'] = id.toString();
+    // }
     return queryParams;
   }
 

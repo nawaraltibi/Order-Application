@@ -42,7 +42,7 @@ class RectangularProductCard extends StatelessWidget {
               width: 73.w,
               height: 90.h,
               child: Image.network(
-                'http://$host2/images/${product.image}',
+                'http://$host2${product.image}',
                 fit: BoxFit.contain,
                 loadingBuilder: (BuildContext context, Widget child,
                     ImageChunkEvent? loadingProgress) {

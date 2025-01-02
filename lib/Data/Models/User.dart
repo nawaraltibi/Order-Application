@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:order_application/Data/Models/CreditCard.dart';
 import 'package:order_application/Data/Models/Location.dart';
+import 'package:order_application/Data/Models/Order.dart';
 
 class User {
   int? id;
@@ -14,6 +15,7 @@ class User {
   String? imageName;
   List<Location>? locations;
   List<CreditCard>? cards;
+  List<Order>? orders;
 
   User.empty();
 
@@ -27,6 +29,7 @@ class User {
     this.imageName,
     this.locations,
     this.cards,
+    this.orders
   }){
     name = setName();
   }

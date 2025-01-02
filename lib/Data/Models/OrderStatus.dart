@@ -40,16 +40,12 @@ enum OrderStatus {
   static OrderStatus fromString(String status) {
     switch (status) {
       case "cart":
-      case "في السلة":
         return OrderStatus.cart;
-      case "Waiting for confirmation":
-      case "بانتظار التأكيد":
+      case "waiting for confirmation":
         return OrderStatus.pendingConfirmation;
-      case "On the way":
-      case "قيد التوصيل":
+      case "on the way":
         return OrderStatus.inDelivery;
-      case "Delivered":
-      case "تم التوصيل":
+      case "delivered":
         return OrderStatus.delivered;
       default:
         throw Exception("Invalid order status: $status");

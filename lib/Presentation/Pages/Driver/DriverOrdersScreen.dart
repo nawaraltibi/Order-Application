@@ -115,7 +115,7 @@ class DriverOrdersScreen extends GetView<DriverController> {
   Column buildIsEmpty() {
     return Column(
       children: [
-        Expanded(child: EmptyStateWidget(state: EmptyState.noOrders)),
+        Expanded(child: EmptyStateWidget(state: EmptyState.noOrdersD)),
         Padding(
           padding: EdgeInsets.only(bottom: 40.h),
           child: GetLocationButton(),

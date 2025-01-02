@@ -13,6 +13,7 @@ class Order {
   double? deliveryFee;
   DateTime? deliveredAt;
   DateTime? createdAt;
+  bool expanded = false;
 
   Order({
     this.id,
@@ -26,6 +27,11 @@ class Order {
     this.createdAt,
   }) {
     updateTotalCost();
+  }
+
+  @override
+  String toString() {
+    return 'Order{id: $id, products: $products, location: $location, card: $card, status: $status, totalCost: $totalCost, deliveryFee: $deliveryFee, deliveredAt: $deliveredAt, createdAt: $createdAt}';
   }
 
   Map<String, dynamic> toJson() {
@@ -44,15 +50,13 @@ class Order {
           .toList(),
       location: json['location'] != null ? Location.fromJson(json['location']) : null,
       card: json['card'] != null ? CreditCard.fromJson(json['card']) : null,
-      status: OrderStatus.values
-          .firstWhere((e) => e.toString() == 'OrderStatus.${json['status']}'),
+      status: OrderStatus.fromString(json['status_en']),
       totalCost: json['totalCost'] != null ? (json['totalCost'] as num).toDouble() : null,
-      deliveryFee: json['deliveryFee'] != null ? (json['deliveryFee'] as num).toDouble() : 10.0,
-      deliveredAt: json['deliveredAt'] != null
+      deliveredAt: json['delivered_at'] != null
           ? DateTime.parse(json['deliveredAt'])
           : null,
-      createdAt: json['createdAt'] != null
-          ? DateTime.parse(json['createdAt'])
+      createdAt: json['created_at'] != null
+          ? DateTime.parse(json['created_at'])
           : null,
     );
   }

@@ -37,8 +37,7 @@ class Product {
     this.quantity,
   }) {
     availableToAdd = stockQuantity;
-    // existingQuantityInOrder = 0;
-    // quantity = 1;
+    quantity = 1;
   }
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -49,7 +48,8 @@ class Product {
       descriptionAr: json['description_ar'],
       price: json['price'],
       image: json['image'],
-      rate: json['rate']?.toDouble(),
+      existingQuantityInOrder: json['quantity'] ?? 0,
+      rate: double.parse(json['rate']),
       stockQuantity: json['stock_quantity'],
       totalSold: json['total_sold'],
       categoryEn: json['category_en'],
@@ -77,15 +77,21 @@ class Product {
   }
 
   String get description {
-    return Get.locale?.languageCode == 'ar' ? (descriptionAr ?? '') : (descriptionEn ?? '');
+    return Get.locale?.languageCode == 'ar'
+        ? (descriptionAr ?? '')
+        : (descriptionEn ?? '');
   }
 
   String get category {
-    return Get.locale?.languageCode == 'ar' ? (categoryAr ?? '') : (categoryEn ?? '');
+    return Get.locale?.languageCode == 'ar'
+        ? (categoryAr ?? '')
+        : (categoryEn ?? '');
   }
 
   void incrementQuantity() {
-    if (quantity != null && stockQuantity != null && quantity! < stockQuantity!) {
+    if (quantity != null &&
+        stockQuantity != null &&
+        quantity! < stockQuantity!) {
       quantity = quantity! + 1;
     }
   }
@@ -96,12 +102,12 @@ class Product {
     }
   }
 
-  int getTotalPrice(){
-    return quantity!*price!;
+  int getTotalPrice() {
+    return quantity! * price!;
   }
 
-  void addToCart(){
-    int i = availableToAdd! - quantity! ;
+  void addToCart() {
+    int i = availableToAdd! - quantity!;
     if (i < 0) {
       throw Exception("Product stock exceeded.");
     }

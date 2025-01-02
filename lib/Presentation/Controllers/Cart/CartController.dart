@@ -5,10 +5,16 @@ import 'package:order_application/Data/Models/OrderStatus.dart';
 import 'package:order_application/Data/Models/Product.dart';
 import 'package:order_application/Presentation/Widgets/CustomAlertDialog.dart';
 
+import '../Orders/OrdersController.dart';
+
 class CartController extends GetxController {
   Rx<Order> currentCart = Order(status: OrderStatus.cart).obs;
   RxMap<String, RxBool> loadingMap = <String, RxBool>{}.obs;
   RxMap<String, String?> errorMap = <String, String?>{}.obs;
+  var isExpanded = false.obs;
+
+  void toggleExpanded() => isExpanded.value = !isExpanded.value;
+
 
   bool isCartEmpty() {
     try {
@@ -91,23 +97,14 @@ class CartController extends GetxController {
     }
   }
 
-  void updateLocation(Location location) {
-    try {
-      currentCart.value.updateLocation(location);
-      currentCart.refresh();
-    } catch (e) {
-      errorMap['updateLocation'] = e.toString();
-      Get.snackbar('Error', e.toString());
-    }
-  }
-
   void clearCart() {
+    Get.back();
     currentCart.value.products?.clear();
     currentCart.refresh();
   }
 
-  var isExpanded = false.obs;
-
-  void toggleExpanded() => isExpanded.value = !isExpanded.value;
-
+  void sendCart(){
+    Get.find<OrdersController>().createOrder(currentCart.value);
+    clearCart();
+  }
 }

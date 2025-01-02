@@ -15,7 +15,7 @@ class Market {
     return Market(
       id: json['id'],
       name: json['name'],
-      rate: json['rate'].toDouble(),
+      rate: double.parse(json['rate']),
       logo: json['logo'],
     );
   }
