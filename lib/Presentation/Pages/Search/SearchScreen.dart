@@ -44,6 +44,12 @@ class SearchScreen extends GetView<SearchFieldController> {
                 final selectedFilter = controller.selectedFilter.value;
                 final isProducts = selectedFilter == SearchType.products;
 
+                if (controller.loadingMap['searchProducts']!.value &&
+                    controller.products.isEmpty &&
+                    controller.markets.isEmpty) {
+                  return Center(child: CircularProgressIndicator());
+                }
+
                 if (controller.searchQuery.isEmpty) {
                   return const Center(
                       child: EmptyStateWidget(state: EmptyState.searchPrompt));

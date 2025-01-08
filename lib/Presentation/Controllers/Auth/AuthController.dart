@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:order_application/Data/Models/Driver.dart';
 import 'package:order_application/Data/Models/ResponseBody.dart';
 import 'package:order_application/App/Utils/ControllerHandling.dart';
 import 'package:order_application/Data/Models/Location.dart';
@@ -10,16 +11,25 @@ import 'package:order_application/Domain/Usecases/auth_usecases/RegisterUserUseC
 import 'package:order_application/Domain/Usecases/auth_usecases/ResendVerificationCodeUseCase.dart';
 import 'package:order_application/Domain/Usecases/auth_usecases/VerifyUserUseCase.dart';
 import 'package:order_application/Data/Models/User.dart';
+import 'package:order_application/Presentation/Controllers/Driver/DriverController.dart';
 import 'package:order_application/Presentation/Controllers/SharedPreferences/SharedPreferencesController.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:order_application/Data/providers/network/api_endpoint.dart';
 import 'package:order_application/Presentation/Controllers/User/UserController.dart';
 
+import '../../../Domain/Usecases/DriverAuthUseCase/RegisterDriverUseCase.dart';
+import '../../../Domain/Usecases/DriverAuthUseCase/ResendVerificationCodeUseCaseForDriver.dart';
+import '../../../Domain/Usecases/DriverAuthUseCase/VerifyDriverUseCase.dart';
+
 class AuthController extends GetxController {
   final RegisterUserUseCase registerUserUseCase;
   final ResendVerificationCodeUseCase resendVerificationCodeUseCase;
   final VerifyUserUseCase verifyUserUseCase;
+
+  final RegisterDriverUseCase registerDriverUseCase;
+  final ResendVerificationCodeUseCaseForDriver resendVerificationCodeUseCaseForDriver;
+  final VerifyDriverUseCase verifyDriverUseCase;
 
   TextEditingController phoneController = TextEditingController();
   TextEditingController otpController = TextEditingController();
@@ -38,6 +48,7 @@ class AuthController extends GetxController {
   RxMap<String, String?> errorMap = <String, String?>{}.obs;
 
   Rx<User> user = Rx<User>(User.empty());
+  Rx<Driver> driver = Rx<Driver>(Driver.empty());
 
   var statusMessage = ''.obs;
   var remainingTime = ''.obs;
@@ -49,6 +60,9 @@ class AuthController extends GetxController {
     required this.registerUserUseCase,
     required this.resendVerificationCodeUseCase,
     required this.verifyUserUseCase,
+    required this.registerDriverUseCase,
+    required this.resendVerificationCodeUseCaseForDriver,
+    required this.verifyDriverUseCase,
   });
 
   @override
@@ -101,31 +115,36 @@ class AuthController extends GetxController {
   }
 
   void register(){
-    user.value.phone = phoneController.text;
-    if (user.value.phone == null || !RegExp(r'^\+963\d{9}$').hasMatch(user.value.phone!)) {
-      Get.snackbar('Failed', "Please enter a valid phone number starting with +963");
-      return;
-    }
     if(!isDelivery){
+      user.value.phone = phoneController.text;
+      if (user.value.phone == null || !RegExp(r'^\+963\d{9}$').hasMatch(user.value.phone!)) {
+        Get.snackbar('Failed', "Please enter a valid phone number starting with +963");
+        return;
+      }
       registerUser();
     }else{
-
+      driver.value.phone = phoneController.text;
+      if (driver.value.phone == null || !RegExp(r'^\+963\d{9}$').hasMatch(driver.value.phone!)) {
+        Get.snackbar('Failed', "Please enter a valid phone number starting with +963");
+        return;
+      }
+      registerDriver();
     }
   }
 
-  void resend(){
-    if(!isDelivery){
+  void resend() {
+    if (!isDelivery) {
       resendUserVerificationCode();
-    }else{
-
+    } else {
+      resendDriverVerificationCode();
     }
   }
 
-  void verify(){
-    if(!isDelivery){
+  void verify() {
+    if (!isDelivery) {
       verifyUser();
-    }else{
-
+    } else {
+      verifyDriver();
     }
   }
 
@@ -164,7 +183,7 @@ class AuthController extends GetxController {
         Get.snackbar('Success', response.message!);
         if(response.userExists!){
           Get.find<SharedPreferencesController>().saveData('token',response.token!);
-          Get.toNamed("/DashboardPage");
+          Get.offAllNamed("/DashboardPage");
           Get.find<UserController>().user.value = User.fromJson(response.data);
         }else{
           Get.toNamed("/FillData");
@@ -231,7 +250,8 @@ class AuthController extends GetxController {
         if (response.statusCode == 201) {
           Get.snackbar('Success', responseBody.message!);
           Get.find<SharedPreferencesController>().saveData('token',responseBody.token!);
-          Get.toNamed("/DashboardPage");
+          Get.find<SharedPreferencesController>().saveData('role', 'user');
+          Get.offAllNamed("/DashboardPage");
           Get.find<UserController>().user.value = User.fromJson(responseBody.data);
         } else {
           Get.snackbar('Error', responseBody.message!);
@@ -241,6 +261,51 @@ class AuthController extends GetxController {
       'fill_data',
       errorMap,
       'fill_data',
+    );
+  }
+
+  Future<void> registerDriver() async {
+    await controllerHandling(
+          () async {
+        final ResponseBody response = await registerDriverUseCase.call(driver.value);
+        Get.snackbar('Success', response.message!);
+        Get.toNamed("/Verification");
+      },
+      loadingMap,
+      'register',
+      errorMap,
+      'register',
+    );
+  }
+
+  Future<void> resendDriverVerificationCode() async {
+    await controllerHandling(
+          () async {
+        final ResponseBody response = await resendVerificationCodeUseCaseForDriver.call(driver.value);
+        Get.snackbar('Success', response.message!);
+      },
+      loadingMap,
+      'resend_verification_code',
+      errorMap,
+      'resend_verification_code',
+    );
+  }
+
+  Future<void> verifyDriver() async {
+    await controllerHandling(
+          () async {
+        driver.value.otp = otpController.text;
+        final ResponseBody response = await verifyDriverUseCase.call(driver.value);
+        Get.snackbar('Success', response.message!);
+        Get.find<SharedPreferencesController>().saveData('token', response.token!);
+        Get.find<SharedPreferencesController>().saveData('role', 'driver');
+        Get.offAllNamed("/DriverOrders");
+        Get.find<DriverController>().driver.value = Driver.fromJson(response.data);
+      },
+      loadingMap,
+      'verify',
+      errorMap,
+      'verify',
     );
   }
 }

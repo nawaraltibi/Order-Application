@@ -6,6 +6,8 @@ import 'package:order_application/App/Const/Host.dart';
 import 'package:order_application/Data/Models/Market.dart';
 import '../../App/Color/Color.dart';
 import '../../App/Styles/AppTextStyles.dart';
+import '../../App/Utils/GetPath.dart';
+import 'DynamicImage.dart';
 
 class MarketCard extends StatelessWidget {
   final Market market;
@@ -41,30 +43,7 @@ class MarketCard extends StatelessWidget {
             SizedBox(
               width: 73.w,
               height: 92.h,
-              child: Image.network(
-                'http://$host2/images/${market.logo}',
-                fit: BoxFit.contain,
-                loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                  if (loadingProgress == null) {
-                    return child;
-                  } else {
-                    return Center(
-                      child: CircularProgressIndicator(
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
-                            : null,
-                        strokeWidth: 2,
-                        color: AppColors.primary,
-                      ),
-                    );
-                  }
-                },
-                errorBuilder: (context, error, stackTrace) => Icon(
-                  Icons.broken_image,
-                  size: 50,
-                  color: Colors.grey,
-                ),
-              ),
+              child: dynamicImage(imagePath: getMarketPath(market)),
             ),
             SizedBox(width: 12.w),
             // Market Details
@@ -102,7 +81,7 @@ class MarketCard extends StatelessWidget {
                       ),
                       SizedBox(width: 4.w),
                       Text(
-                        "review".trParams({'num': market.id.toString()}),
+                        "review".trParams({'num': market.rateCount.toString()}),
                         style: AppTextStyles.language.copyWith(
                           color: const Color(0xFFC0C0CF),
                           fontWeight: FontWeight.w600,

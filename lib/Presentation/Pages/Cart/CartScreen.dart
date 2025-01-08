@@ -26,25 +26,27 @@ class CartScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildAttentionBox(),
-              SizedBox(height: 30.h),
-              SectionTitle(text: 'What has been determined:'.tr),
-              SizedBox(height: 15.h),
-              _buildProductList(),
-              SizedBox(height: 20.h),
-              _buildDeliveryAddressBox(),
-              SizedBox(height: 20.h),
-              _buildPriceSummary(),
-              SizedBox(height: 25.h),
-              CustomBlackButton(buttonText: 'Buy'.tr, onPressed: () {controller.sendCart();}),
-              SizedBox(height: 20.h),
-              CustomOrangebButton(buttonText: 'Cancel'.tr, onPressed: () {controller.clearCart();}),
-              SizedBox(height: 40.h),
-            ],
-          ),
+          child: Obx((){
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildAttentionBox(),
+                SizedBox(height: 30.h),
+                SectionTitle(text: 'What has been determined:'.tr),
+                SizedBox(height: 15.h),
+                _buildProductList(),
+                SizedBox(height: 20.h),
+                _buildDeliveryAddressBox(),
+                SizedBox(height: 20.h),
+                _buildPriceSummary(),
+                SizedBox(height: 25.h),
+                CustomBlackButton(buttonText: 'Buy'.tr, onPressed: () {controller.sendCart();}),
+                SizedBox(height: 20.h),
+                CustomOrangebButton(buttonText: 'Cancel'.tr, onPressed: () {controller.clearCart();}),
+                SizedBox(height: 40.h),
+              ],
+            );
+          }),
         ),
       ),
     );
@@ -110,9 +112,10 @@ class CartScreen extends StatelessWidget {
       children: [
         for (var product in controller.currentCart.value.products ?? [])
           Padding(
+            key: ValueKey(product.id),
             padding: EdgeInsets.only(bottom: 20.h),
             child: SwipeToDeleteWidget(
-              height: 120,
+              height: 130,
               child: productCardForCart(
                  product,
               ),
@@ -173,198 +176,191 @@ class CartScreen extends StatelessWidget {
   }
 
   Widget _buildLocationDetails() {
+    Location? location = controller.currentCart.value.location;
 
-    return Obx(() {
-      Location? location = controller.currentCart.value.location;
-
-      return Column(
-        children: [
-          if (location != null)
-            Container(
-              width: 300.w,
-              margin: EdgeInsets.only(top: 10.h, bottom: 5.h),
-              padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
-              decoration: BoxDecoration(
-                color: Color(0xFFF1F1F1),
-                borderRadius: BorderRadius.circular(16.r),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    location.name,
-                    style: AppTextStyles.language.copyWith(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF263238),
-                    ),
-                  ),
-                  SizedBox(height: 8.h),
-                  Text(
-                    location.region ?? 'City',
-                    style: AppTextStyles.language.copyWith(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xFF8E8EA9),
-                    ),
-                  ),
-                  SizedBox(height: 5.h),
-                  Text(
-                    location.street ?? 'Street',
-                    style: AppTextStyles.language.copyWith(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xFF8E8EA9),
-                    ),
-                  ),
-                ],
-              ),
+    return Column(
+      children: [
+        if (location != null)
+          Container(
+            width: 300.w,
+            margin: EdgeInsets.only(top: 10.h, bottom: 5.h),
+            padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
+            decoration: BoxDecoration(
+              color: Color(0xFFF1F1F1),
+              borderRadius: BorderRadius.circular(16.r),
             ),
-          Padding(
-            padding: EdgeInsets.only(left: 10.w, top: 15.h),
-            child: PlaceOrCardText(
-              isAdd: false,
-              isPlace: true,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  location.name,
+                  style: AppTextStyles.language.copyWith(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFF263238),
+                  ),
+                ),
+                SizedBox(height: 8.h),
+                Text(
+                  location.region ?? 'City',
+                  style: AppTextStyles.language.copyWith(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFF8E8EA9),
+                  ),
+                ),
+                SizedBox(height: 5.h),
+                Text(
+                  location.street ?? 'Street',
+                  style: AppTextStyles.language.copyWith(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFF8E8EA9),
+                  ),
+                ),
+              ],
             ),
           ),
-        ],
-      );
-    });
+        Padding(
+          padding: EdgeInsets.only(left: 10.w, top: 15.h),
+          child: PlaceOrCardText(
+            isAdd: false,
+            isPlace: true,
+          ),
+        ),
+      ],
+    );
   }
 
   Widget _buildPriceSummary() {
-    return Obx(() {
-      return Container(
-        padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16.r),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Text(
-                  'Price of products'.tr,
-                  style: AppTextStyles.language.copyWith(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF666687),
-                  ),
-                ),
-                Spacer(),
-                BlackPriceText(price: controller.currentCart.value.totalCost!.toInt() - controller.currentCart.value.deliveryFee!.toInt(), size: 14),
-              ],
-            ),
-            SizedBox(height: 15.h),
-            Row(
-              children: [
-                Text(
-                  'Delivery'.tr,
-                  style: AppTextStyles.language.copyWith(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF666687),
-                  ),
-                ),
-                Spacer(),
-                BlackPriceText(price: controller.currentCart.value.deliveryFee!.toInt(), size: 14),
-              ],
-            ),
-            Divider(
-              thickness: 1.5,
-              color: Color(0xFFEAEAEF),
-            ),
-            controller.currentCart.value.card != null
-                ? _buildCardDetails()
-                : Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 10.h, horizontal: 25.w),
-                    child: PlaceOrCardText(
-                      isAdd: true,
-                      isPlace: false,
-                    ),
-                  ),
-            Divider(
-              thickness: 1.5,
-              color: Color(0xFFEAEAEF),
-            ),
-            Row(
-              children: [
-                Text(
-                  'Total price'.tr,
-                  style: AppTextStyles.language.copyWith(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFF4A4A6A),
-                  ),
-                ),
-                Spacer(),
-                OrangePriceText(price: controller.currentCart.value.totalCost!.toInt(), size: 16),
-              ],
-            ),
-          ],
-        ),
-      );
-    });
-  }
-
-  Widget _buildCardDetails() {
-    return Obx(() {
-      final card = controller.currentCart.value.card;
-
-      if (card == null) {
-        return Center(
-          child: Text(
-            'No card available'.tr,
-            style: AppTextStyles.language.copyWith(
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w600,
-              color: Color(0xFF8E8EA9),
-            ),
-          ),
-        );
-      }
-
-      return Column(
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16.r),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            margin: EdgeInsets.only(top: 10.h, bottom: 5.h),
-            padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 10.w),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16.r),
-              border: Border.all(
-                color: Color(0xFFEAEAEF),
-                width: 1,
-              ),
-            ),
-            child: ListTile(
-              leading: SvgPicture.asset(
-                'assets/icons/Credit-Card.svg',
-                width: 24.w,
-                height: 24.h,
-              ),
-              title: Text(
-                card.name,
+          Row(
+            children: [
+              Text(
+                'Price of products'.tr,
                 style: AppTextStyles.language.copyWith(
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF8E8EA9),
+                  color: Color(0xFF666687),
                 ),
               ),
-            ),
+              Spacer(),
+              BlackPriceText(price: controller.currentCart.value.totalCost!.toInt() - controller.currentCart.value.deliveryFee!.toInt(), size: 14),
+            ],
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 25.w),
+          SizedBox(height: 15.h),
+          Row(
+            children: [
+              Text(
+                'Delivery'.tr,
+                style: AppTextStyles.language.copyWith(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF666687),
+                ),
+              ),
+              Spacer(),
+              BlackPriceText(price: controller.currentCart.value.deliveryFee!.toInt(), size: 14),
+            ],
+          ),
+          Divider(
+            thickness: 1.5,
+            color: Color(0xFFEAEAEF),
+          ),
+          controller.currentCart.value.card != null
+              ? _buildCardDetails()
+              : Padding(
+            padding:
+            EdgeInsets.symmetric(vertical: 10.h, horizontal: 25.w),
             child: PlaceOrCardText(
-              isAdd: false,
+              isAdd: true,
               isPlace: false,
             ),
           ),
+          Divider(
+            thickness: 1.5,
+            color: Color(0xFFEAEAEF),
+          ),
+          Row(
+            children: [
+              Text(
+                'Total price'.tr,
+                style: AppTextStyles.language.copyWith(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xFF4A4A6A),
+                ),
+              ),
+              Spacer(),
+              OrangePriceText(price: controller.currentCart.value.totalCost!.toInt(), size: 16),
+            ],
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildCardDetails() {
+    final card = controller.currentCart.value.card;
+
+    if (card == null) {
+      return Center(
+        child: Text(
+          'No card available'.tr,
+          style: AppTextStyles.language.copyWith(
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF8E8EA9),
+          ),
+        ),
       );
-    });
+    }
+
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.only(top: 10.h, bottom: 5.h),
+          padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 10.w),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16.r),
+            border: Border.all(
+              color: Color(0xFFEAEAEF),
+              width: 1,
+            ),
+          ),
+          child: ListTile(
+            leading: SvgPicture.asset(
+              'assets/icons/Credit-Card.svg',
+              width: 24.w,
+              height: 24.h,
+            ),
+            title: Text(
+              card.name,
+              style: AppTextStyles.language.copyWith(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF8E8EA9),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 25.w),
+          child: PlaceOrCardText(
+            isAdd: false,
+            isPlace: false,
+          ),
+        ),
+      ],
+    );
   }
 }

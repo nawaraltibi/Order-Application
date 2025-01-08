@@ -48,7 +48,7 @@ class Order {
       products: (json['products'] as List?)
           ?.map((product) => Product.fromJson(product))
           .toList(),
-      location: json['location'] != null ? Location.fromJson(json['location']) : null,
+      location: json['address'] != null ? Location.fromJson(json['address']) : null,
       card: json['card'] != null ? CreditCard.fromJson(json['card']) : null,
       status: OrderStatus.fromString(json['status_en']),
       totalCost: json['totalCost'] != null ? (json['totalCost'] as num).toDouble() : null,
@@ -90,10 +90,6 @@ class Order {
   }
 
   void adjustProductQuantity(int productId, int delta) {
-    if (!canEditProduct(delta > 0)) {
-      throw Exception("Cannot adjust product quantity in the current order state.");
-    }
-
     final product = products!.firstWhere(
           (p) => p.id == productId,
       orElse: () => throw Exception("Product not found."),
@@ -102,32 +98,28 @@ class Order {
     int newQuantity = (product.existingQuantityInOrder ?? 0) + delta;
 
     if (newQuantity <= 0) {
-      throw Exception("Cannot adjust product quantity to zero or below.");
+      throw Exception("Cannot reduce quantity to zero.");
     }
 
-    if (delta > 0 && newQuantity >= product.stockQuantity!) {
-      throw Exception("Exceeds available stock.");
-    }
-
-    if (delta > 0) {
-      int availableToAdd = product.stockQuantity! - (product.existingQuantityInOrder ?? 0);
-      if (delta > availableToAdd) {
-        throw Exception("Product stock exceeded.");
+    if (isEditable()) {
+      if (newQuantity > product.originalQuantityInOrder!) {
+        throw Exception(
+            "Cannot exceed the originally ordered quantity (${product.originalQuantityInOrder}).");
       }
-      product.existingQuantityInOrder = newQuantity;
-
-      product.availableToAdd = availableToAdd - delta;
-    }
-    else if (delta < 0) {
-      int updatedExistingQuantity = (product.existingQuantityInOrder ?? 0) + delta;
-      if (updatedExistingQuantity < 0) {
-        throw Exception("Cannot reduce product quantity below zero.");
+    } else {
+      if (newQuantity > product.availableToAdd!) {
+        throw Exception("Cannot exceed available stock.");
       }
-      product.existingQuantityInOrder = newQuantity;
-
-      product.availableToAdd = (product.availableToAdd ?? 0) - delta;
+      product.availableToAdd = product.stockQuantity! - newQuantity;
     }
+
+    product.existingQuantityInOrder = newQuantity;
+
     updateTotalCost();
+  }
+
+  bool _isEditableState() {
+    return status == OrderStatus.pendingConfirmation || status == OrderStatus.inDelivery;
   }
 
 
@@ -154,13 +146,18 @@ class Order {
           "You are about to remove the last product. Set `requireConfirmation` to true to confirm.");
     }
 
+
+
     final productToRemove = products!.firstWhere((p) => p.id == productId);
+
 
     productToRemove.existingQuantityInOrder = 0;
     productToRemove.availableToAdd = productToRemove.stockQuantity;
     productToRemove.quantity = 1;
 
-    products?.removeWhere((p) => p.id == productId);
+    if(_isCart()){
+      products?.removeWhere((p) => p.id == productId);
+    }
 
     updateTotalCost();
   }

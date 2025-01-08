@@ -41,8 +41,8 @@ class OrdersAPI implements APIRequestRepresentable {
       : this._(action: OrdersAction.deleteAnOrder, token: token, id: id);
 
   // Constructor for edit An Order action
-  OrdersAPI.editAnOrder(String token, int id,Order order)
-      : this._(action: OrdersAction.deleteAnOrder, token: token, id: id,order: order);
+  OrdersAPI.editAnOrder(String token, int id, Order order)
+      : this._(action: OrdersAction.editAnOrder, token: token, id: id,order: order);
 
   @override
   String get endpoint => APIEndpoint.API;
@@ -52,8 +52,8 @@ class OrdersAPI implements APIRequestRepresentable {
     switch (action) {
       case OrdersAction.getAllOrders:
       case OrdersAction.createAnOrder:
-      case OrdersAction.getAnOrder:
       return "/user/orders";
+      case OrdersAction.getAnOrder:
       case OrdersAction.deleteAnOrder:
       case OrdersAction.editAnOrder:
         return "/user/orders/$id";
@@ -89,15 +89,6 @@ class OrdersAPI implements APIRequestRepresentable {
   @override
   Map<String, String> get query {
     final Map<String, String> queryParams = {};
-    // switch (action) {
-    //   case OrdersAction.getAllOrders:
-    //   case OrdersAction.createAnOrder:
-    //     break;
-    //   case OrdersAction.getAnOrder:
-    //   case OrdersAction.deleteAnOrder:
-    //   case OrdersAction.editAnOrder:
-    //     queryParams['id'] = id.toString();
-    // }
     return queryParams;
   }
 
@@ -111,17 +102,18 @@ class OrdersAPI implements APIRequestRepresentable {
           'order_items': order?.products?.map((product) {
             return {
               'product_id': product.id,
-              'quantity': product.quantity,
+              'quantity': product.existingQuantityInOrder,
             };
           }).toList() ?? [],
         };
       case OrdersAction.editAnOrder:
+
         return {
           'address_id': order?.location?.id,
           'order_items': order?.products?.map((product) {
             return {
               'product_id': product.id,
-              'quantity': product.quantity,
+              'quantity': product.existingQuantityInOrder,
             };
           }).toList() ?? [],
         };

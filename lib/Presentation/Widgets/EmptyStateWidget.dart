@@ -43,7 +43,7 @@ class EmptyStateWidget extends StatelessWidget {
         break;
       case EmptyState.noOrdersU:
         assetPath = 'assets/images/no_favorites.svg';
-        message = 'no_orders'.tr;
+        message = 'no_ordersU'.tr;
         break;
       case EmptyState.error:
         assetPath = 'assets/images/error.svg';
@@ -55,7 +55,7 @@ class EmptyStateWidget extends StatelessWidget {
         break;
       case EmptyState.noOrdersD:
         assetPath = 'assets/images/no_orders.svg';
-        message = 'Nothing is available now. Click on the Get Current Location button to update and get the list of requests.';
+        message = 'no_ordersD'.tr;
       default:
         assetPath = 'assets/images/default_empty.svg';
         message = 'default_empty'.tr;

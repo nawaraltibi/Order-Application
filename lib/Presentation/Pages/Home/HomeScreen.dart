@@ -7,6 +7,8 @@ import 'package:order_application/Presentation/Controllers/Cart/CartController.d
 import 'package:order_application/Presentation/Controllers/Home/HomeController.dart';
 import 'package:order_application/Presentation/Controllers/User/UserController.dart';
 import 'package:order_application/Presentation/Widgets/SectionTitle.dart';
+import '../../../App/Utils/GetPath.dart';
+import '../../Widgets/DynamicImage.dart';
 import '../../Widgets/ShoppingCartContainer.dart';
 
 class HomeScreen extends GetView<HomeController> {
@@ -21,18 +23,18 @@ class HomeScreen extends GetView<HomeController> {
               SizedBox(
                 height: 60.h,
               ),
-              Obx((){
+              Obx(() {
                 return Row(
                   children: [
                     Container(
                       width: 50.w,
                       height: 50.h,
                       decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              image: NetworkImage(
-                                  'http://$host2/images/${Get.find<UserController>().user.value.imageName}'),
-                              fit: BoxFit.cover)),
+                        shape: BoxShape.circle,
+                      ),
+                      child: ClipOval(
+                        child: dynamicImage(imagePath: getUserPath(), box: BoxFit.cover),
+                      ),
                     ),
                     SizedBox(
                       width: 19.w,
@@ -63,11 +65,14 @@ class HomeScreen extends GetView<HomeController> {
               SizedBox(
                 height: 30.h,
               ),
-              Obx((){
-                print(Get.find<CartController>().currentCart.value.toJson());
+              Obx(() {
                 return ShoppingCartContainer(
                   isShow: !Get.find<CartController>().isCartEmpty(),
-                  price: Get.find<CartController>().currentCart.value.totalCost!.toInt(),
+                  price: Get.find<CartController>()
+                      .currentCart
+                      .value
+                      .totalCost!
+                      .toInt(),
                 );
               }),
               SectionTitle(text: 'Most Requested:'.tr),

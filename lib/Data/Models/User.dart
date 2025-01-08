@@ -15,7 +15,6 @@ class User {
   String? imageName;
   List<Location>? locations;
   List<CreditCard>? cards;
-  List<Order>? orders;
 
   User.empty();
 
@@ -29,7 +28,6 @@ class User {
     this.imageName,
     this.locations,
     this.cards,
-    this.orders
   }){
     name = setName();
   }

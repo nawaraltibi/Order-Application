@@ -103,8 +103,8 @@ class CartController extends GetxController {
     currentCart.refresh();
   }
 
-  void sendCart(){
-    Get.find<OrdersController>().createOrder(currentCart.value);
+  Future<void> sendCart() async {
+    await Get.find<OrdersController>().createOrder(currentCart.value);
     clearCart();
   }
 }

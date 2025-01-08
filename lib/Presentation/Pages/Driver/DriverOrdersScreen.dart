@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:order_application/App/Styles/AppTextStyles.dart';
 import 'package:order_application/Data/Models/EmptyState.dart';
@@ -11,6 +12,7 @@ import 'package:order_application/Presentation/Widgets/OrangePriceText.dart';
 import 'package:order_application/Presentation/Widgets/SectionTitle.dart';
 import '../../../App/Color/Color.dart';
 import '../../Widgets/BlackPriceText.dart';
+import '../../Widgets/CustomAlertDialog.dart';
 
 class DriverOrdersScreen extends GetView<DriverController> {
   const DriverOrdersScreen({super.key});
@@ -18,6 +20,42 @@ class DriverOrdersScreen extends GetView<DriverController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: Icon(Icons.language_rounded),
+          onPressed: () {
+            if (Get.locale?.languageCode == 'en') {
+              Get.updateLocale(const Locale('ar'));
+            } else {
+              Get.updateLocale(const Locale('en'));
+            }
+          },
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout_outlined),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return CustomAlertDialog(
+                    message: 'are you sure you want to log out?'.tr,
+                    onConfirm: () {
+                      // controller.logoutUser();
+                    },
+                    onCancel: () {
+                      Get.back();
+                    },
+                    confirmText: 'logout'.tr,
+                    cancelText: 'cancel'.tr,
+                  );
+                },
+              );
+            },
+          ),
+        ],
+      ),
       body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: controller.orders.isEmpty
@@ -118,8 +156,12 @@ class DriverOrdersScreen extends GetView<DriverController> {
         Expanded(child: EmptyStateWidget(state: EmptyState.noOrdersD)),
         Padding(
           padding: EdgeInsets.only(bottom: 40.h),
-          child: GetLocationButton(),
-        )
+          child: GetLocationButton(
+              onLocationFetched: (Position position){
+                Get.find<DriverController>().updateLocation(position.latitude, position.longitude);
+              }
+          ),
+        ),
       ],
     );
   }

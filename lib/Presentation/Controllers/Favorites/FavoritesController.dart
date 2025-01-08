@@ -19,6 +19,13 @@ class FavoriteController extends GetxController {
 
   FavoriteController({required this.addRemoveFavoriteUseCase, required this.showFavoritesUseCase});
 
+  @override
+  void onInit() {
+    super.onInit();
+    loadingMap['showFavorites'] = false.obs;
+    loadingMap['addRemoveFavorite'] = false.obs;
+  }
+
   Future<void> addRemoveFavorite({
     required int id,
     required Product product,

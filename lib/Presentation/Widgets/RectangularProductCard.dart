@@ -5,6 +5,8 @@ import 'package:order_application/App/Const/Host.dart';
 import '../../App/Color/Color.dart';
 import '../../App/Styles/AppTextStyles.dart';
 import 'package:order_application/Data/Models/Product.dart';
+import '../../App/Utils/GetPath.dart';
+import 'DynamicImage.dart';
 import 'ToggleFavoriteButton.dart';
 
 class RectangularProductCard extends StatelessWidget {
@@ -41,32 +43,7 @@ class RectangularProductCard extends StatelessWidget {
             SizedBox(
               width: 73.w,
               height: 90.h,
-              child: Image.network(
-                'http://$host2${product.image}',
-                fit: BoxFit.contain,
-                loadingBuilder: (BuildContext context, Widget child,
-                    ImageChunkEvent? loadingProgress) {
-                  if (loadingProgress == null) {
-                    return child;
-                  } else {
-                    return Center(
-                      child: CircularProgressIndicator(
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded /
-                                (loadingProgress.expectedTotalBytes ?? 1)
-                            : null,
-                        strokeWidth: 2,
-                        color: AppColors.primary,
-                      ),
-                    );
-                  }
-                },
-                errorBuilder: (context, error, stackTrace) => const Icon(
-                  Icons.broken_image,
-                  size: 50,
-                  color: Colors.grey,
-                ),
-              ),
+              child: dynamicImage(imagePath: getProductPath(product)),
             ),
             SizedBox(width: 12.w),
             // Product Details

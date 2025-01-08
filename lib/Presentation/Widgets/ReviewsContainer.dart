@@ -18,13 +18,16 @@ class ReviewsContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 5.w),
-      height: 23.h,
+      height: 26.h,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20.w),
       ),
       child: Row(
         children: [
+          SizedBox(
+            width: 1.w,
+          ),
           Icon(
             Icons.star,
             color: AppColors.primary,
@@ -34,9 +37,12 @@ class ReviewsContainer extends StatelessWidget {
             width: 3.w,
           ),
           Text(
-            '$rating($reviews)',
+            '$rating ($reviews)',
             style: AppTextStyles.language
                 .copyWith(fontSize: 12.sp, fontWeight: FontWeight.w600),
+          ),
+          SizedBox(
+            width: 2.w,
           ),
         ],
       ),

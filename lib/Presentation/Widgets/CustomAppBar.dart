@@ -28,6 +28,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: AppBar(
           backgroundColor: AppColors.background,
           elevation: 0,
+          scrolledUnderElevation: 0,
           leading: GestureDetector(
             onTap: () {
               if (controller != null) {

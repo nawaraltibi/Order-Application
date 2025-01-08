@@ -25,7 +25,7 @@ class MyFavoritesScreen extends GetView<FavoriteController> {
             child: NotificationListener<ScrollNotification>(
               onNotification: (scrollInfo) {
                 if (scrollInfo.metrics.pixels ==
-                    scrollInfo.metrics.maxScrollExtent &&
+                        scrollInfo.metrics.maxScrollExtent &&
                     !(controller.loadingMap['showFavorites']?.value ?? false)) {
                   controller.getNextSearchPage();
                 }
@@ -104,43 +104,46 @@ class MyFavoritesScreen extends GetView<FavoriteController> {
                     ],
                   ),
                   SizedBox(height: 40.h),
-                  controller.searchedProducts.isEmpty
-                      ? EmptyStateWidget(
-                    state: EmptyState.noFavorites,
-                  )
-                      : ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: controller.searchedProducts.length + 1,
-                    itemBuilder: (context, index) {
-                      if (index == controller.searchedProducts.length) {
-                        return Obx(() {
-                          if (controller.meta.value?.currentPage ==
-                              controller.meta.value?.lastPage ||
-                              !(controller.loadingMap['showFavorites']
-                                  ?.value ??
-                                  false)) {
-                            return SizedBox.shrink();
-                          }
-                          return Padding(
-                            padding:
-                            EdgeInsets.symmetric(vertical: 20.h),
-                            child:
-                            Center(child: CircularProgressIndicator()),
-                          );
-                        });
-                      }
+                  controller.loadingMap['showFavorites']!.value
+                      ? Center(child: CircularProgressIndicator())
+                      : controller.searchedProducts.isEmpty
+                          ? EmptyStateWidget(
+                              state: EmptyState.noFavorites,
+                            )
+                          : ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: controller.searchedProducts.length + 1,
+                              itemBuilder: (context, index) {
+                                if (index ==
+                                    controller.searchedProducts.length) {
+                                  return Obx(() {
+                                    if (controller.meta.value?.currentPage ==
+                                            controller.meta.value?.lastPage ||
+                                        !(controller.loadingMap['showFavorites']
+                                                ?.value ??
+                                            false)) {
+                                      return SizedBox.shrink();
+                                    }
+                                    return Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 20.h),
+                                      child: Center(
+                                          child: CircularProgressIndicator()),
+                                    );
+                                  });
+                                }
 
-                      final product =
-                      controller.searchedProducts[index];
-                      return Padding(
-                        padding: EdgeInsets.only(bottom: 25.h),
-                        child: RectangularProductCard(
-                          product: product,
-                        ),
-                      );
-                    },
-                  ),
+                                final product =
+                                    controller.searchedProducts[index];
+                                return Padding(
+                                  padding: EdgeInsets.only(bottom: 25.h),
+                                  child: RectangularProductCard(
+                                    product: product,
+                                  ),
+                                );
+                              },
+                            ),
                 ],
               ),
             ),

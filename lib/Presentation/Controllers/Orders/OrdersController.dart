@@ -13,6 +13,7 @@ import 'package:order_application/Domain/Usecases/orders_usecases/DeleteAnOrderU
 import 'package:order_application/Domain/Usecases/orders_usecases/EditAnOrderUseCase.dart';
 import 'package:order_application/Domain/Usecases/orders_usecases/GetAnOrderUseCase.dart';
 
+import '../../../Domain/Usecases/rate_use_case/RateProductUseCase.dart';
 import '../../Widgets/CustomAlertDialog.dart';
 import '../User/UserController.dart';
 
@@ -22,6 +23,7 @@ class OrdersController extends GetxController {
   final DeleteAnOrderUseCase deleteAnOrderUseCase;
   final EditAnOrderUseCase editAnOrderUseCase;
   final GetAnOrderUseCase getAnOrderUseCase;
+  final RateProductUseCase rateProductUseCase;
 
   OrdersController({
     required this.getAllOrdersUseCase,
@@ -29,6 +31,7 @@ class OrdersController extends GetxController {
     required this.deleteAnOrderUseCase,
     required this.editAnOrderUseCase,
     required this.getAnOrderUseCase,
+    required this.rateProductUseCase,
   });
 
   Rx<Order?> selectedOrder = Rx<Order?>(null);
@@ -83,11 +86,12 @@ class OrdersController extends GetxController {
     );
   }
 
-  Future<void> editOrder(Order order, int id) async {
+  Future<void> editOrder(Order order) async {
     await controllerHandling(
       () async {
-        await editAnOrderUseCase.call(order: order, id: id);
-        await fetchAllOrders(); // Refresh the orders list after editing
+        await editAnOrderUseCase.call(order: order, id: order.id!);
+        await fetchAllOrders(); // Refresh the orders list after deletion
+        Get.back();
       },
       loadingMap,
       'editOrder',
@@ -97,9 +101,9 @@ class OrdersController extends GetxController {
   }
 
   Future<void> fetchOrderDetails(int id) async {
+    final ResponseBody response = await getAnOrderUseCase.call(id: id);
     await controllerHandling(
       () async {
-        final ResponseBody response = await getAnOrderUseCase.call(id: id);
         selectedOrder.value = Order.fromJson(response.data);
       },
       loadingMap,
@@ -130,18 +134,93 @@ class OrdersController extends GetxController {
     );
   }
 
+  Future<bool> removeProduct(int? productId) async {
+    bool isSuccess = false;
+    try {
+      bool confirmation = false;
+      if (selectedOrder.value!.hasSingleProduct()) {
+        await Get.dialog(
+          CustomAlertDialog(
+            message: 'are you sure you want to remove product?'.tr,
+            onConfirm: () {
+              isSuccess = true;
+              confirmation = true;
+              deleteOrder(selectedOrder.value!.id!);
+              selectedOrder.refresh();
+              Get.back();
+              Get.back();
+            },
+              onCancel: () {
+              Get.back();
+            },
+            confirmText: 'Yes'.tr,
+            cancelText: 'No'.tr,
+          ),
+          barrierDismissible: false,
+        );
+      } else {
+        selectedOrder.value!.removeProduct(productId!, requireConfirmation: confirmation);
+        selectedOrder.refresh();
+        isSuccess = true;
+      }
+    } catch (e) {
+      errorMap['removeProduct'] = e.toString();
+      Get.snackbar('Error', e.toString());
+    }
+    return isSuccess;
+  }
+
+  Rx<int> getProductQuantity(int productId) {
+    return selectedOrder.value!.productById(productId).existingQuantityInOrder!.obs;
+  }
+
+  void incrementProductQuantity(int productId) {
+    try {
+      selectedOrder.value!.incrementProductQuantity(productId);
+      selectedOrder.refresh();
+    } catch (e) {
+      errorMap['incrementProductQuantity'] = e.toString();
+      Get.snackbar('Error', e.toString());
+    }
+  }
+
+  void decrementProductQuantity(int productId) {
+    try {
+      selectedOrder.value!.decrementProductQuantity(productId);
+      selectedOrder.refresh();
+    } catch (e) {
+      errorMap['decrementProductQuantity'] = e.toString();
+      Get.snackbar('Error', e.toString());
+    }
+  }
+
   var productRatings = <int>[].obs;
 
   void initializeRatings(int productCount) {
     productRatings.value = List.generate(productCount, (_) => 0);
   }
 
-  void updateStars(int productIndex, int rating) {
+  Future<void> updateStars(int productIndex, int rating, Product product) async {
     if (rating == 0 && productRatings[productIndex] == 1) {
       productRatings[productIndex] = 0;
     } else {
       productRatings[productIndex] = rating + 1;
     }
-  }
 
+    await controllerHandling(
+          () async {
+        final ResponseBody response = await rateProductUseCase.call(
+          rateableType: "product",
+          rateableId: product.id!,
+          rate: productRatings[productIndex],
+        );
+
+        Get.snackbar(response.message!,"The ${product.name} has been rated as ${rating+1} stars." );
+      },
+      loadingMap,
+      'updateStars',
+      errorMap,
+      'updateStars',
+    );
+  }
 }

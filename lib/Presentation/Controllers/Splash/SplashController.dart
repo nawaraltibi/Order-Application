@@ -1,5 +1,10 @@
 import 'package:get/get.dart';
+import 'package:order_application/Presentation/Controllers/Driver/DriverController.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../Data/Repository/user_repository.dart';
+import '../../../Domain/Usecases/user_usecases/GetAuthenticatedUserUseCase.dart';
+import '../User/UserController.dart';
 
 class SplashController extends GetxController {
 
@@ -11,6 +16,7 @@ class SplashController extends GetxController {
     // Get the value that indicates whether the user has used the app before
     var isFirstTime = prefs.getBool('isFirstTime') ?? true;
     var token = prefs.getString('token');
+    var role = prefs.getString('role');
 
     // If it's the first use, update the value to false for the next time and navigate to Onboarding
     if (isFirstTime) {
@@ -24,6 +30,15 @@ class SplashController extends GetxController {
       return;
     }
     // Otherwise, navigate to the home screen
-    Get.offAllNamed('/DashboardPage');
+    if (role == 'user') {
+
+      Get.offAllNamed('/DashboardPage'); // Navigate to user dashboard
+    } else if (role == 'driver') {
+
+      Get.offAllNamed('/DriverOrders'); // Navigate to driver orders screen
+    } else {
+      // Handle unexpected roles (fallback)
+      Get.offAllNamed('/EnterNumber');
+    }
   }
 }

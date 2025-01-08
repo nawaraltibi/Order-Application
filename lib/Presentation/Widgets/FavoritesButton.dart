@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class FavoritesButton extends StatefulWidget {
 
@@ -14,7 +16,9 @@ class _FavoritesButtonState extends State<FavoritesButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Get.toNamed("Favorites");
+      },
       child: Container(
         width: 50.h,
         height: 50.h,

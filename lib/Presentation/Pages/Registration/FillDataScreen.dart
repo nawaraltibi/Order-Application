@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:order_application/Presentation/Controllers/Auth/AuthController.dart';
 import 'package:order_application/Presentation/Widgets/CustomAppBar.dart';
@@ -54,7 +55,11 @@ class FillDataScreen extends GetView<AuthController> {
                   keyboardType: TextInputType.name,
                 ),
                 SizedBox(height: 30.h),
-                GetLocationButton(),
+                GetLocationButton(
+                    onLocationFetched: (Position position){
+                      Get.find<AuthController>().updateLocation(position.latitude, position.longitude);
+                    }
+                ),
               ],
             ),
           ),

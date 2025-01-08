@@ -4,57 +4,49 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:order_application/App/Color/Color.dart';
 import 'package:order_application/App/Styles/AppTextStyles.dart';
-import 'package:order_application/Data/Models/Location.dart';
 import 'package:order_application/Data/Models/Order.dart';
-import 'package:order_application/Presentation/Controllers/Cart/CartController.dart';
 import 'package:order_application/Presentation/Controllers/Orders/OrdersController.dart';
 import 'package:order_application/Presentation/Widgets/BlackPriceText.dart';
 import 'package:order_application/Presentation/Widgets/CustomAppBar.dart';
 import 'package:order_application/Presentation/Widgets/CustomBlackButton.dart';
 import 'package:order_application/Presentation/Widgets/CustomOrangeButton.dart';
 import 'package:order_application/Presentation/Widgets/OrangePriceText.dart';
-import 'package:order_application/Presentation/Widgets/ProductCardForCart.dart';
 import 'package:order_application/Presentation/Widgets/SectionTitle.dart';
 import 'package:order_application/Presentation/Widgets/SwipeToDeleteWidget.dart';
-import '../../../Data/Models/Product.dart';
-import '../../Widgets/PlaceOrCardText.dart';
+import '../../Widgets/PlaceSelector.dart';
+import '../../Widgets/ProductCardForOrder.dart';
 
 class EditOrderScreen extends GetView<OrdersController> {
-  final CartController controller1 = Get.put(CartController());
-  final data = Get.arguments as Order;
 
   @override
   Widget build(BuildContext context) {
-    Order order = data;
-    var products = order.products;
-    Location? location = order.location;
-    var delivery = order.deliveryFee;
-    var totalPrice = order.totalCost;
-    var productsPrice = (totalPrice! - delivery!.toInt()).toInt();
+    controller.selectedOrder.value = Get.arguments as Order;
     return Scaffold(
       appBar: CustomAppBar(title: 'Cart'.tr),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildAttentionBox(),
-              SizedBox(height: 30.h),
-              SectionTitle(text: 'What has been determined:'.tr),
-              SizedBox(height: 15.h),
-              _buildProductList([]),
-              SizedBox(height: 10.h),
-              _buildDeliveryAddressBox(location),
-              SizedBox(height: 20.h),
-              _buildPriceSummary(productsPrice , delivery , totalPrice),
-              SizedBox(height: 25.h),
-              CustomBlackButton(buttonText: 'Buy'.tr, onPressed: () {}),
-              SizedBox(height: 20.h),
-              CustomOrangebButton(buttonText: 'Cancel'.tr, onPressed: () {}),
-              SizedBox(height: 40.h),
-            ],
-          ),
+          child: Obx((){
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildAttentionBox(),
+                SizedBox(height: 30.h),
+                SectionTitle(text: 'What has been determined:'.tr),
+                SizedBox(height: 15.h),
+                _buildProductList(),
+                SizedBox(height: 10.h),
+                _buildDeliveryAddressBox(),
+                SizedBox(height: 20.h),
+                _buildPriceSummary(),
+                SizedBox(height: 25.h),
+                CustomBlackButton(buttonText: 'Buy'.tr, onPressed: () {controller.editOrder(controller.selectedOrder.value!);}),
+                SizedBox(height: 20.h),
+                CustomOrangebButton(buttonText: 'Cancel'.tr, onPressed: () {}),
+                SizedBox(height: 40.h),
+              ],
+            );
+          })
         ),
       ),
     );
@@ -100,7 +92,7 @@ class EditOrderScreen extends GetView<OrdersController> {
                 ),
                 SizedBox(height: 5.h),
                 Text(
-                  'You cannot increase the quantity in your order or add new products. To do this, request another order.'
+                  'You cannot increase the quantity'
                       .tr,
                   style: AppTextStyles.language.copyWith(
                       fontSize: 15.sp,
@@ -115,27 +107,30 @@ class EditOrderScreen extends GetView<OrdersController> {
     );
   }
 
-  Widget _buildProductList(List<Product>?products) {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      itemCount: products!.length,
-      itemBuilder: (context, index) => Padding(
-        padding: EdgeInsets.only(bottom: 20.h),
-        child: SwipeToDeleteWidget(
-          height: 120,
-          child: productCardForCart(
-            products[index],
+  Widget _buildProductList() {
+    final products = controller.selectedOrder.value?.products ?? [];
+    return Column(
+      children: [
+        for (var product in products)
+          Padding(
+            key: ValueKey(product.id),
+            padding: EdgeInsets.only(bottom: 20.h),
+            child: SwipeToDeleteWidget(
+              height: 130,
+              child: productCardForOrder(
+                product,
+              ),
+              onSwipe: () async {
+                bool success = await controller.removeProduct(product.id);
+                return success;
+              },
+            ),
           ),
-          onSwipe: () {
-            return controller1.removeProduct(products[index].id);
-          },
-        ),
-      ),
+      ],
     );
   }
 
-  Widget _buildDeliveryAddressBox(Location? location) {
+  Widget _buildDeliveryAddressBox() {
       return Container(
         padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 18.w),
         width: double.infinity,
@@ -144,37 +139,26 @@ class EditOrderScreen extends GetView<OrdersController> {
           borderRadius: BorderRadius.circular(16.r),
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Text(
-                  'Delivery address'.tr,
-                  style: AppTextStyles.language.copyWith(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF8E8EA9),
-                  ),
+            Container(
+              child: Text(
+                'Delivery address'.tr,
+                style: AppTextStyles.language.copyWith(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF8E8EA9),
                 ),
-                Spacer(),
-                IconButton(
-                  onPressed: controller1.toggleExpanded,
-                  icon: Icon(
-                    controller1.isExpanded.value
-                        ? Icons.keyboard_arrow_up
-                        : Icons.keyboard_arrow_down,
-                    color: AppColors.primary,
-                    size: 23.sp,
-                  ),
-                ),
-              ],
+              ),
             ),
-            _buildLocationDetails(location)
+            SizedBox(height: 10.h,),
+            _buildLocationDetails()
           ],
         ),
       );
   }
 
-  Widget _buildLocationDetails(Location? location) {
+  Widget _buildLocationDetails() {
       return Column(
         children: [
             Container(
@@ -189,29 +173,11 @@ class EditOrderScreen extends GetView<OrdersController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    location!.name,
+                    controller.selectedOrder.value!.location!.name,
                     style: AppTextStyles.language.copyWith(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w500,
                       color: Color(0xFF263238),
-                    ),
-                  ),
-                  SizedBox(height: 8.h),
-                  Text(
-                    location.region ?? 'City',
-                    style: AppTextStyles.language.copyWith(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xFF8E8EA9),
-                    ),
-                  ),
-                  SizedBox(height: 5.h),
-                  Text(
-                    location.street ?? 'Street',
-                    style: AppTextStyles.language.copyWith(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xFF8E8EA9),
                     ),
                   ),
                 ],
@@ -219,17 +185,13 @@ class EditOrderScreen extends GetView<OrdersController> {
             ),
           Padding(
             padding: EdgeInsets.only(left: 10.w, top: 15.h),
-            child: PlaceOrCardText(
-              isAdd: false,
-              isPlace: true,
-            ),
+            child: PlaceSelector(),
           ),
         ],
       );
   }
 
-  Widget _buildPriceSummary(var productsPrice , var delivery , var totalPrice) {
-
+  Widget _buildPriceSummary() {
       return Container(
         padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
         decoration: BoxDecoration(
@@ -250,7 +212,7 @@ class EditOrderScreen extends GetView<OrdersController> {
                   ),
                 ),
                 Spacer(),
-                BlackPriceText(price: productsPrice, size: 14),
+                BlackPriceText(price: controller.selectedOrder.value!.totalCost! - controller.selectedOrder.value!.deliveryFee!.toInt(), size: 14),
               ],
             ),
             SizedBox(height: 15.h),
@@ -265,7 +227,7 @@ class EditOrderScreen extends GetView<OrdersController> {
                   ),
                 ),
                 Spacer(),
-                BlackPriceText(price: delivery, size: 14),
+                BlackPriceText(price: controller.selectedOrder.value!.deliveryFee, size: 14),
               ],
             ),
             Padding(
@@ -286,14 +248,11 @@ class EditOrderScreen extends GetView<OrdersController> {
                   ),
                 ),
                 Spacer(),
-                OrangePriceText(price: totalPrice, size: 16),
+                OrangePriceText(price: controller.selectedOrder.value!.totalCost, size: 16),
               ],
             ),
           ],
         ),
       );
-
   }
-
-
 }

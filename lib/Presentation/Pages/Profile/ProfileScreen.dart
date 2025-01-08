@@ -11,6 +11,9 @@ import 'package:order_application/Presentation/Controllers/User/UserController.d
 import 'package:order_application/Presentation/Widgets/CustomAlertDialog.dart';
 import 'package:order_application/Presentation/Widgets/CustomAppBar.dart';
 
+import '../../../App/Utils/GetPath.dart';
+import '../../Widgets/DynamicImage.dart';
+
 class ProfileScreen extends GetView<ProfileController> {
   final List<Map> list = [
     {
@@ -68,11 +71,11 @@ class ProfileScreen extends GetView<ProfileController> {
                       width: 80.w,
                       height: 80.h,
                       decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              image: NetworkImage(
-                                  'http://$host2/images/${Get.find<UserController>().user.value.imageName}'),
-                              fit: BoxFit.cover)),
+                        shape: BoxShape.circle,
+                      ),
+                      child: ClipOval(
+                        child: dynamicImage(imagePath: getUserPath(), box: BoxFit.cover),
+                      ),
                     ),
                     SizedBox(
                       width: 19.w,

@@ -6,13 +6,11 @@ import 'package:order_application/Presentation/Controllers/Auth/AuthController.d
 import 'package:order_application/Presentation/Widgets/CustomBlackButton.dart';
 
 class GetLocationButton extends StatefulWidget {
-  final double? initialLatitude;
-  final double? initialLongitude;
+  final void Function(Position)? onLocationFetched;
 
   const GetLocationButton({
     Key? key,
-    this.initialLatitude,
-    this.initialLongitude,
+    this.onLocationFetched,
   }) : super(key: key);
 
   @override
@@ -22,11 +20,6 @@ class GetLocationButton extends StatefulWidget {
 class _GetLocationButtonState extends State<GetLocationButton> {
   bool isLocationFetched = false;
   bool isLoading = false;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   Future<void> _fetchLocation(BuildContext context) async {
     setState(() {
@@ -57,8 +50,9 @@ class _GetLocationButtonState extends State<GetLocationButton> {
       Position position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
 
-      // Update the latitude and longitude in the controller
-      Get.find<AuthController>().updateLocation(position.latitude, position.longitude);
+      if (widget.onLocationFetched != null) {
+        widget.onLocationFetched!(position);
+      }
 
       setState(() {
         isLocationFetched = true;

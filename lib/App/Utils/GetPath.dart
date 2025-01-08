@@ -1,12 +1,18 @@
 
-String getImagePath(String name, {String format = 'png'}) {
-  return 'assets/images/$name.$format';
+import 'package:get/get.dart';
+import 'package:order_application/Data/Models/Market.dart';
+import 'package:order_application/Data/Models/Product.dart';
+import '../../Presentation/Controllers/User/UserController.dart';
+import '../Const/Host.dart';
+
+String getUserPath() {
+  return 'http://$host2/images/users/${Get.find<UserController>().user.value.imageName}';
 }
 
-String getIconPath(String name, {String format = 'svg'}) {
-  return 'assets/icons/$name.$format';
+String getProductPath(Product product) {
+  return 'http://$host2${product.image}';
 }
 
-String getRivePath(String name, {String format = 'riv'}) {
-  return 'assets/rive/$name.$format';
+String getMarketPath(Market market) {
+  return'http://$host2${market.logo}';
 }

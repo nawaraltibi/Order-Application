@@ -13,8 +13,10 @@ import 'package:order_application/Presentation/Widgets/CustomAppBar.dart';
 import 'package:order_application/Presentation/Widgets/OrangePriceText.dart';
 import 'package:order_application/Presentation/Widgets/SectionTitle.dart';
 import '../../../App/Const/Host.dart';
+import '../../../App/Utils/GetPath.dart';
 import '../../../Data/Models/EmptyState.dart';
 import '../../Controllers/Dashboard/DashboardController.dart';
+import '../../Widgets/DynamicImage.dart';
 import '../../Widgets/EmptyStateWidget.dart';
 
 class OrdersScreen extends GetView<OrdersController> {
@@ -170,7 +172,8 @@ class OrdersScreen extends GetView<OrdersController> {
     );
   }
 
-  Widget _buildOrderDetails(BuildContext context, int index, Order order, OrderStatus statusDetails) {
+  Widget _buildOrderDetails(
+      BuildContext context, int index, Order order, OrderStatus statusDetails) {
     return AnimatedSize(
       duration: Duration(milliseconds: 300),
       curve: Curves.easeInOut,
@@ -259,7 +262,7 @@ class OrdersScreen extends GetView<OrdersController> {
           children: [
             _buildProductImage(product),
             SizedBox(width: 20.w),
-            _buildProductName(product),
+            SizedBox(width: 150.w,child: _buildProductName(product),),
             Spacer(),
             _buildProductPrice(product),
             _buildProductQuantity(product),
@@ -268,7 +271,11 @@ class OrdersScreen extends GetView<OrdersController> {
         SizedBox(
           height: 20.h,
         ),
-        if (statusDetails == OrderStatus.delivered) _buildRatingStars(index),
+        if (statusDetails == OrderStatus.delivered) _buildRatingStars(index,product),
+        if (statusDetails == OrderStatus.delivered)
+          SizedBox(
+            height: 20.h,
+          ),
       ],
     );
   }
@@ -277,31 +284,7 @@ class OrdersScreen extends GetView<OrdersController> {
     return SizedBox(
       width: 32.w,
       height: 40.h,
-      child: Image.network(
-        'http://$host2${product.image}',
-        fit: BoxFit.contain,
-        loadingBuilder: (context, child, loadingProgress) {
-          if (loadingProgress == null) {
-            return child;
-          } else {
-            return Center(
-              child: CircularProgressIndicator(
-                value: loadingProgress.expectedTotalBytes != null
-                    ? loadingProgress.cumulativeBytesLoaded /
-                        (loadingProgress.expectedTotalBytes ?? 1)
-                    : null,
-                strokeWidth: 2,
-                color: AppColors.primary,
-              ),
-            );
-          }
-        },
-        errorBuilder: (context, error, stackTrace) => const Icon(
-          Icons.broken_image,
-          size: 50,
-          color: Colors.grey,
-        ),
-      ),
+      child: dynamicImage(imagePath: getProductPath(product)),
     );
   }
 
@@ -313,6 +296,8 @@ class OrdersScreen extends GetView<OrdersController> {
         fontWeight: FontWeight.w500,
         color: Color(0xFF32324D),
       ),
+      overflow: TextOverflow.ellipsis,
+      maxLines: 1,
     );
   }
 
@@ -336,13 +321,14 @@ class OrdersScreen extends GetView<OrdersController> {
     );
   }
 
-  Row _buildRatingStars(int productIndex) {
+  Row _buildRatingStars(int productIndex,Product product) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: List.generate(5, (index) {
         return InkWell(
-          onTap: () {
-            controller.updateStars(productIndex, index);
+          onTap: ()  async{
+            controller.updateStars(productIndex, index,product);
+            controller.productRatings.refresh();
           },
           child: Obx(() => SvgPicture.asset(
                 index < controller.productRatings[productIndex]
@@ -379,12 +365,17 @@ class OrdersScreen extends GetView<OrdersController> {
   Column _buildEditableOptions(BuildContext context, Order order) {
     return Column(children: [
       _buildDivider(10, 10),
-      SizedBox(height: 20.h,),
+      SizedBox(
+        height: 20.h,
+      ),
       _buildLocationTile(order),
-      SizedBox(height: 20.h,),
+      SizedBox(
+        height: 20.h,
+      ),
       _buildDivider(10, 10),
-      SizedBox(height: 20.h,),
-
+      SizedBox(
+        height: 20.h,
+      ),
       Padding(
         padding: EdgeInsets.symmetric(horizontal: 10.w),
         child: InkWell(
@@ -401,7 +392,9 @@ class OrdersScreen extends GetView<OrdersController> {
                 color: AppColors.primary,
                 size: 22.sp,
               ),
-              SizedBox(width: 10.w,),
+              SizedBox(
+                width: 10.w,
+              ),
               Text(
                 ' edit_order'.tr,
                 style: AppTextStyles.language.copyWith(
@@ -430,7 +423,9 @@ class OrdersScreen extends GetView<OrdersController> {
                 color: Color(0xFFCD1F45),
                 size: 22.sp,
               ),
-              SizedBox(width: 10.w,),
+              SizedBox(
+                width: 10.w,
+              ),
               Text(
                 ' delete_request'.tr,
                 style: AppTextStyles.language.copyWith(
@@ -464,7 +459,7 @@ class OrdersScreen extends GetView<OrdersController> {
           size: 24.sp,
         ),
         title: Text(
-          order.location?.name ?? "m",
+          order.location!.name,
           style: AppTextStyles.language.copyWith(
             fontSize: 14.sp,
             fontWeight: FontWeight.w600,

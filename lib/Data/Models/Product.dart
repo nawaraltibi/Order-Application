@@ -12,6 +12,7 @@ class Product {
   final int? stockQuantity;
   int? availableToAdd;
   int? existingQuantityInOrder;
+  int? originalQuantityInOrder;
   int? quantity;
   final int? totalSold;
   final String? categoryEn;
@@ -33,9 +34,10 @@ class Product {
     this.categoryAr,
     this.isFavorite,
     this.market,
-    this.existingQuantityInOrder,
+    this.originalQuantityInOrder,
     this.quantity,
   }) {
+    existingQuantityInOrder = originalQuantityInOrder?? 0;
     availableToAdd = stockQuantity;
     quantity = 1;
   }
@@ -48,7 +50,8 @@ class Product {
       descriptionAr: json['description_ar'],
       price: json['price'],
       image: json['image'],
-      existingQuantityInOrder: json['quantity'] ?? 0,
+      originalQuantityInOrder: json['quantity'] ?? 0,
+
       rate: double.parse(json['rate']),
       stockQuantity: json['stock_quantity'],
       totalSold: json['total_sold'],

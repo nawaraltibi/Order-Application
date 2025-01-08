@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:order_application/Data/Repository/favorites_repository.dart';
+import 'package:order_application/Data/Repository/markets_repository.dart';
 import 'package:order_application/Data/Repository/orders_repository.dart';
+import 'package:order_application/Data/Repository/rate_repository.dart';
 import 'package:order_application/Data/Repository/search_repository.dart';
 import 'package:order_application/Data/Repository/auth_repository.dart';
 import 'package:order_application/Data/Repository/card_repository.dart';
@@ -8,11 +10,13 @@ import 'package:order_application/Data/Repository/address_repository.dart';
 import 'package:order_application/Domain/Usecases/auth_usecases/LogoutUseCase.dart';
 import 'package:order_application/Domain/Usecases/favorites_usecases/AddRemoveFavoriteUseCase.dart';
 import 'package:order_application/Domain/Usecases/favorites_usecases/ShowFavoritesUseCase.dart';
+import 'package:order_application/Domain/Usecases/markets_use_case/GetMarketProductsUseCase.dart';
 import 'package:order_application/Domain/Usecases/orders_usecases/CreateAnOrderUseCase.dart';
 import 'package:order_application/Domain/Usecases/orders_usecases/DeleteAnOrderUseCase.dart';
 import 'package:order_application/Domain/Usecases/orders_usecases/EditAnOrderUseCase.dart';
 import 'package:order_application/Domain/Usecases/orders_usecases/GetAllOrdersUseCase.dart';
 import 'package:order_application/Domain/Usecases/orders_usecases/GetAnOrderUseCase.dart';
+import 'package:order_application/Domain/Usecases/rate_use_case/RateProductUseCase.dart';
 import 'package:order_application/Domain/Usecases/search_usecases/SearchUseCase.dart';
 import 'package:order_application/Presentation/Controllers/Cart/CartController.dart';
 import 'package:order_application/Presentation/Controllers/Dashboard/DashboardController.dart';
@@ -31,6 +35,8 @@ import 'package:order_application/Domain/Usecases/card_usecases/DeleteAnCardsUse
 import 'package:order_application/Domain/Usecases/card_usecases/GetAllCardsUseCase.dart';
 import 'package:order_application/Domain/Usecases/card_usecases/GetAnCardsUseCase.dart';
 
+import '../Market/MarketProductsController.dart';
+
 class DashboardBinding extends Bindings {
   @override
   void dependencies() {
@@ -44,7 +50,8 @@ class DashboardBinding extends Bindings {
             createAnOrderUseCase: CreateAnOrderUseCase(OrderRepository()),
             deleteAnOrderUseCase: DeleteAnOrderUseCase(OrderRepository()),
             editAnOrderUseCase: EditAnOrderUseCase(OrderRepository()),
-            getAnOrderUseCase: GetAnOrderUseCase(OrderRepository())
+            getAnOrderUseCase: GetAnOrderUseCase(OrderRepository()),
+            rateProductUseCase: RateProductUseCase(RateRepository())
         ),
         permanent: true);
 
@@ -64,12 +71,12 @@ class DashboardBinding extends Bindings {
       permanent: true,
     );
 
-    Get.lazyPut<OrdersController>(() => OrdersController(
-        getAllOrdersUseCase: GetAllOrdersUseCase(OrderRepository()),
-        createAnOrderUseCase: CreateAnOrderUseCase(OrderRepository()),
-        deleteAnOrderUseCase: DeleteAnOrderUseCase(OrderRepository()),
-        editAnOrderUseCase: EditAnOrderUseCase(OrderRepository()),
-        getAnOrderUseCase: GetAnOrderUseCase(OrderRepository())));
+    Get.put<MarketProductsController>(
+      MarketProductsController(
+        getMarketProductsUseCase: GetMarketProductsUseCase(MarketsRepository()),
+      ),
+      permanent: true,
+    );
 
     Get.put<ProfileController>(
       ProfileController(

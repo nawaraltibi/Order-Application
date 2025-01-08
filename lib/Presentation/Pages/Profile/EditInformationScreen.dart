@@ -7,6 +7,7 @@ import 'package:order_application/Presentation/Widgets/CustomAppBar.dart';
 import 'package:order_application/Presentation/Widgets/CircularOrangeButton.dart';
 import 'package:order_application/Presentation/Widgets/ProfileImagePicker.dart';
 import 'package:order_application/Presentation/Widgets/SectionTitle.dart';
+import '../../../App/Utils/GetPath.dart';
 import '../../Widgets/CustomTextField.dart';
 
 class EditInformationScreen extends GetView<ProfileController> {
@@ -27,7 +28,7 @@ class EditInformationScreen extends GetView<ProfileController> {
             child: ListView(
               children: [
                 Center(
-                  child: ProfileImagePicker(imagePath: Get.find<UserController>().user.value.imageName,),
+                  child: ProfileImagePicker(imagePath: getUserPath(),),
                 ),
                 SizedBox(height: 20.h),
                 SectionTitle(

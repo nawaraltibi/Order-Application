@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:order_application/App/Const/Host.dart';
 import 'package:order_application/Data/Models/Product.dart';
 import 'package:order_application/Presentation/Controllers/Cart/CartController.dart';
+import 'package:order_application/Presentation/Controllers/Orders/OrdersController.dart';
 import 'package:order_application/Presentation/Widgets/OrangePriceText.dart';
 import 'package:order_application/Presentation/Widgets/MinusButton.dart';
 import 'package:order_application/Presentation/Widgets/PlusButton.dart';
@@ -12,14 +13,11 @@ import '../../App/Styles/AppTextStyles.dart';
 import '../../App/Utils/GetPath.dart';
 import 'DynamicImage.dart';
 
-Widget productCardForCart(Product product) {
-  final CartController cartController = Get.find();
+Widget productCardForOrder(Product product) {
+  final OrdersController ordersController = Get.find();
 
   return InkWell(
     borderRadius: BorderRadius.circular(16),
-    onTap: () {
-      Get.toNamed('/ProductDetails');
-    },
     child: Container(
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -98,13 +96,13 @@ Widget productCardForCart(Product product) {
                 width: 40.w,
                 child: PlusButton(onTap: () {
                   // Increase quantity using CartController
-                  cartController.incrementProductQuantity(product.id!);
+                  ordersController.incrementProductQuantity(product.id!);
                 }),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 4.h),
                 child: Text(
-                  '${cartController.getProductQuantity(product.id!).value}',
+                  '${ordersController.getProductQuantity(product.id!).value}',
                   style: AppTextStyles.language.copyWith(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w600,
@@ -117,7 +115,7 @@ Widget productCardForCart(Product product) {
                 width: 40.w,
                 child: MinusButton(onTap: () {
                   // Decrease quantity using CartController
-                  cartController.decrementProductQuantity(product.id!);
+                  ordersController.decrementProductQuantity(product.id!);
                 }),
               ),
             ],

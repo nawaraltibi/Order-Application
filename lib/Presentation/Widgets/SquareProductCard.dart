@@ -3,21 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-
+import '../../App/Color/Color.dart';
+import '../../App/Const/Host.dart';
 import '../../App/Styles/AppTextStyles.dart';
+import '../../App/Utils/GetPath.dart';
+import '../../Data/Models/Product.dart';
+import 'DynamicImage.dart';
 import 'OrangePriceText.dart';
 import 'ToggleFavoriteButton.dart';
 
 class SquareProductCard extends StatelessWidget {
-  String productImage;
-  String productName;
-  double? price;
-  double rating;
-  SquareProductCard({
-    required this.productImage,
-    required this.productName,
-    required this.price,
-    required this.rating,
+  final Product product;
+
+  const SquareProductCard({
+    required this.product,
     super.key,
   });
 
@@ -25,7 +24,7 @@ class SquareProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Get.toNamed('ProductDetails');
+        Get.toNamed('/ProductDetails', arguments: product);
       },
       child: Container(
         padding: EdgeInsets.symmetric(
@@ -47,17 +46,15 @@ class SquareProductCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: 10.h,),
             Stack(
               children: [
                 Center(
-                  child: Container(
-                    child: Image.asset(
-                      productImage,
-                      width: 75,
-                      height: 91.h,
-                      fit: BoxFit.contain,
-                    ),
-                    padding: EdgeInsets.all(10),
+                  child:
+                  SizedBox(
+                    width: 90.w,
+                    height: 90.h,
+                    child: dynamicImage(imagePath: getProductPath(product)),
                   ),
                 ),
                 Positioned(
@@ -89,7 +86,7 @@ class SquareProductCard extends StatelessWidget {
                           width: 3.w,
                         ),
                         Text(
-                          '$rating',
+                          '${product.rate}',
                           style: AppTextStyles.language.copyWith(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w600,
@@ -101,21 +98,27 @@ class SquareProductCard extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 2.h,),
+            SizedBox(height: 20.h,),
             Text(
-              productName,
+              product.name!,
               style: AppTextStyles.language.copyWith(
                 fontWeight: FontWeight.w500,
                 fontSize: 14.sp,
                 color: Color(0xFF32324D),
               ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
             ),
             SizedBox(height: 7.h,),
             Row(
               children: [
-                OrangePriceText(price: price, size: 15),
+                OrangePriceText(price: product.price, size: 15),
                 Spacer(),
-                // ToggleFavoriteButton(height: 24, width: 24)
+                buildToggleFavoriteButton(
+                  product: product,
+                  height: 22.h,
+                  width: 22.w,
+                ),
               ],
             )
           ],

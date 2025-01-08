@@ -21,6 +21,12 @@ class SearchFieldController extends GetxController {
 
   SearchFieldController({required this.searchUseCase});
 
+  @override
+  void onInit() {
+    super.onInit();
+    loadingMap['searchProducts'] = false.obs;
+  }
+
   void onSearchChanged(String query) {
     searchQuery.value = query;
     if (query.trim().isNotEmpty) {

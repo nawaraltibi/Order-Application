@@ -11,6 +11,7 @@ import 'package:order_application/Presentation/Widgets/CustomBlackButton.dart';
 import 'package:order_application/Presentation/Widgets/OrangePriceText.dart';
 import 'package:order_application/Presentation/Widgets/SectionTitle.dart';
 import 'package:order_application/Presentation/Widgets/ToggleFavoriteButton.dart';
+import '../../Widgets/MarketCard.dart';
 import '../../Widgets/NormalText.dart';
 import '../../Widgets/ReviewsContainer.dart';
 import '../../Widgets/MinusButton.dart';
@@ -38,51 +39,51 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         title: '',
         trailingWidget: buildToggleFavoriteButton(
           height: 36.h,
-          width: 36.w, product: product,
+          width: 36.w,
+          product: product,
         ),
       ),
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: 21.w),
         children: [
           Container(
-            padding: EdgeInsets.all(26.sp),
-            width: 318.w,
-            height: 281.h,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16.w),
-            ),
-            child: SizedBox(
-              width: 173.w,
-              height: 219.h,
-              child: Image.network(
-                'http://$host2${product.image}',
-                fit: BoxFit.contain,
-                loadingBuilder: (BuildContext context, Widget child,
-                    ImageChunkEvent? loadingProgress) {
-                  if (loadingProgress == null) {
-                    return child;
-                  } else {
-                    return Center(
-                      child: CircularProgressIndicator(
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded /
-                            (loadingProgress.expectedTotalBytes ?? 1)
-                            : null,
-                        strokeWidth: 2,
-                        color: AppColors.primary,
-                      ),
-                    );
-                  }
-                },
-                errorBuilder: (context, error, stackTrace) => const Icon(
-                  Icons.broken_image,
-                  size: 50,
-                  color: Colors.grey,
-                ),
+              padding: EdgeInsets.all(26.sp),
+              width: 318.w,
+              height: 281.h,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16.w),
               ),
-            )
-          ),
+              child: SizedBox(
+                width: 173.w,
+                height: 219.h,
+                child: Image.network(
+                  'http://$host2${product.image}',
+                  fit: BoxFit.contain,
+                  loadingBuilder: (BuildContext context, Widget child,
+                      ImageChunkEvent? loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    } else {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  (loadingProgress.expectedTotalBytes ?? 1)
+                              : null,
+                          strokeWidth: 2,
+                          color: AppColors.primary,
+                        ),
+                      );
+                    }
+                  },
+                  errorBuilder: (context, error, stackTrace) => const Icon(
+                    Icons.broken_image,
+                    size: 50,
+                    color: Colors.grey,
+                  ),
+                ),
+              )),
           SizedBox(
             height: 17.h,
           ),
@@ -96,13 +97,17 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             ),
             child: Row(
               children: [
-                Text(
+                SizedBox(width: 170.w,child: Text(
                   product.name!,
                   style: AppTextStyles.language.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
                       fontSize: 16.sp),
-                ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+
+                )
+                  ,),
                 Spacer(),
                 ReviewsContainer(
                   rating: product.rate!,
@@ -114,16 +119,18 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           SizedBox(
             height: 23.h,
           ),
-          SectionTitle(text: 'Available at:'.tr),
-          SizedBox(
-            height: 13.h,
-          ),
-          // MarketCard(
-          //     imageType: true,
-          //     marketImage: 'assets/images/market.jpg',
-          //     marketName: 'XIAOMI',
-          //     rating: 4.9,
-          //     reviews: 120),
+          if (product.market != null)
+            SectionTitle(
+                text: 'Available at:'.tr
+            ),
+          if (product.market != null)
+            SizedBox(
+              height: 13.h,
+            ),
+          if (product.market != null)
+            MarketCard(
+              market: product.market!,
+            ),
           SizedBox(
             height: 23.h,
           ),
@@ -207,10 +214,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           SizedBox(
             height: 30.h,
           ),
-          CustomBlackButton(buttonText: "Add to cart", onPressed: () {
-            Get.find<CartController>().addProduct(product);
-            Get.back();
-          }),
+          CustomBlackButton(
+              buttonText: "Add to cart",
+              onPressed: () {
+                Get.find<CartController>().addProduct(product);
+                Get.back();
+              }),
           SizedBox(
             height: 30.h,
           )

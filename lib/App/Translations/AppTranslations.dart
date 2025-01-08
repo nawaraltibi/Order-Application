@@ -69,7 +69,8 @@ class AppTranslations extends Translations {
           'no_location': 'No location available.',
           'no_bank_card': 'No bank cards found.',
           'no_favorites': 'No favorites found.',
-          'no_orders': 'No orders found.',
+          'no_ordersU': 'No orders found.',
+          'no_ordersD': 'Nothing is available now. Click on the Get Current Location button to update and get the list of requests.',
           'error': 'An error occurred.',
           'no_network': 'No internet connection.',
           'default_empty': 'No data available.',
@@ -86,6 +87,7 @@ class AppTranslations extends Translations {
           ' edit_order':'Edit the order',
           ' delete_request':'Delete request',
           'delete_confirmation':'Are you sure you want to Delete request?',
+          'You cannot increase the quantity': 'You cannot increase the quantity in your order or add new products. To do this, request another order.',
         },
         'ar_SA': {
           'general': 'عام',
@@ -178,7 +180,8 @@ class AppTranslations extends Translations {
           'no_location': 'لا يوجد موقع.',
           'no_bank_card': 'لا توجد بطاقات بنكية.',
           'no_favorites': 'لا توجد مفضلات.',
-          'no_orders': 'لا يوجد طلبات.',
+          'no_ordersU': 'لا يوجد طلبات.',
+          'no_ordersD': 'لا يوجد شيء متاح الآن. انقر فوق الزر "الحصول على الموقع الحالي" لتحديث قائمة الطلبات والحصول عليها.',
           'error': 'حدث خطأ ما.',
           'no_network': 'لا يوجد اتصال بالإنترنت.',
           'default_empty': 'لا توجد بيانات.',
@@ -195,7 +198,8 @@ class AppTranslations extends Translations {
           'Delete':'حذف',
           'Orders that need to be delivered:':'الطلبات التي تحتاج إلى توصيل:',
           'Take it':'أخذ',
-          'Done':'تم التوصيل'
+          'Done':'تم التوصيل',
+          'You cannot increase the quantity': 'لا يمكنك زيادة الكمية في طلبك أو إضافة منتجات جديدة. للقيام بذلك، اطلب طلبًا آخر.',
         },
       };
 }

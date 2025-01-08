@@ -1,40 +1,34 @@
-import 'package:order_application/Data/Models/User.dart';
+import 'package:order_application/Data/Models/Driver.dart';
 import 'package:order_application/Data/providers/network/api_endpoint.dart';
 import 'package:order_application/Data/providers/network/api_provider.dart';
 import 'package:order_application/Data/providers/network/api_request_representable.dart';
+import 'auth_api.dart';
 
-enum AuthAction {
-  register,
-  resendVerificationCode,
-  verify,
-  logout
-}
-
-class AuthAPI implements APIRequestRepresentable {
+class DriverAuthAPI implements APIRequestRepresentable {
   final AuthAction action;
-  final User? user;
+  final Driver? driver;
   final String? token;
 
-  AuthAPI._({
+  DriverAuthAPI._({
     required this.action,
-    this.user,
+    this.driver,
     this.token,
   });
 
   // Constructor for the registration action
-  AuthAPI.register(User user)
-      : this._(action: AuthAction.register, user: user);
+  DriverAuthAPI.register(Driver driver)
+      : this._(action: AuthAction.register, driver: driver);
 
   // Constructor for the resend verification code action
-  AuthAPI.resendVerificationCode(User user)
-      : this._(action: AuthAction.resendVerificationCode, user: user);
+  DriverAuthAPI.resendVerificationCode(Driver driver)
+      : this._(action: AuthAction.resendVerificationCode, driver: driver);
 
   // Constructor for the verify action
-  AuthAPI.verify(User user)
-      : this._(action: AuthAction.verify, user: user);
+  DriverAuthAPI.verify(Driver driver)
+      : this._(action: AuthAction.verify, driver: driver);
 
   // Constructor for the logout action
-  AuthAPI.logout(String token) : this._(action: AuthAction.logout,token: token);
+  DriverAuthAPI.logout(String token) : this._(action: AuthAction.logout, token: token);
 
   @override
   String get endpoint => APIEndpoint.API;
@@ -44,11 +38,11 @@ class AuthAPI implements APIRequestRepresentable {
     switch (action) {
       case AuthAction.register:
       case AuthAction.resendVerificationCode:
-        return "/user/otp-request";
+        return "/driver/otp-request";
       case AuthAction.verify:
-        return "/user/otp-check";
+        return "/driver/otp-check";
       case AuthAction.logout:
-        return "/user/logout";
+        return "/driver/logout";
     }
   }
 
@@ -76,9 +70,9 @@ class AuthAPI implements APIRequestRepresentable {
     switch (action) {
       case AuthAction.register:
       case AuthAction.resendVerificationCode:
-        return {'phone': user?.phone};
+        return {'phone': driver?.phone};
       case AuthAction.verify:
-        return {'phone': user?.phone, 'otp': user?.otp};
+        return {'phone': driver?.phone, 'otp': driver?.otp};
       case AuthAction.logout:
         return null;
     }
