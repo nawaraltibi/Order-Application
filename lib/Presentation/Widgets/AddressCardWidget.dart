@@ -18,33 +18,38 @@ class AddressCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical:18.h,horizontal: 18.w),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16.r),
-      ),
-      width: 330.w,
-      height: 108.h,
-      child: IntrinsicHeight(
-        child: Row(
-          children: [
-            Text(
-              type,
-              style: AppTextStyles.language.copyWith(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w400,
-                color: AppColors.dark,
+        padding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 18.w),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16.r),
+        ),
+        width: 330.w,
+        height: 120.h,
+        child: IntrinsicHeight(
+          child: Row(
+            children: [
+              SizedBox(
+                width: 60.w,
+                child: Text(
+                  type,
+                  style: AppTextStyles.language.copyWith(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.dark,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
               ),
-            ),
-            VerticalDivider(
-              color: Color(0xFFDCDCE4),
-              thickness: 1.4,
-              width: 30.w,
-              indent: 7.h,
-              endIndent: 7.h,
-            ),
-            Expanded(
-              child: Padding(
+              VerticalDivider(
+                color: Color(0xFFDCDCE4),
+                thickness: 1.4,
+                width: 30.w,
+                indent: 7.h,
+                endIndent: 7.h,
+              ),
+              Container(
+                width: 200.w,
                 padding: EdgeInsets.symmetric(vertical: 10.h),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,12 +77,8 @@ class AddressCardWidget extends StatelessWidget {
                   ],
                 ),
               ),
-            ),
-          ],
-        ),
-      )
-
-
-    );
+            ],
+          ),
+        ));
   }
 }

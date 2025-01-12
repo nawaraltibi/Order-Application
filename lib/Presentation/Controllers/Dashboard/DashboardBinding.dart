@@ -20,7 +20,6 @@ import 'package:order_application/Domain/Usecases/rate_use_case/RateProductUseCa
 import 'package:order_application/Domain/Usecases/search_usecases/SearchUseCase.dart';
 import 'package:order_application/Presentation/Controllers/Cart/CartController.dart';
 import 'package:order_application/Presentation/Controllers/Dashboard/DashboardController.dart';
-import 'package:order_application/Presentation/Controllers/Driver/DriverController.dart';
 import 'package:order_application/Presentation/Controllers/Favorites/FavoritesController.dart';
 import 'package:order_application/Presentation/Controllers/Home/HomeController.dart';
 import 'package:order_application/Presentation/Controllers/Orders/OrdersController.dart';
@@ -92,7 +91,5 @@ class DashboardBinding extends Bindings {
       ),
       permanent: true,
     );
-
-    Get.put<DriverController>(DriverController());
   }
 }

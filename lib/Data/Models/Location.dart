@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'package:order_application/App/Const/Host.dart';
 
@@ -40,26 +39,9 @@ class Location {
       longitude: json['longitude'] is String
           ? double.parse(json['longitude'] as String)
           : json['longitude'] as double,
+      region: json['municipality'] != null ? json['municipality'] as String :null,
+      street: json['road'] != null ? json['road'] as String :null,
     );
-  }
-
-  double distanceTo(Location other) {
-    const double earthRadius = 6371.0;
-    final double dLat = _degreesToRadians(other.latitude - latitude);
-    final double dLon = _degreesToRadians(other.longitude - longitude);
-
-    final double a = (sin(dLat / 2) * sin(dLat / 2)) +
-        cos(_degreesToRadians(latitude)) *
-            cos(_degreesToRadians(other.latitude)) *
-            (sin(dLon / 2) * sin(dLon / 2));
-
-    final double c = 2 * atan2(sqrt(a), sqrt(1 - a));
-
-    return earthRadius * c;
-  }
-
-  double _degreesToRadians(double degrees) {
-    return degrees * (3.141592653589793 / 180.0);
   }
 
   static List<Location> fromJsonList(List<Map<String, dynamic>> jsonList) {

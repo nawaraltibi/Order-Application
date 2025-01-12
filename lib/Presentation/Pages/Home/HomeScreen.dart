@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:order_application/App/Const/Host.dart';
 import 'package:order_application/App/Styles/AppTextStyles.dart';
 import 'package:order_application/Presentation/Controllers/Cart/CartController.dart';
 import 'package:order_application/Presentation/Controllers/Home/HomeController.dart';
 import 'package:order_application/Presentation/Controllers/User/UserController.dart';
-import 'package:order_application/Presentation/Widgets/SectionTitle.dart';
 import '../../../App/Utils/GetPath.dart';
 import '../../Widgets/DynamicImage.dart';
 import '../../Widgets/ShoppingCartContainer.dart';
@@ -75,10 +73,6 @@ class HomeScreen extends GetView<HomeController> {
                       .toInt(),
                 );
               }),
-              SectionTitle(text: 'Most Requested:'.tr),
-              SizedBox(
-                height: 20.h,
-              ),
             ]),
           ],
         ),

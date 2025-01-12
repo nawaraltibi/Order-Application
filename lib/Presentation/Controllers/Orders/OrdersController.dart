@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:order_application/App/Utils/ControllerHandling.dart';
-import 'package:order_application/Data/Models/CreditCard.dart';
-import 'package:order_application/Data/Models/Location.dart';
 import 'package:order_application/Data/Models/Order.dart';
-import 'package:order_application/Data/Models/OrderStatus.dart';
 import 'package:order_application/Data/Models/Product.dart';
 import 'package:order_application/Data/Models/ResponseBody.dart';
 import 'package:order_application/Domain/Usecases/orders_usecases/GetAllOrdersUseCase.dart';
@@ -12,10 +9,8 @@ import 'package:order_application/Domain/Usecases/orders_usecases/CreateAnOrderU
 import 'package:order_application/Domain/Usecases/orders_usecases/DeleteAnOrderUseCase.dart';
 import 'package:order_application/Domain/Usecases/orders_usecases/EditAnOrderUseCase.dart';
 import 'package:order_application/Domain/Usecases/orders_usecases/GetAnOrderUseCase.dart';
-
 import '../../../Domain/Usecases/rate_use_case/RateProductUseCase.dart';
 import '../../Widgets/CustomAlertDialog.dart';
-import '../User/UserController.dart';
 
 class OrdersController extends GetxController {
   final GetAllOrdersUseCase getAllOrdersUseCase;

@@ -28,7 +28,7 @@ class EditInformationScreen extends GetView<ProfileController> {
             child: ListView(
               children: [
                 Center(
-                  child: ProfileImagePicker(imagePath: getUserPath(),),
+                  child: ProfileImagePicker(),
                 ),
                 SizedBox(height: 20.h),
                 SectionTitle(

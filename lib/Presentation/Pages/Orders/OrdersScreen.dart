@@ -12,7 +12,6 @@ import 'package:order_application/Presentation/Widgets/BlackPriceText.dart';
 import 'package:order_application/Presentation/Widgets/CustomAppBar.dart';
 import 'package:order_application/Presentation/Widgets/OrangePriceText.dart';
 import 'package:order_application/Presentation/Widgets/SectionTitle.dart';
-import '../../../App/Const/Host.dart';
 import '../../../App/Utils/GetPath.dart';
 import '../../../Data/Models/EmptyState.dart';
 import '../../Controllers/Dashboard/DashboardController.dart';
@@ -83,9 +82,7 @@ class OrdersScreen extends GetView<OrdersController> {
     return orders.asMap().entries.map((entry) {
       final index = entry.key;
       final order = entry.value;
-      return Obx(() {
-        return _buildOrderCard(context, index, orders[index]);
-      });
+      return _buildOrderCard(context, index, order);
     }).toList();
   }
 

@@ -1,10 +1,5 @@
 import 'package:get/get.dart';
-import 'package:order_application/Presentation/Controllers/Driver/DriverController.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../../Data/Repository/user_repository.dart';
-import '../../../Domain/Usecases/user_usecases/GetAuthenticatedUserUseCase.dart';
-import '../User/UserController.dart';
 
 class SplashController extends GetxController {
 
@@ -35,7 +30,7 @@ class SplashController extends GetxController {
       Get.offAllNamed('/DashboardPage'); // Navigate to user dashboard
     } else if (role == 'driver') {
 
-      Get.offAllNamed('/DriverOrders'); // Navigate to driver orders screen
+      Get.offAllNamed('/GetCurrentLocation'); // Navigate to driver orders screen
     } else {
       // Handle unexpected roles (fallback)
       Get.offAllNamed('/EnterNumber');

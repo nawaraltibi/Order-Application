@@ -9,6 +9,11 @@ enum OrdersAction {
   getAnOrder,
   deleteAnOrder,
   editAnOrder,
+
+  activeOrder,
+  unTakenOrders,
+  takeAnOrder,
+  deliverAnOrder,
 }
 
 class OrdersAPI implements APIRequestRepresentable {
@@ -16,12 +21,14 @@ class OrdersAPI implements APIRequestRepresentable {
   final String token;
   final Order? order;
   final int? id;
+  final int? page;
 
   OrdersAPI._({
     required this.action,
     required this.token,
     this.order,
     this.id,
+    this.page,
   });
 
   // Constructor for get All Orders action
@@ -42,7 +49,26 @@ class OrdersAPI implements APIRequestRepresentable {
 
   // Constructor for edit An Order action
   OrdersAPI.editAnOrder(String token, int id, Order order)
-      : this._(action: OrdersAction.editAnOrder, token: token, id: id,order: order);
+      : this._(
+            action: OrdersAction.editAnOrder,
+            token: token,
+            id: id,
+            order: order);
+
+  OrdersAPI.activeOrder(String token)
+      : this._(
+          action: OrdersAction.activeOrder,
+          token: token,
+        );
+
+  OrdersAPI.unTakenOrders(String token, int page)
+      : this._(action: OrdersAction.unTakenOrders, token: token, page: page);
+
+  OrdersAPI.takeAnOrder(String token, int id)
+      : this._(action: OrdersAction.takeAnOrder, token: token, id: id);
+
+  OrdersAPI.deliverAnOrder(String token, int id)
+      : this._(action: OrdersAction.deliverAnOrder, token: token, id: id);
 
   @override
   String get endpoint => APIEndpoint.API;
@@ -52,11 +78,18 @@ class OrdersAPI implements APIRequestRepresentable {
     switch (action) {
       case OrdersAction.getAllOrders:
       case OrdersAction.createAnOrder:
-      return "/user/orders";
+        return "/user/orders";
       case OrdersAction.getAnOrder:
       case OrdersAction.deleteAnOrder:
       case OrdersAction.editAnOrder:
         return "/user/orders/$id";
+      case OrdersAction.activeOrder:
+        return "/driver/orders/active";
+      case OrdersAction.unTakenOrders:
+      case OrdersAction.takeAnOrder:
+        return "/driver/orders";
+      case OrdersAction.deliverAnOrder:
+        return "/driver/deliver-order";
     }
   }
 
@@ -73,6 +106,14 @@ class OrdersAPI implements APIRequestRepresentable {
         return HTTPMethod.delete;
       case OrdersAction.editAnOrder:
         return HTTPMethod.put;
+      case OrdersAction.activeOrder:
+        return HTTPMethod.get;
+      case OrdersAction.unTakenOrders:
+        return HTTPMethod.get;
+      case OrdersAction.takeAnOrder:
+        return HTTPMethod.post;
+      case OrdersAction.deliverAnOrder:
+        return HTTPMethod.post;
     }
   }
 
@@ -89,6 +130,7 @@ class OrdersAPI implements APIRequestRepresentable {
   @override
   Map<String, String> get query {
     final Map<String, String> queryParams = {};
+    queryParams['page'] = page.toString();
     return queryParams;
   }
 
@@ -100,27 +142,33 @@ class OrdersAPI implements APIRequestRepresentable {
           'address_id': order?.location?.id,
           'card_id': order?.card?.id,
           'order_items': order?.products?.map((product) {
-            return {
-              'product_id': product.id,
-              'quantity': product.existingQuantityInOrder,
-            };
-          }).toList() ?? [],
+                return {
+                  'product_id': product.id,
+                  'quantity': product.existingQuantityInOrder,
+                };
+              }).toList() ??
+              [],
         };
       case OrdersAction.editAnOrder:
-
         return {
           'address_id': order?.location?.id,
           'order_items': order?.products?.map((product) {
-            return {
-              'product_id': product.id,
-              'quantity': product.existingQuantityInOrder,
-            };
-          }).toList() ?? [],
+                return {
+                  'product_id': product.id,
+                  'quantity': product.existingQuantityInOrder,
+                };
+              }).toList() ??
+              [],
         };
       case OrdersAction.getAnOrder:
       case OrdersAction.deleteAnOrder:
       case OrdersAction.getAllOrders:
+      case OrdersAction.activeOrder:
+      case OrdersAction.unTakenOrders:
         return null;
+      case OrdersAction.takeAnOrder:
+      case OrdersAction.deliverAnOrder:
+        return {'order_id': id};
     }
   }
 

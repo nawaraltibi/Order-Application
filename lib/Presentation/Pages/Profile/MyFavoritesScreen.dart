@@ -44,10 +44,10 @@ class MyFavoritesScreen extends GetView<FavoriteController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 15.w, vertical: 50.h),
+                        SizedBox(width: 20.w,),
+                        Expanded(
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
@@ -59,7 +59,7 @@ class MyFavoritesScreen extends GetView<FavoriteController> {
                               ),
                               SizedBox(height: 4.h),
                               Text(
-                                'Get your special\nitems in one place.'.tr,
+                                'Get your special items in one place.'.tr,
                                 style: AppTextStyles.language.copyWith(
                                   height: 1.5.h,
                                   fontSize: 15.sp,

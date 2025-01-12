@@ -97,7 +97,6 @@ class ProfileController extends GetxController {
         final ResponseBody response =
             await createAnAddressUseCase.call(address);
         final location = Location.fromJson(response.data);
-        await location.fetchLocationDetails();
         Get.find<UserController>().user.value.locations!.add(location);
         Get.back();
         Get.snackbar('Success', response.message!);
@@ -136,9 +135,6 @@ class ProfileController extends GetxController {
       () async {
         final ResponseBody response = await getAllAddressUseCase.call();
         final locations = Location.fromJsonList(response.data);
-        for (var location in locations) {
-          await location.fetchLocationDetails();
-        }
         Get.find<UserController>().user.value.locations = locations;
       },
       loadingMap,
@@ -292,7 +288,7 @@ class ProfileController extends GetxController {
       () async {
         await logoutUseCase.call();
         Get.find<SharedPreferencesController>().clearData();
-        Get.toNamed("/EnterNumber");
+        Get.offAllNamed("/EnterNumber");
       },
       loadingMap,
       'logout',

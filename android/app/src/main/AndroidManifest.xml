@@ -10,7 +10,7 @@
 
 
     <application
-        android:label="order_application"
+        android:label="Sold Out"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -42,7 +42,7 @@ class AddAddressScreen extends GetView<ProfileController> {
                         Marker(
                           point: LatLng(controller.latitude.value, controller.longitude.value),
                           child: Icon(
-                            Icons.location_pin,
+                            Icons.location_on_rounded,
                             color: Colors.red,
                             size: 40,
                           ),

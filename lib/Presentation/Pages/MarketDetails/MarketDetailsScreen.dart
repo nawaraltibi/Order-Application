@@ -6,7 +6,6 @@ import 'package:order_application/App/Color/Color.dart';
 import 'package:order_application/App/Styles/AppTextStyles.dart';
 import 'package:order_application/Presentation/Widgets/ReviewsContainer.dart';
 import 'package:order_application/Presentation/Widgets/SearchField.dart';
-import '../../../App/Const/Host.dart';
 import '../../../App/Utils/GetPath.dart';
 import '../../../Data/Models/Market.dart';
 import '../../Controllers/Market/MarketProductsController.dart';
@@ -107,16 +106,21 @@ class _MarketDetailsScreenState extends State<MarketDetailsScreen> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              market.name,
-                              style: AppTextStyles.language.copyWith(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white,
+                            SizedBox(
+                              width: 230.w,
+                              child: Text(
+                                market.name,
+                                style: AppTextStyles.language.copyWith(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
                               ),
                             ),
                             SizedBox(
-                              height: 15.h,
+                              height: 10.h,
                             ),
                             Row(
                               children: [
@@ -125,23 +129,22 @@ class _MarketDetailsScreenState extends State<MarketDetailsScreen> {
                                   color: Colors.white,
                                   size: 18.sp,
                                 ),
-                                Text(
-                                  "market.address",
-                                  style: AppTextStyles.language.copyWith(
-                                    color: Colors.white,
-                                    fontSize: 11.sp,
-                                    fontWeight: FontWeight.w600,
+                                SizedBox(
+                                  width: 250.w,
+                                  child: Text(
+                                    '${market.address?.region}, ${market.address?.street}',
+                                    style: AppTextStyles.language.copyWith(
+                                      color: Colors.white,
+                                      fontSize: 11.sp,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
                                   ),
                                 )
                               ],
                             )
                           ],
-                        ),
-                        const Spacer(),
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 42.h),
-                          child: ReviewsContainer(
-                              rating: market.rate, reviews: market.rateCount),
                         ),
                       ],
                     ),

@@ -2,9 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import '../../App/Color/Color.dart';
-import '../../App/Const/Host.dart';
 import '../../App/Styles/AppTextStyles.dart';
 import '../../App/Utils/GetPath.dart';
 import '../../Data/Models/Product.dart';
@@ -28,9 +25,9 @@ class SquareProductCard extends StatelessWidget {
       },
       child: Container(
         padding: EdgeInsets.symmetric(
-            horizontal: 17.35.w, vertical: 13.5.h),
+            horizontal: 17.35.w, vertical: 5.h),
         width: 153.w,
-        height: 193.h,
+        height: 205.h,
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(17.35.r),
@@ -58,10 +55,9 @@ class SquareProductCard extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  left: 77.w,
+                  right: 0.w,
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 5.w),
-                    width: 46.35.w,
                     height: 21.69.h,
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -92,6 +88,9 @@ class SquareProductCard extends StatelessWidget {
                               fontWeight: FontWeight.w600,
                               color: Color(0xFF8E8EA9)),
                         ),
+                        SizedBox(
+                          width: 3.w,
+                        ),
                       ],
                     ),
                   ),
@@ -120,7 +119,8 @@ class SquareProductCard extends StatelessWidget {
                   width: 22.w,
                 ),
               ],
-            )
+            ),
+            SizedBox(height: 7.h,),
           ],
         ),
       ),

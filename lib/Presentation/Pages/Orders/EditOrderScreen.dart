@@ -22,7 +22,7 @@ class EditOrderScreen extends GetView<OrdersController> {
   Widget build(BuildContext context) {
     controller.selectedOrder.value = Get.arguments as Order;
     return Scaffold(
-      appBar: CustomAppBar(title: 'Cart'.tr),
+      appBar: CustomAppBar(title: ' edit_order'.tr),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -40,7 +40,7 @@ class EditOrderScreen extends GetView<OrdersController> {
                 SizedBox(height: 20.h),
                 _buildPriceSummary(),
                 SizedBox(height: 25.h),
-                CustomBlackButton(buttonText: 'Buy'.tr, onPressed: () {controller.editOrder(controller.selectedOrder.value!);}),
+                CustomBlackButton(buttonText: 'oK'.tr, onPressed: () {controller.editOrder(controller.selectedOrder.value!);}),
                 SizedBox(height: 20.h),
                 CustomOrangebButton(buttonText: 'Cancel'.tr, onPressed: () {}),
                 SizedBox(height: 40.h),

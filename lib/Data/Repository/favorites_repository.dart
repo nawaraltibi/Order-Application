@@ -31,7 +31,7 @@ class FavoritesRepository {
       productId: productId,
     );
 
-    final response = await _apiProvider.request(favoritesAPI);
+    await _apiProvider.request(favoritesAPI);
     return;
   }
 }

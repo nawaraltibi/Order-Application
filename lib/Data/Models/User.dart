@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:order_application/Data/Models/CreditCard.dart';
 import 'package:order_application/Data/Models/Location.dart';
-import 'package:order_application/Data/Models/Order.dart';
 
 class User {
   int? id;

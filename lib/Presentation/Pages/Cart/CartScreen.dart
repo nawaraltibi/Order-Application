@@ -26,7 +26,7 @@ class CartScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Obx((){
+          child: Obx(() {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -40,9 +40,17 @@ class CartScreen extends StatelessWidget {
                 SizedBox(height: 20.h),
                 _buildPriceSummary(),
                 SizedBox(height: 25.h),
-                CustomBlackButton(buttonText: 'Buy'.tr, onPressed: () {controller.sendCart();}),
+                CustomBlackButton(
+                    buttonText: 'Buy'.tr,
+                    onPressed: () {
+                      controller.sendCart();
+                    }),
                 SizedBox(height: 20.h),
-                CustomOrangebButton(buttonText: 'Cancel'.tr, onPressed: () {controller.clearCart();}),
+                CustomOrangebButton(
+                    buttonText: 'Cancel'.tr,
+                    onPressed: () {
+                      controller.clearCart();
+                    }),
                 SizedBox(height: 40.h),
               ],
             );
@@ -64,7 +72,7 @@ class CartScreen extends StatelessWidget {
         children: [
           Positioned(
             left: Get.locale?.languageCode == 'ar' ? 210.w : -17.w,
-            top: -15.h,
+            top: 0.h,
             child: Transform(
               alignment: Alignment.center,
               transform: Matrix4.rotationY(
@@ -79,27 +87,29 @@ class CartScreen extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'attention'.tr,
-                  style: AppTextStyles.language.copyWith(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFFA5A5BA),
+            child: Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'attention'.tr,
+                    style: AppTextStyles.language.copyWith(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFFA5A5BA),
+                    ),
                   ),
-                ),
-                SizedBox(height: 5.h),
-                Text(
-                  'Confirm or cancel your cart before\nexiting the application.'
-                      .tr,
-                  style: AppTextStyles.language.copyWith(
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white),
-                ),
-              ],
+                  SizedBox(height: 5.h),
+                  Text(
+                    'Confirm or cancel your cart before exiting the application.'
+                        .tr,
+                    style: AppTextStyles.language.copyWith(
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -117,7 +127,7 @@ class CartScreen extends StatelessWidget {
             child: SwipeToDeleteWidget(
               height: 130,
               child: productCardForCart(
-                 product,
+                product,
               ),
               onSwipe: () {
                 return controller.removeProduct(product.id);
@@ -166,9 +176,9 @@ class CartScreen extends StatelessWidget {
               controller.currentCart.value.location != null
                   ? _buildLocationDetails()
                   : PlaceOrCardText(
-                isPlace: true,
-                isAdd: true,
-              ),
+                      isPlace: true,
+                      isAdd: true,
+                    ),
           ],
         ),
       );
@@ -253,7 +263,10 @@ class CartScreen extends StatelessWidget {
                 ),
               ),
               Spacer(),
-              BlackPriceText(price: controller.currentCart.value.totalCost!.toInt() - controller.currentCart.value.deliveryFee!.toInt(), size: 14),
+              BlackPriceText(
+                  price: controller.currentCart.value.totalCost!.toInt() -
+                      controller.currentCart.value.deliveryFee!.toInt(),
+                  size: 14),
             ],
           ),
           SizedBox(height: 15.h),
@@ -268,22 +281,26 @@ class CartScreen extends StatelessWidget {
                 ),
               ),
               Spacer(),
-              BlackPriceText(price: controller.currentCart.value.deliveryFee!.toInt(), size: 14),
+              BlackPriceText(
+                  price: controller.currentCart.value.deliveryFee!.toInt(),
+                  size: 14),
             ],
           ),
           Divider(
             thickness: 1.5,
             color: Color(0xFFEAEAEF),
           ),
+          SizedBox(
+            height: 5.h,
+          ),
           controller.currentCart.value.card != null
               ? _buildCardDetails()
-              : Padding(
-            padding:
-            EdgeInsets.symmetric(vertical: 10.h, horizontal: 25.w),
-            child: PlaceOrCardText(
-              isAdd: true,
-              isPlace: false,
-            ),
+              : PlaceOrCardText(
+                  isAdd: true,
+                  isPlace: false,
+                ),
+          SizedBox(
+            height: 5.h,
           ),
           Divider(
             thickness: 1.5,
@@ -300,7 +317,9 @@ class CartScreen extends StatelessWidget {
                 ),
               ),
               Spacer(),
-              OrangePriceText(price: controller.currentCart.value.totalCost!.toInt(), size: 16),
+              OrangePriceText(
+                  price: controller.currentCart.value.totalCost!.toInt(),
+                  size: 16),
             ],
           ),
         ],

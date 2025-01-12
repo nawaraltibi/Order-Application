@@ -52,7 +52,7 @@ class Product {
       image: json['image'],
       originalQuantityInOrder: json['quantity'] ?? 0,
 
-      rate: double.parse(json['rate']),
+      rate: json['rate'] != null ? double.parse(json['rate']):null,
       stockQuantity: json['stock_quantity'],
       totalSold: json['total_sold'],
       categoryEn: json['category_en'],

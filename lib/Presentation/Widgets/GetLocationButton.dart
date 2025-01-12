@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:order_application/Presentation/Controllers/Auth/AuthController.dart';
 import 'package:order_application/Presentation/Widgets/CustomBlackButton.dart';
 
 class GetLocationButton extends StatefulWidget {

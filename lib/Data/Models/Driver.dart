@@ -26,6 +26,16 @@ class Driver {
     return "$firstName $lastName";
   }
 
+  void setLocation(double latitude, double longitude, {String? name, String? region, String? street}) {
+    location = Location(
+      name: name ?? "Unknown",
+      latitude: latitude,
+      longitude: longitude,
+      region: region,
+      street: street,
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'phone': phone,

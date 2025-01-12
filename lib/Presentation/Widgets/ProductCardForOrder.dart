@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:order_application/App/Const/Host.dart';
 import 'package:order_application/Data/Models/Product.dart';
-import 'package:order_application/Presentation/Controllers/Cart/CartController.dart';
 import 'package:order_application/Presentation/Controllers/Orders/OrdersController.dart';
 import 'package:order_application/Presentation/Widgets/OrangePriceText.dart';
 import 'package:order_application/Presentation/Widgets/MinusButton.dart';

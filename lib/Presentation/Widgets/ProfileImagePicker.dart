@@ -8,11 +8,15 @@ import 'package:order_application/App/Const/Host.dart';
 import 'package:order_application/Presentation/Controllers/Auth/AuthController.dart';
 import 'package:order_application/Presentation/Controllers/Profile/ProfileController.dart';
 
+import '../../App/Utils/GetPath.dart';
+import '../../Data/Models/User.dart';
+import '../Controllers/User/UserController.dart';
+import 'DynamicImage.dart';
+
 class ProfileImagePicker extends StatefulWidget {
-  final String? imagePath;
 
 
-  const ProfileImagePicker({Key? key, this.imagePath}) : super(key: key);
+  const ProfileImagePicker({Key? key,}) : super(key: key);
 
   @override
   _ProfileImagePickerState createState() => _ProfileImagePickerState();
@@ -56,12 +60,19 @@ class _ProfileImagePickerState extends State<ProfileImagePicker> {
         CircleAvatar(
           radius: 65.w,
           backgroundColor: Colors.grey[300],
-          backgroundImage: _image != null
-              ? FileImage(_image!)
-              : widget.imagePath != null && widget.imagePath!.isNotEmpty
-              ? NetworkImage('http://$host2/images/${widget.imagePath}')
-              : const AssetImage('assets/images/User.png')
-          as ImageProvider,
+          child: ClipOval(
+            child: _image != null
+                ? Image.file(
+              _image!,
+              fit: BoxFit.cover,
+            )
+                : Get.find<UserController>().user.value.imageName != null
+                ? dynamicImage(imagePath: getUserPath(), box: BoxFit.cover)
+                : dynamicImage(
+              imagePath: 'http://$host/images/users/user.png',
+              box: BoxFit.cover,
+            )
+          ),
         ),
         Positioned(
           bottom: 0,

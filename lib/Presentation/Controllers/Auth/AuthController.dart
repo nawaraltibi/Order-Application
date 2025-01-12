@@ -183,6 +183,7 @@ class AuthController extends GetxController {
         Get.snackbar('Success', response.message!);
         if(response.userExists!){
           Get.find<SharedPreferencesController>().saveData('token',response.token!);
+          Get.find<SharedPreferencesController>().saveData('role', 'user');
           Get.offAllNamed("/DashboardPage");
           Get.find<UserController>().user.value = User.fromJson(response.data);
         }else{
@@ -299,7 +300,7 @@ class AuthController extends GetxController {
         Get.snackbar('Success', response.message!);
         Get.find<SharedPreferencesController>().saveData('token', response.token!);
         Get.find<SharedPreferencesController>().saveData('role', 'driver');
-        Get.offAllNamed("/DriverOrders");
+        Get.offAllNamed("/GetCurrentLocation");
         Get.find<DriverController>().driver.value = Driver.fromJson(response.data);
       },
       loadingMap,

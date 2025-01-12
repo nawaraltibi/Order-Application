@@ -1,11 +1,13 @@
 import 'package:order_application/Data/Models/CreditCard.dart';
 import 'package:order_application/Data/Models/Location.dart';
+import 'package:order_application/Data/Models/Market.dart';
 import 'package:order_application/Data/Models/OrderStatus.dart';
 import 'package:order_application/Data/Models/Product.dart';
 
 class Order {
   int? id;
   List<Product>? products;
+  List<Market>? markets;
   Location? location;
   CreditCard? card;
   OrderStatus status;
@@ -14,20 +16,20 @@ class Order {
   DateTime? deliveredAt;
   DateTime? createdAt;
   bool expanded = false;
+  String? geometry;
 
   Order({
     this.id,
     this.products,
+    this.markets,
     this.location,
     this.card,
     this.status = OrderStatus.cart,
-    this.totalCost,
+    this.totalCost = 0,
     this.deliveryFee = 1000.0,
     this.deliveredAt,
     this.createdAt,
-  }) {
-    updateTotalCost();
-  }
+  }) ;
 
   @override
   String toString() {
@@ -48,12 +50,15 @@ class Order {
       products: (json['products'] as List?)
           ?.map((product) => Product.fromJson(product))
           .toList(),
+      markets: json['markets'] != null
+          ? Market.fromListJson(json['markets'])
+          : [],
       location: json['address'] != null ? Location.fromJson(json['address']) : null,
       card: json['card'] != null ? CreditCard.fromJson(json['card']) : null,
-      status: OrderStatus.fromString(json['status_en']),
-      totalCost: json['totalCost'] != null ? (json['totalCost'] as num).toDouble() : null,
+      status: json['status_en'] != null ? OrderStatus.fromString(json['status_en']): OrderStatus.pendingConfirmation,
+      totalCost: json['total_cost']?.toDouble(),
       deliveredAt: json['delivered_at'] != null
-          ? DateTime.parse(json['deliveredAt'])
+          ? DateTime.parse(json['delivered_at'])
           : null,
       createdAt: json['created_at'] != null
           ? DateTime.parse(json['created_at'])
@@ -117,11 +122,6 @@ class Order {
 
     updateTotalCost();
   }
-
-  bool _isEditableState() {
-    return status == OrderStatus.pendingConfirmation || status == OrderStatus.inDelivery;
-  }
-
 
   void incrementProductQuantity(int productId) {
     adjustProductQuantity(productId, 1);
@@ -225,10 +225,6 @@ class Order {
   bool isEditable() {
     return status == OrderStatus.pendingConfirmation ||
         status == OrderStatus.inDelivery;
-  }
-
-  bool _isDelivered() {
-    return status == OrderStatus.delivered;
   }
 
   bool canEditProduct(bool isAdding) {

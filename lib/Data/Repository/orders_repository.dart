@@ -42,4 +42,32 @@ class OrderRepository {
     final response = await _apiProvider.request(request);
     return ResponseBody.fromJson(response);
   }
+
+  Future<ResponseBody> getActiveOrder() async {
+    final request =
+    OrdersAPI.activeOrder(Get.find<SharedPreferencesController>().token);
+    final response = await _apiProvider.request(request);
+    return ResponseBody.fromJson(response);
+  }
+
+  Future<ResponseBody> getUnTakenOrders(int page) async {
+    final request = OrdersAPI.unTakenOrders(
+        Get.find<SharedPreferencesController>().token, page);
+    final response = await _apiProvider.request(request);
+    return ResponseBody.fromJson(response);
+  }
+
+  Future<ResponseBody> takeAnOrder(int id) async {
+    final request = OrdersAPI.takeAnOrder(
+        Get.find<SharedPreferencesController>().token, id);
+    final response = await _apiProvider.request(request);
+    return ResponseBody.fromJson(response);
+  }
+
+  Future<ResponseBody> deliverAnOrder(int id) async {
+    final request = OrdersAPI.deliverAnOrder(
+        Get.find<SharedPreferencesController>().token, id);
+    final response = await _apiProvider.request(request);
+    return ResponseBody.fromJson(response);
+  }
 }

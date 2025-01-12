@@ -11,6 +11,8 @@ import 'package:order_application/Presentation/Widgets/CustomBlackButton.dart';
 import 'package:order_application/Presentation/Widgets/OrangePriceText.dart';
 import 'package:order_application/Presentation/Widgets/SectionTitle.dart';
 import 'package:order_application/Presentation/Widgets/ToggleFavoriteButton.dart';
+import '../../../App/Utils/GetPath.dart';
+import '../../Widgets/DynamicImage.dart';
 import '../../Widgets/MarketCard.dart';
 import '../../Widgets/NormalText.dart';
 import '../../Widgets/ReviewsContainer.dart';
@@ -57,32 +59,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               child: SizedBox(
                 width: 173.w,
                 height: 219.h,
-                child: Image.network(
-                  'http://$host2${product.image}',
-                  fit: BoxFit.contain,
-                  loadingBuilder: (BuildContext context, Widget child,
-                      ImageChunkEvent? loadingProgress) {
-                    if (loadingProgress == null) {
-                      return child;
-                    } else {
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                  (loadingProgress.expectedTotalBytes ?? 1)
-                              : null,
-                          strokeWidth: 2,
-                          color: AppColors.primary,
-                        ),
-                      );
-                    }
-                  },
-                  errorBuilder: (context, error, stackTrace) => const Icon(
-                    Icons.broken_image,
-                    size: 50,
-                    color: Colors.grey,
-                  ),
-                ),
+                child: dynamicImage(imagePath: getProductPath(product)),
               )),
           SizedBox(
             height: 17.h,

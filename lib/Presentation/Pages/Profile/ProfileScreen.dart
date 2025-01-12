@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:order_application/App/Color/Color.dart';
-import 'package:order_application/App/Const/Host.dart';
 import 'package:order_application/App/Styles/AppTextStyles.dart';
 import 'package:order_application/Presentation/Controllers/Dashboard/DashboardController.dart';
 import 'package:order_application/Presentation/Controllers/Profile/ProfileController.dart';
@@ -16,11 +15,6 @@ import '../../Widgets/DynamicImage.dart';
 
 class ProfileScreen extends GetView<ProfileController> {
   final List<Map> list = [
-    {
-      'icon': 'assets/icons/Notification.svg',
-      'text': 'notification'.tr,
-      'root': ''
-    },
     {
       'icon': 'assets/icons/Address.svg',
       'text': 'addresses'.tr,
@@ -141,17 +135,21 @@ class ProfileScreen extends GetView<ProfileController> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 25.h),
-                      child: Text("experience".tr,
+                    SizedBox(width: 20.w,),
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: 20.h),
+                        child: Text("experience".tr,
                           style: AppTextStyles.language.copyWith(
                               fontSize: 15.sp,
                               fontWeight: FontWeight.w500,
-                              color: Colors.white)),
+                              color: Colors.white),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ),
                     ),
-                    SizedBox(
-                      width: 30.w,
-                    ),
+                    SizedBox(width: 10.w,),
                     Transform(
                       alignment: Alignment.center,
                       transform: Matrix4.rotationY(isRTL ? 3.1416 : 0),

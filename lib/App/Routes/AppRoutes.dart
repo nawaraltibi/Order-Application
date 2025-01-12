@@ -17,6 +17,7 @@ import 'package:order_application/Presentation/Pages/Registration/EnterPhoneNumb
 import 'package:order_application/Presentation/Pages/Registration/FillDataScreen.dart';
 import 'package:order_application/Presentation/Pages/Registration/VerificationScreen.dart';
 import 'package:order_application/Presentation/Pages/Splash/SplashScreen.dart';
+import '../../Presentation/Pages/Driver/GetCurrentLocationScreen.dart';
 import '../../Presentation/Pages/ProductDetails/ProductDetailsScreen.dart';
 import '../../Presentation/Pages/Profile/EditInformationScreen.dart';
 import '../../Presentation/Pages/Profile/Payment/NewCardScreen.dart';
@@ -71,95 +72,70 @@ class AppRoutes {
     GetPage(
       name: '/Language',
       page: () => LanguageScreen(),
-      transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 450),
     ),
     GetPage(
       name: '/About',
       page: () => AboutScreen(),
-      transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 450),
     ),
     GetPage(
       name: '/ProductDetails',
       page: () => ProductDetailsScreen(),
-      transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 450),
     ),
     GetPage(
       name: '/Payment',
       page: () => PaymentMethodsScreen(),
-      transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 450),
     ),
     GetPage(
       name: '/Addresses',
       page: () => AddressesScreen(),
-      transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 450),
     ),
     GetPage(
       name: '/AddAddress',
       page: () => AddAddressScreen(),
-      transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 500),
     ),
     GetPage(
       name: '/Payment',
       page: () => PaymentMethodsScreen(),
       binding: DashboardBinding(),
-      transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 450),
     ),
     GetPage(
       name: '/NewCard',
       page: () => NewCardScreen(),
       binding: DashboardBinding(),
-      transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 500),
     ),
     GetPage(
       name: '/Addresses',
       page: () => AddressesScreen(),
       binding: DashboardBinding(),
-      transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 450),
     ),
     GetPage(
       name: '/Favorites',
       page: () => MyFavoritesScreen(),
-      transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 450),
     ),
     GetPage(
       name: '/MarketDetails',
       page: () => MarketDetailsScreen(),
-      transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 500),
     ),
     GetPage(
       name: '/Cart',
       page: () => CartScreen(),
-      transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 500),
     ),
     GetPage(
       name: '/EditOrder',
       page: () => EditOrderScreen(),
-      transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 500),
     ),
     GetPage(
       name: '/DriverOrders',
       page: () => DriverOrdersScreen(),
-      transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 500),
     ),
     GetPage(
       name: '/DriverOrderTaken',
       page: () => DriverOrderTakenScreen(),
-      transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 500),
+
+    ),
+    GetPage(
+      name: '/GetCurrentLocation',
+      page: () => GetCurrentLocationScreen(),
     ),
   ];
 }

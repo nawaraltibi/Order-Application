@@ -116,22 +116,28 @@ class _PlaceOrCardTextState extends State<PlaceOrCardText> {
               Icons.edit,
               color: AppColors.primary,
               size: 23.sp,
-            ),
-            widget.isPlace
-                ? Text(
-              ' Change the place'.tr,
-              style: AppTextStyles.language.copyWith(
-                fontWeight: FontWeight.w600,
-                fontSize: 16.sp,
-                color: AppColors.primary,
-              ),
-            )
-                : Text(
-              ' Change payment method'.tr,
-              style: AppTextStyles.language.copyWith(
-                fontWeight: FontWeight.w600,
-                fontSize: 16.sp,
-                color: AppColors.primary,
+            ),SizedBox(
+              width: 220.w,
+              child: widget.isPlace
+                  ? Text(
+                ' Change the place'.tr,
+                style: AppTextStyles.language.copyWith(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16.sp,
+                  color: AppColors.primary,
+                ),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              )
+                  : Text(
+                ' Change payment method'.tr,
+                style: AppTextStyles.language.copyWith(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16.sp,
+                  color: AppColors.primary,
+                ),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
               ),
             ),
           ],

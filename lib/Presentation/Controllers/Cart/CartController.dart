@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:order_application/Data/Models/Location.dart';
 import 'package:order_application/Data/Models/Order.dart';
 import 'package:order_application/Data/Models/OrderStatus.dart';
 import 'package:order_application/Data/Models/Product.dart';
@@ -99,12 +98,22 @@ class CartController extends GetxController {
 
   void clearCart() {
     Get.back();
-    currentCart.value.products?.clear();
-    currentCart.refresh();
+    Future.delayed(const Duration(milliseconds: 300), () {
+      currentCart.value.products?.clear();
+      currentCart.refresh();
+    });
   }
 
   Future<void> sendCart() async {
-    await Get.find<OrdersController>().createOrder(currentCart.value);
+    if(currentCart.value.location != null) {
+      if(currentCart.value.card != null) {
+        await Get.find<OrdersController>().createOrder(currentCart.value);
+      }else{
+        Get.snackbar('Error', 'Card is empty');
+      }
+    }else{
+      Get.snackbar('Error', 'Location is empty');
+    }
     clearCart();
   }
 }
