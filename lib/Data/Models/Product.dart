@@ -9,6 +9,7 @@ class Product {
   final int? price;
   final String? image;
   final double? rate;
+  final int? rateCount;
   final int? stockQuantity;
   int? availableToAdd;
   int? existingQuantityInOrder;
@@ -28,6 +29,7 @@ class Product {
     this.price,
     this.image,
     this.rate,
+    this.rateCount,
     this.stockQuantity,
     this.totalSold,
     this.categoryEn,
@@ -50,8 +52,8 @@ class Product {
       descriptionAr: json['description_ar'],
       price: json['price'],
       image: json['image'],
+      rateCount: json['rate_count'],
       originalQuantityInOrder: json['quantity'] ?? 0,
-
       rate: json['rate'] != null ? double.parse(json['rate']):null,
       stockQuantity: json['stock_quantity'],
       totalSold: json['total_sold'],

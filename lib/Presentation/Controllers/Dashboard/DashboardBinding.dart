@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:order_application/Data/Repository/favorites_repository.dart';
+import 'package:order_application/Data/Repository/products_repository.dart';
 import 'package:order_application/Data/Repository/markets_repository.dart';
 import 'package:order_application/Data/Repository/orders_repository.dart';
 import 'package:order_application/Data/Repository/rate_repository.dart';
@@ -16,6 +17,7 @@ import 'package:order_application/Domain/Usecases/orders_usecases/DeleteAnOrderU
 import 'package:order_application/Domain/Usecases/orders_usecases/EditAnOrderUseCase.dart';
 import 'package:order_application/Domain/Usecases/orders_usecases/GetAllOrdersUseCase.dart';
 import 'package:order_application/Domain/Usecases/orders_usecases/GetAnOrderUseCase.dart';
+import 'package:order_application/Domain/Usecases/products_use_case/GetForYouProductsUseCase.dart';
 import 'package:order_application/Domain/Usecases/rate_use_case/RateProductUseCase.dart';
 import 'package:order_application/Domain/Usecases/search_usecases/SearchUseCase.dart';
 import 'package:order_application/Presentation/Controllers/Cart/CartController.dart';
@@ -34,6 +36,8 @@ import 'package:order_application/Domain/Usecases/card_usecases/DeleteAnCardsUse
 import 'package:order_application/Domain/Usecases/card_usecases/GetAllCardsUseCase.dart';
 import 'package:order_application/Domain/Usecases/card_usecases/GetAnCardsUseCase.dart';
 
+import '../../../Domain/Usecases/products_use_case/GetBestSellingProductsUseCase.dart';
+import '../../../Domain/Usecases/products_use_case/GetTopRatedProductsUseCase.dart';
 import '../Market/MarketProductsController.dart';
 
 class DashboardBinding extends Bindings {
@@ -61,7 +65,12 @@ class DashboardBinding extends Bindings {
         ),
         permanent: true);
 
-    Get.put<HomeController>(HomeController(), permanent: true);
+    Get.put<HomeController>(HomeController(
+        getBestSellingProductsUseCase: GetBestSellingProductsUseCase(ProductsRepository()),
+        getTopRatedProductsUseCase: GetTopRatedProductsUseCase(ProductsRepository()),
+        getForYouProductsUseCase: GetForYouProductsUseCase(ProductsRepository())
+    )
+        , permanent: true);
 
     Get.put<SearchFieldController>(
       SearchFieldController(

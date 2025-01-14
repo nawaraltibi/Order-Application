@@ -1,4 +1,4 @@
-const String host = "192.168.1.104:8000";
+const String host = "192.168.27.110:8000";
 const String apiKey = 'pk.2bf11c9ca2f6f9284a05229be07b1c0f';
 
 // Router IP address

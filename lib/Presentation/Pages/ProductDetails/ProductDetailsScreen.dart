@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:order_application/App/Color/Color.dart';
-import 'package:order_application/App/Const/Host.dart';
 import 'package:order_application/App/Styles/AppTextStyles.dart';
 import 'package:order_application/Data/Models/Product.dart';
 import 'package:order_application/Presentation/Controllers/Cart/CartController.dart';
@@ -88,7 +87,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 Spacer(),
                 ReviewsContainer(
                   rating: product.rate!,
-                  reviews: 214,
+                  reviews: product.rateCount!,
                 ),
               ],
             ),

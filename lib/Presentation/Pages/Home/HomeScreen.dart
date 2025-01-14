@@ -7,7 +7,9 @@ import 'package:order_application/Presentation/Controllers/Home/HomeController.d
 import 'package:order_application/Presentation/Controllers/User/UserController.dart';
 import '../../../App/Utils/GetPath.dart';
 import '../../Widgets/DynamicImage.dart';
+import '../../Widgets/SectionTitle.dart';
 import '../../Widgets/ShoppingCartContainer.dart';
+import '../../Widgets/buildHorizontalList.dart';
 
 class HomeScreen extends GetView<HomeController> {
   @override
@@ -27,7 +29,7 @@ class HomeScreen extends GetView<HomeController> {
                     Container(
                       width: 50.w,
                       height: 50.h,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                       ),
                       child: ClipOval(
@@ -74,6 +76,78 @@ class HomeScreen extends GetView<HomeController> {
                 );
               }),
             ]),
+            SizedBox(height: 20.h),
+            Obx(() {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SectionTitle(text: 'you might like'.trParams({
+                    'category': controller.category,
+                  })),
+                  IconButton(
+                    icon: Icon(Icons.refresh),
+                    onPressed: () {
+                      controller.getForYouProducts();
+                    },
+                  ),
+                ],
+              );
+            }),
+            SizedBox(height: 10.h),
+            Obx(() {
+              return buildHorizontalList(
+                isLoading: controller.loadingMap['getForYouProducts']!.value,
+                hasError: controller.errorMap['getForYouProducts'],
+                items: controller.forYou,
+                onRetry: controller.getForYouProducts,
+              );
+            }),
+            SizedBox(height: 20.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SectionTitle(text: 'Best-Selling:'.tr),
+                IconButton(
+                  icon: Icon(Icons.refresh),
+                  onPressed: () {
+                    controller.getBestSellingProducts();
+                  },
+                ),
+              ],
+            ),
+            SizedBox(height: 10.h),
+            Obx(() {
+              return buildHorizontalList(
+                isLoading: controller.loadingMap['getBestSellingProducts']!.value,
+                hasError: controller.errorMap['getBestSellingProducts'],
+                items: controller.bestSelling,
+                onRetry: controller.getBestSellingProducts,
+              );
+            }),
+            SizedBox(height: 20.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SectionTitle(text: 'Top-Rated:'.tr),
+                IconButton(
+                  icon: Icon(Icons.refresh),
+                  onPressed: () {
+                    controller.getTopRatedProducts();
+                  },
+                ),
+              ],
+            ),
+            SizedBox(height: 10.h),
+            Obx(() {
+              return buildHorizontalList(
+                isLoading: controller.loadingMap['getTopRatedProducts']!.value,
+                hasError: controller.errorMap['getTopRatedProducts'],
+                items: controller.topRated,
+                onRetry: controller.getTopRatedProducts,
+              );
+            }),
+            SizedBox(height: 20.h),
+
           ],
         ),
       ),

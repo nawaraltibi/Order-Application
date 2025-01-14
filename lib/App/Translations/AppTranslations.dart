@@ -103,7 +103,8 @@ class AppTranslations extends Translations {
           'Here it is': 'Here it is',
           'There is a shopping cart available for':
               'There is a shopping cart available for',
-          'Most Requested:': 'Most Requested:',
+          'Best-Selling:': 'Best-Selling:',
+          'Top-Rated:': 'Top-Rated:',
           'Confirm or cancel your cart before exiting the application.':
               'Confirm or cancel your cart before exiting the application.',
           'What has been determined:': 'What has been determined:',
@@ -119,6 +120,7 @@ class AppTranslations extends Translations {
           'Total price': 'Total price',
           'Buy': 'Buy',
           'Delete': 'Delete',
+          'you might like': '@category you might like:',
         },
         'ar_SA': {
           'discover local stores and products':
@@ -192,7 +194,8 @@ class AppTranslations extends Translations {
           'Here it is': 'إنها هنا',
           'There is a shopping cart available for':
               'يوجد عربة تسوق متاحة بقيمة',
-          'Most Requested:': 'الأكثر طلباً:',
+          'Best-Selling:': 'الأكثر مبيعاً:',
+          'Top-Rated:': 'الأكثر تقيماً:',
           'attention': 'انتبه!',
           'Confirm or cancel your cart before exiting the application.':
               'قم بتأكيد أو إلغاء سلة التسوق الخاصة بك قبل الخروج من التطبيق',
@@ -236,6 +239,7 @@ class AppTranslations extends Translations {
           'Done': 'تم التوصيل',
           'You cannot increase the quantity':
               'لا يمكنك زيادة الكمية في طلبك أو إضافة منتجات جديدة. للقيام بذلك، اطلب طلبًا آخر.',
+          'you might like': '@category قد تعجبك:',
         },
       };
 }

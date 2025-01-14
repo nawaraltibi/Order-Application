@@ -14,7 +14,7 @@ class SectionTitle extends StatelessWidget {
     return Text(
       text,
       style: AppTextStyles.language.copyWith(
-        fontSize: 20.sp,
+        fontSize: 18.sp,
         color: Color(0xff32324D),
         fontWeight: FontWeight.w500,
       ),

@@ -6,7 +6,7 @@ import '../../Presentation/Controllers/User/UserController.dart';
 import '../Const/Host.dart';
 
 String getUserPath() {
-  return 'http://$host/images/users/${Get.find<UserController>().user.value.imageName}';
+  return 'http://$host${Get.find<UserController>().user.value.imageName}';
 }
 
 String getProductPath(Product product) {
