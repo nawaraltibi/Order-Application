@@ -49,11 +49,14 @@ class SearchScreen extends GetView<SearchFieldController> {
                     controller.markets.isEmpty) {
                   return const Center(child: CircularProgressIndicator());
                 }
-
                 if (controller.searchQuery.isEmpty) {
-                  return const SingleChildScrollView(child: Center(
-                      child: EmptyStateWidget(state: EmptyState.searchPrompt)),);
+                  return const Center(
+                    child: SingleChildScrollView(
+                      child: EmptyStateWidget(state: EmptyState.searchPrompt),
+                    ),
+                  );
                 }
+
 
                 if ((isProducts && controller.products.isEmpty) ||
                     (!isProducts && controller.markets.isEmpty)) {

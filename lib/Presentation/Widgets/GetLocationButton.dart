@@ -26,26 +26,57 @@ class _GetLocationButtonState extends State<GetLocationButton> {
     });
 
     try {
+      // التحقق من تمكين خدمات الموقع
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
         setState(() {
           isLocationFetched = false;
           isLoading = false;
         });
+        Get.snackbar(
+          "Location Services Disabled",
+          "Please enable location services to continue.",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
         return;
       }
 
+      // التحقق من الأذونات
       LocationPermission permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
+          setState(() {
+            isLoading = false;
+          });
+          Get.snackbar(
+            "Permission Denied",
+            "Location permission is required to fetch your location.",
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.orange,
+            colorText: Colors.white,
+          );
           return;
         }
       }
+
       if (permission == LocationPermission.deniedForever) {
+        setState(() {
+          isLoading = false;
+        });
+        Get.snackbar(
+          "Permission Permanently Denied",
+          "You need to enable location permission from settings.",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
         return;
       }
 
+      // الحصول على الموقع
       Position position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
 
@@ -62,6 +93,13 @@ class _GetLocationButtonState extends State<GetLocationButton> {
         isLocationFetched = false;
         isLoading = false;
       });
+      Get.snackbar(
+        "Error",
+        "An error occurred while fetching location: ${e.toString()}",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
   }
 

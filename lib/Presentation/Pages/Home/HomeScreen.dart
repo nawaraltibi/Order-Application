@@ -81,9 +81,9 @@ class HomeScreen extends GetView<HomeController> {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SectionTitle(text: 'you might like'.trParams({
+                  SizedBox(width: 280.w, child: SectionTitle(text: 'you might like'.trParams({
                     'category': controller.category,
-                  })),
+                  })),),
                   IconButton(
                     icon: Icon(Icons.refresh),
                     onPressed: () {

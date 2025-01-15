@@ -75,18 +75,18 @@ class DriverController extends GetxController {
 
   Future<void> getUnTakenOrders({
     int page = 1,
-  }) async {
+  }) async {       final ResponseBody response =
+  await getUnTakenOrdersUseCase.call(page: page);
+  if (page == 1) {
+    orders.value = Order.fromListJson(response.data);
+  } else {
+    orders.addAll(Order.fromListJson(response.data));
+  }
+  meta.value = response.meta;
+  orders.refresh();
     await controllerHandling(
       () async {
-        final ResponseBody response =
-        await getUnTakenOrdersUseCase.call(page: page);
-        if (page == 1) {
-          orders.value = Order.fromListJson(response.data);
-        } else {
-          orders.addAll(Order.fromListJson(response.data));
-        }
-        meta.value = response.meta;
-        orders.refresh();
+
       },
       loadingMap,
       'getUnTakenOrders',
